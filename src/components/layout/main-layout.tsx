@@ -1,26 +1,30 @@
 import { ThemeToggle } from "../ui/theme-toggle"
 import { SidebarNav } from "../ui/sidebar-nav"
-import { Home, Settings, Wrench } from "lucide-react"
-
-const sidebarNavItems = [
-  {
-    title: "首页",
-    href: "/",
-    icon: <Home className="h-4 w-4" />,
-  },
-  {
-    title: "工具",
-    href: "/tools",
-    icon: <Wrench className="h-4 w-4" />,
-  },
-  {
-    title: "设置",
-    href: "/settings",
-    icon: <Settings className="h-4 w-4" />,
-  },
-]
+import { Settings, Workflow } from "lucide-react"
+import { useAppStore } from "../../store/app-store"
+import { useNavigate } from "react-router-dom"
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
+  const { workflows, currentWorkflow, setCurrentWorkflow } = useAppStore()
+  const navigate = useNavigate()
+
+  const sidebarNavItems = [
+    ...workflows.map((workflow) => ({
+      title: workflow.name,
+      href: `/workflow/${workflow.id}`,
+      icon: <Workflow className="h-4 w-4" />,
+      onClick: () => {
+        setCurrentWorkflow(workflow)
+        navigate(`/workflow/${workflow.id}`)
+      }
+    })),
+    {
+      title: "设置",
+      href: "/settings",
+      icon: <Settings className="h-4 w-4" />,
+    }
+  ]
+
   return (
     <div className="min-h-screen bg-background">
       <div className="flex">
@@ -35,7 +39,10 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
         {/* 主内容区 */}
         <div className="flex-1 pl-64">
           <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container flex h-14 items-center justify-end">
+            <div className="container flex h-14 items-center justify-between">
+              {currentWorkflow && (
+                <h1 className="text-lg font-semibold">{currentWorkflow.name}</h1>
+              )}
               <nav className="flex items-center">
                 <ThemeToggle />
               </nav>

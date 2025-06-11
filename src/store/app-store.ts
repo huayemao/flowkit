@@ -6,39 +6,90 @@ export type Tool = {
   name: string
   description: string
   path: string
+  type: 'component' | 'web-app'
+  component?: string
+  url?: string
+}
+
+export type Workflow = {
+  id: string
+  name: string
+  description: string
+  tools: Tool[]
 }
 
 export type AppState = {
-  tools: Tool[]
+  workflows: Workflow[]
+  currentWorkflow: Workflow | null
   currentTool: Tool | null
+  setCurrentWorkflow: (workflow: Workflow) => void
   setCurrentTool: (tool: Tool) => void
+  addWorkflow: (workflow: Workflow) => void
+  updateWorkflow: (workflow: Workflow) => void
+  deleteWorkflow: (workflowId: string) => void
+}
+
+export const defaultTools: Tool[] = [
+  {
+    id: 'text-remove-newlines',
+    name: '文本删除换行',
+    description: '删除文本中的所有换行符',
+    path: '/text-remove-newlines',
+    type: 'component',
+    component: 'TextRemoveNewlines'
+  },
+  {
+    id: 'excalidraw',
+    name: 'Excalidraw',
+    description: '手绘风格的在线白板工具',
+    path: '/excalidraw',
+    type: 'web-app',
+    url: 'https://excalidraw.com/'
+  },
+  {
+    id: 'tableconvert',
+    name: 'TableConvert',
+    description: '表格转换工具',
+    path: '/tableconvert',
+    type: 'web-app',
+    url: 'https://tableconvert.com/'
+  },
+  {
+    id: 'baimiao',
+    name: '白描',
+    description: '在线图片文字识别工具',
+    path: '/baimiao',
+    type: 'web-app',
+    url: 'https://web.baimiaoapp.com/'
+  }
+]
+
+const defaultWorkflow: Workflow = {
+  id: 'pdf-content-extraction',
+  name: 'PDF 内容提取',
+  description: '从 PDF 中提取文本内容的工作流',
+  tools: defaultTools
 }
 
 export const useAppStore = create<AppState>()(
   persist(
     (set) => ({
-      tools: [
-        {
-          id: 'text-remove-newlines',
-          name: '文本删除换行',
-          description: '删除文本中的所有换行符',
-          path: '/text-remove-newlines',
-        },
-        {
-          id: 'excalidraw',
-          name: 'Excalidraw',
-          description: '手绘风格的在线白板工具',
-          path: '/excalidraw',
-        },
-        {
-          id: 'tableconvert',
-          name: 'TableConvert',
-          description: '表格转换工具',
-          path: '/tableconvert',
-        },
-      ],
+      workflows: [defaultWorkflow],
+      currentWorkflow: defaultWorkflow,
       currentTool: null,
+      setCurrentWorkflow: (workflow) => set({ currentWorkflow: workflow }),
       setCurrentTool: (tool) => set({ currentTool: tool }),
+      addWorkflow: (workflow) => set((state) => ({ 
+        workflows: [...state.workflows, workflow] 
+      })),
+      updateWorkflow: (workflow) => set((state) => ({
+        workflows: state.workflows.map((w) => 
+          w.id === workflow.id ? workflow : w
+        )
+      })),
+      deleteWorkflow: (workflowId) => set((state) => ({
+        workflows: state.workflows.filter((w) => w.id !== workflowId)
+      }))
     }),
     {
       name: 'app-storage',
