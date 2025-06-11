@@ -29,30 +29,6 @@ function WorkflowPage() {
     }
   }, [workflowId, workflows, setCurrentWorkflow])
 
-  const renderTool = (tool: typeof currentTool) => {
-    if (!tool) return null
-
-    if (tool.type === 'web-app' && tool.url) {
-      return <WebAppEmbed url={tool.url} title={tool.name} />
-    }
-
-    if (tool.type === 'component') {
-      switch (tool.component) {
-        case 'TextRemoveNewlines':
-          return (
-            <TextRemoveNewlines
-              state={textRemoveNewlinesState}
-              setState={setTextRemoveNewlinesState}
-            />
-          )
-        default:
-          return null
-      }
-    }
-
-    return null
-  }
-
   if (!currentWorkflow) {
     return <Navigate to="/settings" replace />
   }
@@ -92,8 +68,26 @@ function WorkflowPage() {
       {/* 内容区域 */}
       <div className="flex-1 overflow-hidden">
         <div className="container h-full py-6">
-          <div className="h-full">
-            {renderTool(currentTool)}
+          <div className="h-full relative">
+            {currentWorkflow.tools.map((tool) => (
+              <div
+                key={tool.id}
+                className={cn(
+                  'absolute inset-0 transition-opacity duration-200',
+                  currentTool?.id === tool.id ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none'
+                )}
+              >
+                {tool.type === 'web-app' && tool.url && (
+                  <WebAppEmbed url={tool.url} title={tool.name} />
+                )}
+                {tool.type === 'component' && tool.component === 'TextRemoveNewlines' && (
+                  <TextRemoveNewlines
+                    state={textRemoveNewlinesState}
+                    setState={setTextRemoveNewlinesState}
+                  />
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
