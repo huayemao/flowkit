@@ -8,9 +8,14 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: false
     strategy:
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +24,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'yarn'
           
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+            **/.yarn-cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+            
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -28,13 +44,13 @@ jobs:
       - name: Install dependencies (Windows)
         if: matrix.os == 'windows-latest'
         run: |
-          yarn install
+          yarn install --frozen-lockfile --network-timeout 100000
           yarn global add @tauri-apps/cli
           
       - name: Install dependencies (macOS)
         if: matrix.os == 'macos-latest'
         run: |
-          yarn install
+          yarn install --frozen-lockfile --network-timeout 100000
           yarn global add @tauri-apps/cli
           
       - name: Install dependencies (Ubuntu)
@@ -42,7 +58,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev build-essential curl wget libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
-          yarn install
+          yarn install --frozen-lockfile --network-timeout 100000
           yarn global add @tauri-apps/cli
           
       - name: Build
@@ -54,4 +70,38 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os }}-${{ github.ref_name }}
-          path: src-tauri/target/release/bundle/ 
+          path: src-tauri/target/release/bundle/
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ github.ref_name }}
+          body: |
+            ## 更新内容
+            ${{ github.event.head_commit.message }}
+            
+            ## 下载
+            - Windows: 下载 .exe 安装包
+            - macOS: 下载 .dmg 安装包
+            - Linux: 下载 .AppImage 或 .deb 安装包
+          draft: false
+          prerelease: false
+          files: |
+            artifacts/windows-latest-v*/**/*.exe
+            artifacts/macos-latest-v*/**/*.dmg
+            artifacts/ubuntu-latest-v*/**/*.AppImage
+            artifacts/ubuntu-latest-v*/**/*.deb
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
