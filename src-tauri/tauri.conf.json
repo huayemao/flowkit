@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "wtoolkit",
+  "productName": "flowkit",
   "version": "0.1.0",
-  "identifier": "wtoolkit.huayemao.run",
+  "identifier": "flowkit.huayemao.run",
   "build": {
     "beforeDevCommand": "yarn dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "wtoolkit",
+        "title": "flowkit",
         "width": 800,
         "height": 600
       }

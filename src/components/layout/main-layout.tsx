@@ -31,7 +31,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
         {/* 侧边栏 */}
         <aside className="fixed left-0 top-0 z-40 h-screen w-64 border-r bg-background">
           <div className="flex h-14 items-center border-b px-4">
-            <h2 className="text-lg font-semibold">WToolkit</h2>
+            <h2 className="text-lg font-semibold">FlowKit</h2>
           </div>
           <SidebarNav items={sidebarNavItems} className="mt-4" />
         </aside>
