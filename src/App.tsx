@@ -19,6 +19,18 @@ function WorkflowLayout() {
   return <Outlet />
 }
 
+function WorkflowDefaultPage() {
+  const { workflowId } = useParams()
+  const { workflows } = useAppStore()
+  const workflow = workflows.find(w => w.id === workflowId)
+  
+  if (!workflow || workflow.tools.length === 0) {
+    return <Navigate to="/settings" replace />
+  }
+
+  return <Navigate to={`${workflow.tools[0].id}`} replace />
+}
+
 function WorkflowPage() {
   const { workflowId, toolId } = useParams()
   const { workflows, currentWorkflow, currentTool, setCurrentTool } = useAppStore()
@@ -46,7 +58,7 @@ function App() {
       <MainLayout>
         <Routes>
           <Route path="/workflow" element={<WorkflowLayout />}>
-            <Route path=":workflowId" element={<Navigate to="text-remove-newlines" replace />} />
+            <Route path=":workflowId" element={<WorkflowDefaultPage />} />
             <Route path=":workflowId/:toolId" element={<WorkflowPage />} />
           </Route>
           <Route path="/settings" element={<SettingsPage />} />
