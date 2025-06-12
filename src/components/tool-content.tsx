@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { TextRemoveNewlines } from '../features/text-remove-newlines'
+import { TextOcr } from '../features/text-ocr'
 import { WebAppEmbed } from './web-app-embed'
 import { Tool } from '../types.ts'
 import { useAppStore } from '../store/app-store'
@@ -20,6 +21,11 @@ export function ToolContent({ tool }: ToolContentProps) {
     input: '', 
     output: '',
     mode: 'remove-all'
+  })
+  const [textOcrState, setTextOcrState] = useState({
+    input: null as File | null,
+    output: '',
+    loading: false
   })
   const { currentWorkflow } = useAppStore()
 
@@ -45,6 +51,8 @@ export function ToolContent({ tool }: ToolContentProps) {
             {t.type === 'component' ? (
               t.component === 'TextRemoveNewlines' ? (
                 <TextRemoveNewlines state={textRemoveNewlinesState} setState={setTextRemoveNewlinesState} />
+              ) : t.component === 'TextOcr' ? (
+                <TextOcr state={textOcrState} setState={setTextOcrState} />
               ) : (
                 <div>未知组件: {t.component}</div>
               )

@@ -42,6 +42,14 @@ export const defaultTools: Tool[] = [
     component: 'TextRemoveNewlines'
   },
   {
+    id: 'text-ocr',
+    name: 'OCR 文字识别',
+    description: '识别图片中的文字内容',
+    path: '/text-ocr',
+    type: 'component',
+    component: 'TextOcr'
+  },
+  {
     id: 'stackedit',
     name: 'StackEdit',
     description: '在线 Markdown 编辑器',
