@@ -20,42 +20,39 @@ export function ToolContent({ tool }: ToolContentProps) {
   const { currentWorkflow } = useAppStore()
 
   const renderContent = () => {
-    if (tool.type === 'component') {
-      switch (tool.component) {
-        case 'TextRemoveNewlines':
-          return <TextRemoveNewlines state={textRemoveNewlinesState} setState={setTextRemoveNewlinesState} />
-        default:
-          return <div>未知组件: {tool.component}</div>
-      }
-    } else if (tool.type === 'web-app') {
-      return (
-        <div className="relative w-full h-full">
-          {/* 同时渲染所有 iframe，通过 CSS 控制显示/隐藏，不要轻易删除这个部分的代码，否则会导致 iframe 状态维持问题 */}
-          {currentWorkflow?.tools.map(t => (
-            t.type === 'web-app' && t.url && (
-              <div
-                key={t.id}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  opacity: t.id === tool.id ? 1 : 0,
-                  pointerEvents: t.id === tool.id ? 'auto' : 'none',
-                  transition: 'opacity 0.3s ease-in-out',
-                  zIndex: t.id === tool.id ? 1 : 0,
-                  visibility: t.id === tool.id ? 'visible' : 'hidden'
-                }}
-              >
-                <WebAppEmbed url={t.url} title={t.name} />
-              </div>
-            )
-          ))}
-        </div>
-      )
-    }
-    return <div>未知工具类型</div>
+    return (
+      <div className="relative w-full h-full">
+        {currentWorkflow?.tools.map(t => (
+          <div
+            key={t.id}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              opacity: t.id === tool.id ? 1 : 0,
+              pointerEvents: t.id === tool.id ? 'auto' : 'none',
+              transition: 'opacity 0.3s ease-in-out',
+              zIndex: t.id === tool.id ? 1 : 0,
+              visibility: t.id === tool.id ? 'visible' : 'hidden'
+            }}
+          >
+            {t.type === 'component' ? (
+              t.component === 'TextRemoveNewlines' ? (
+                <TextRemoveNewlines state={textRemoveNewlinesState} setState={setTextRemoveNewlinesState} />
+              ) : (
+                <div>未知组件: {t.component}</div>
+              )
+            ) : t.type === 'web-app' && t.url ? (
+              <WebAppEmbed url={t.url} title={t.name} />
+            ) : (
+              <div>未知工具类型</div>
+            )}
+          </div>
+        ))}
+      </div>
+    )
   }
 
   return (
