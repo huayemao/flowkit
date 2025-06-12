@@ -16,7 +16,11 @@ interface ToolContentProps {
  * 3. 保持所有 iframe 的状态
  */
 export function ToolContent({ tool }: ToolContentProps) {
-  const [textRemoveNewlinesState, setTextRemoveNewlinesState] = useState({ input: '', output: '' })
+  const [textRemoveNewlinesState, setTextRemoveNewlinesState] = useState({ 
+    input: '', 
+    output: '',
+    mode: 'remove-all'
+  })
   const { currentWorkflow } = useAppStore()
 
   const renderContent = () => {
