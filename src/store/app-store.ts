@@ -22,11 +22,14 @@ export type AppState = {
   workflows: Workflow[]
   currentWorkflow: Workflow | null
   currentTool: Tool | null
+  customTools: Tool[]
   setCurrentWorkflow: (workflow: Workflow) => void
   setCurrentTool: (tool: Tool) => void
   addWorkflow: (workflow: Workflow) => void
   updateWorkflow: (workflow: Workflow) => void
   deleteWorkflow: (workflowId: string) => void
+  addCustomTool: (tool: Tool) => void
+  removeCustomTool: (toolId: string) => void
 }
 
 export const defaultTools: Tool[] = [
@@ -37,6 +40,14 @@ export const defaultTools: Tool[] = [
     path: '/text-remove-newlines',
     type: 'component',
     component: 'TextRemoveNewlines'
+  },
+  {
+    id: 'stackedit',
+    name: 'StackEdit',
+    description: '在线 Markdown 编辑器',
+    path: '/stackedit',
+    type: 'web-app',
+    url: 'https://stackedit.cn/app'
   },
   {
     id: 'excalidraw',
@@ -77,6 +88,7 @@ export const useAppStore = create<AppState>()(
       workflows: [defaultWorkflow],
       currentWorkflow: defaultWorkflow,
       currentTool: null,
+      customTools: [],
       setCurrentWorkflow: (workflow) => set({ currentWorkflow: workflow }),
       setCurrentTool: (tool) => set({ currentTool: tool }),
       addWorkflow: (workflow) => set((state) => ({ 
@@ -89,6 +101,12 @@ export const useAppStore = create<AppState>()(
       })),
       deleteWorkflow: (workflowId) => set((state) => ({
         workflows: state.workflows.filter((w) => w.id !== workflowId)
+      })),
+      addCustomTool: (tool) => set((state) => ({
+        customTools: [...state.customTools, tool]
+      })),
+      removeCustomTool: (toolId) => set((state) => ({
+        customTools: state.customTools.filter((t) => t.id !== toolId)
       }))
     }),
     {
