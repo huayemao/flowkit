@@ -6,20 +6,17 @@ import { useState } from 'react'
 import { invoke } from '@tauri-apps/api/core'
 import { ImageUploader } from '../components/ui/image-uploader'
 
-interface TextOcrProps {
-  state: {
-    input: File | null
-    output: string
-    loading: boolean
-  }
-  setState: (state: { input: File | null; output: string; loading: boolean }) => void
-}
 
-export function TextOcr({ state, setState }: TextOcrProps) {
+
+export function TextOcr() {
   const [copied, setCopied] = useState(false)
-
+  const [textOcrState, setTextOcrState] = useState({
+    input: null as File | null,
+    output: '',
+    loading: false
+  })
   const handleFileChange = async (file: File) => {
-    setState({ ...state, input: file, loading: true })
+    setTextOcrState({ ...textOcrState, input: file, loading: true })
 
     try {
       const reader = new FileReader()
@@ -38,16 +35,16 @@ export function TextOcr({ state, setState }: TextOcrProps) {
         }
 
         const data = response as { content: string }
-        setState({ ...state, input: file, output: data.content || '', loading: false })
+        setTextOcrState({ ...textOcrState, input: file, output: data.content || '', loading: false })
       }
     } catch (error) {
       console.error('OCR 识别错误:', error)
-      setState({ ...state, input: file, output: '识别失败，请重试', loading: false })
+      setTextOcrState({ ...textOcrState, input: file, output: '识别失败，请重试', loading: false })
     }
   }
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(state.output)
+    await navigator.clipboard.writeText(textOcrState.output)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -64,9 +61,9 @@ export function TextOcr({ state, setState }: TextOcrProps) {
         <CardContent className="flex flex-col h-[calc(100%-8rem)]">
           <div className="grid grid-cols-2 gap-6 flex-1">
             <ImageUploader
-              value={state.input}
+              value={textOcrState.input}
               onChange={handleFileChange}
-              loading={state.loading}
+              loading={textOcrState.loading}
               className="h-full"
             />
             
@@ -74,11 +71,11 @@ export function TextOcr({ state, setState }: TextOcrProps) {
               <div className="relative h-full">
                 <Textarea
                   placeholder="识别结果将显示在这里..."
-                  value={state.loading ? '正在识别中...' : state.output}
+                  value={textOcrState.loading ? '正在识别中...' : textOcrState.output}
                   readOnly
                   className="h-full resize-none"
                 />
-                {state.output && !state.loading && (
+                {textOcrState.output && !textOcrState.loading && (
                   <Button
                     className="absolute top-2 right-2"
                     variant="secondary"

@@ -5,6 +5,9 @@ import { useAppStore } from './store/app-store'
 import { ToolContent } from './components/tool-content'
 import { useEffect } from 'react'
 import { WorkflowEditDialog } from './components/workflow/workflow-edit-dialog'
+import WorkflowsPage from "@/pages/workflows"
+import ToolsPage from "@/pages/tools"
+import ToolPage from "@/pages/tool"
 
 function WorkflowLayout() {
   const { workflowId } = useParams()
@@ -76,15 +79,18 @@ function App() {
   return (
     <Router>
       <MainLayout>
-        <Routes>
-          <Route path="/workflow" element={<WorkflowLayout />}>
-            <Route path=":workflowId" element={<WorkflowDefaultPage />} />
-            <Route path=":workflowId/:toolId" element={<WorkflowPage />} />
-            <Route path=":workflowId/edit" element={<WorkflowEditPage />} />
-          </Route>
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/" element={<Navigate to="/workflow/pdf-content-extraction" replace />} />
-        </Routes>
+          <Routes>
+            <Route path="/workflows" element={<WorkflowsPage />} />
+            <Route path="/tools" element={<ToolsPage />} />
+            <Route path="/tools/:toolId" element={<ToolPage />} />
+            <Route path="/workflow" element={<WorkflowLayout />}>
+              <Route path=":workflowId" element={<WorkflowDefaultPage />} />
+              <Route path=":workflowId/:toolId" element={<WorkflowPage />} />
+              <Route path=":workflowId/edit" element={<WorkflowEditPage />} />
+            </Route>
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/" element={<Navigate to="/tools" replace />} />
+          </Routes>
       </MainLayout>
     </Router>
   )

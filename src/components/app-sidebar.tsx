@@ -36,7 +36,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ...workflows.map((workflow) => ({
       name: workflow.name,
       url: `/workflow/${workflow.id}`,
-      icon:Frame,
+      icon: Frame,
       onClick: () => {
         setCurrentWorkflow(workflow);
         navigate(`/workflow/${workflow.id}`);
@@ -63,7 +63,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         plan: "Free",
       },
     ],
-    navMain: [],
+    navMain: [
+      {
+        title: "工作流",
+        url: "/workflows",
+        icon: Workflow,
+      },
+      {
+        title: "工具",
+        url: "/tools",
+        icon: Command,
+      },
+    ],
     workflows: sidebarNavItems,
   };
 

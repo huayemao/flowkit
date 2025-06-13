@@ -1,7 +1,7 @@
 import { ThemeToggle } from "../ui/theme-toggle";
 import { SidebarNav } from "../ui/sidebar-nav";
 import { Settings, Workflow, ChevronDown } from "lucide-react";
-import { useAppStore } from "../../store/app-store";
+import { useAppStore, defaultTools } from "../../store/app-store";
 import {
   useLocation,
 
@@ -86,6 +86,23 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                         </NavigationMenuList>
                       </NavigationMenu>
                     </BreadcrumbItem>
+                  </>
+                )}
+                {location.pathname.startsWith('/tools') && (
+                  <>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/tools">工具</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    {location.pathname !== '/tools' && (
+                      <>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                          <BreadcrumbPage>
+                            {defaultTools.find(t => t.id === location.pathname.split('/').pop())?.name}
+                          </BreadcrumbPage>
+                        </BreadcrumbItem>
+                      </>
+                    )}
                   </>
                 )}
               </BreadcrumbList>

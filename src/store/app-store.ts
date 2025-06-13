@@ -97,13 +97,14 @@ export const useAppStore = create<AppState>()(
       currentWorkflow: defaultWorkflow,
       currentTool: null,
       customTools: [],
+      defaultTools,
       setCurrentWorkflow: (workflow) => set({ currentWorkflow: workflow }),
       setCurrentTool: (tool) => set({ currentTool: tool }),
-      addWorkflow: (workflow) => set((state) => ({ 
-        workflows: [...state.workflows, workflow] 
+      addWorkflow: (workflow) => set((state) => ({
+        workflows: [...state.workflows, workflow]
       })),
       updateWorkflow: (workflow) => set((state) => ({
-        workflows: state.workflows.map((w) => 
+        workflows: state.workflows.map((w) =>
           w.id === workflow.id ? workflow : w
         )
       })),

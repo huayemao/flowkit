@@ -17,16 +17,7 @@ interface ToolContentProps {
  * 3. 保持所有 iframe 的状态
  */
 export function ToolContent({ tool }: ToolContentProps) {
-  const [textRemoveNewlinesState, setTextRemoveNewlinesState] = useState({ 
-    input: '', 
-    output: '',
-    mode: 'remove-newlines-keep-empty'
-  })
-  const [textOcrState, setTextOcrState] = useState({
-    input: null as File | null,
-    output: '',
-    loading: false
-  })
+
   const { currentWorkflow } = useAppStore()
 
   const renderContent = () => {
@@ -52,7 +43,7 @@ export function ToolContent({ tool }: ToolContentProps) {
               t.component === 'TextRemoveNewlines' ? (
                 <TextRemoveNewlines />
               ) : t.component === 'TextOcr' ? (
-                <TextOcr state={textOcrState} setState={setTextOcrState} />
+                <TextOcr/>
               ) : (
                 <div>未知组件: {t.component}</div>
               )
