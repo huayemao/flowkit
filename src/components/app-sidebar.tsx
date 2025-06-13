@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
+import { NavWorkflows } from "@/components/nav-projects";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
@@ -29,13 +29,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppStore } from "@/store/app-store";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { workflows, currentWorkflow, setCurrentWorkflow } = useAppStore();
+  const { workflows, currentWorkflow, setCurrentWorkflow, currentTool } =
+    useAppStore();
 
   const sidebarNavItems = [
     ...workflows.map((workflow) => ({
-      title: workflow.name,
+      name: workflow.name,
       url: `/workflow/${workflow.id}`,
-      icon: <Workflow className="h-4 w-4" />,
+      icon:Frame,
       onClick: () => {
         setCurrentWorkflow(workflow);
         navigate(`/workflow/${workflow.id}`);
@@ -62,43 +63,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         plan: "Free",
       },
     ],
-    navMain: [
-      {
-        title: "工作流",
-        url: "#",
-        icon: Bot,
-        items: sidebarNavItems,
-        isActive: true,
-      },
-      {
-        title: "Settings",
-        url: "#",
-        icon: Settings2,
-        items: [
-          {
-            title: "工作流",
-            url: "/settings",
-          },
-        ],
-      },
-    ],
-    projects: [
-      {
-        name: "Design Engineering",
-        url: "#",
-        icon: Frame,
-      },
-      {
-        name: "Sales & Marketing",
-        url: "#",
-        icon: PieChart,
-      },
-      {
-        name: "Travel",
-        url: "#",
-        icon: Map,
-      },
-    ],
+    navMain: [],
+    workflows: sidebarNavItems,
   };
 
   const navigate = useNavigate();
@@ -110,7 +76,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavWorkflows workflows={data.workflows} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

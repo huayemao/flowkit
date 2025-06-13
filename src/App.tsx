@@ -1,9 +1,10 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useParams, Outlet } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useParams, Outlet, useNavigate } from 'react-router-dom'
 import { MainLayout } from './components/layout/main-layout'
 import { SettingsPage } from './pages/settings'
 import { useAppStore } from './store/app-store'
 import { ToolContent } from './components/tool-content'
 import { useEffect } from 'react'
+import { WorkflowEditDialog } from './components/workflow/workflow-edit-dialog'
 
 function WorkflowLayout() {
   const { workflowId } = useParams()
@@ -52,6 +53,25 @@ function WorkflowPage() {
   return <ToolContent tool={currentTool} />
 }
 
+function WorkflowEditPage() {
+  const { workflowId } = useParams()
+  const { workflows } = useAppStore()
+  const navigate = useNavigate()
+  const workflow = workflows.find(w => w.id === workflowId)
+  
+  if (!workflow) {
+    return <Navigate to="/settings" replace />
+  }
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      navigate(`/workflow/${workflowId}`)
+    }
+  }
+
+  return <WorkflowEditDialog workflowId={workflowId!} open={true} onOpenChange={handleOpenChange} />
+}
+
 function App() {
   return (
     <Router>
@@ -60,6 +80,7 @@ function App() {
           <Route path="/workflow" element={<WorkflowLayout />}>
             <Route path=":workflowId" element={<WorkflowDefaultPage />} />
             <Route path=":workflowId/:toolId" element={<WorkflowPage />} />
+            <Route path=":workflowId/edit" element={<WorkflowEditPage />} />
           </Route>
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/" element={<Navigate to="/workflow/pdf-content-extraction" replace />} />
