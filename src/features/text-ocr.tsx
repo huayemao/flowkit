@@ -1,9 +1,10 @@
 import { Button } from '../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { Textarea } from '../components/ui/textarea'
-import { Copy, Check, Upload } from 'lucide-react'
+import { Copy, Check } from 'lucide-react'
 import { useState } from 'react'
 import { invoke } from '@tauri-apps/api/core'
+import { ImageUploader } from '../components/ui/image-uploader'
 
 interface TextOcrProps {
   state: {
@@ -17,14 +18,10 @@ interface TextOcrProps {
 export function TextOcr({ state, setState }: TextOcrProps) {
   const [copied, setCopied] = useState(false)
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
+  const handleFileChange = async (file: File) => {
     setState({ ...state, input: file, loading: true })
 
     try {
-      // 将文件转换为 base64
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = async () => {
@@ -65,36 +62,13 @@ export function TextOcr({ state, setState }: TextOcrProps) {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col h-[calc(100%-8rem)]">
-          <div className="mb-4">
-            <Button
-              variant="outline"
-              className="w-[200px]"
-              onClick={() => document.getElementById('file-upload')?.click()}
-            >
-              <Upload className="h-4 w-4 mr-2" />
-              选择图片
-            </Button>
-            <input
-              id="file-upload"
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-          </div>
-          
           <div className="grid grid-cols-2 gap-6 flex-1">
-            <div className="space-y-2">
-              {state.input && (
-                <div className="border rounded-lg p-4 h-full flex items-center justify-center">
-                  <img
-                    src={URL.createObjectURL(state.input)}
-                    alt="预览"
-                    className="max-h-full max-w-full object-contain"
-                  />
-                </div>
-              )}
-            </div>
+            <ImageUploader
+              value={state.input}
+              onChange={handleFileChange}
+              loading={state.loading}
+              className="h-full"
+            />
             
             <div className="space-y-2">
               <div className="relative h-full">
