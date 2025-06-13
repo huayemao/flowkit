@@ -20,7 +20,7 @@ export function ToolContent({ tool }: ToolContentProps) {
   const [textRemoveNewlinesState, setTextRemoveNewlinesState] = useState({ 
     input: '', 
     output: '',
-    mode: 'remove-all'
+    mode: 'remove-newlines-keep-empty'
   })
   const [textOcrState, setTextOcrState] = useState({
     input: null as File | null,
@@ -50,7 +50,7 @@ export function ToolContent({ tool }: ToolContentProps) {
           >
             {t.type === 'component' ? (
               t.component === 'TextRemoveNewlines' ? (
-                <TextRemoveNewlines state={textRemoveNewlinesState} setState={setTextRemoveNewlinesState} />
+                <TextRemoveNewlines />
               ) : t.component === 'TextOcr' ? (
                 <TextOcr state={textOcrState} setState={setTextOcrState} />
               ) : (

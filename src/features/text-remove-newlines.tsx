@@ -5,27 +5,32 @@ import { Copy, Check } from 'lucide-react'
 import { useState } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
 
-interface TextRemoveNewlinesProps {
-  state: {
-    input: string
-    output: string
-    mode: string
-  }
-  setState: (state: { input: string; output: string; mode: string }) => void
-}
-
 const TEXT_MODES = {
+  'remove-newlines-keep-empty': '删除换行，但保留空行',
   'remove-all': '移除所有换行',
   'remove-empty': '移除空行',
   'merge-empty': '合并连续空行',
   'trim': '去除前后空格',
 } as const
 
-export function TextRemoveNewlines({ state, setState }: TextRemoveNewlinesProps) {
+export function TextRemoveNewlines() {
+  const [state, setState] = useState({
+    input: '',
+    output: '',
+    mode: 'remove-newlines-keep-empty'
+  })
   const [copied, setCopied] = useState(false)
 
   const processText = (text: string, mode: string) => {
     switch (mode) {
+      case 'remove-newlines-keep-empty':
+        const lines = text.split(/\r?\n/)
+        return lines.map((line, index) => {
+          const nextLine = lines[index + 1]
+          const isNextLineEmpty = nextLine === undefined || nextLine.trim() === ''
+          if (line.trim() === '') return '\n'
+          return line.trim() + (isNextLineEmpty ? '\n' : '')
+        }).join('')
       case 'remove-all':
         return text.replace(/\r?\n/g, '')
       case 'remove-empty':
