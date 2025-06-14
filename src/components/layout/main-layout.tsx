@@ -70,7 +70,6 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                                           ? "bg-accent text-accent-foreground"
                                           : ""
                                       )}
-                                      href={`/workflow/${currentWorkflow.id}/${tool.id}`}
                                       onClick={(e) => {
                                         e.preventDefault();
                                         setCurrentTool(tool);
@@ -113,7 +112,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <main className="relative h-[calc(100vh-5rem)]  flex flex-col overflow-hidden px-6 pb-6">
+          <main className="relative h-[calc(100vh-6rem)]  flex flex-col overflow-hidden px-6">
             {children}
           </main>
           <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
