@@ -4,7 +4,7 @@ import { Settings, Workflow, ChevronDown } from "lucide-react";
 import { useAppStore, defaultTools } from "../../store/app-store";
 import {
   useLocation,
-
+  Link
 } from "react-router-dom";
 import {
   NavigationMenu,
@@ -47,8 +47,10 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                 {location.pathname.startsWith('/workflow') && currentWorkflow && (
                   <>
                     <BreadcrumbItem>
-                      <BreadcrumbLink href={`/workflow/${currentWorkflow.id}`}>
-                        {currentWorkflow.name}
+                      <BreadcrumbLink asChild>
+                        <Link to={`/workflow/${currentWorkflow.id}`}>
+                          {currentWorkflow.name}
+                        </Link>
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
@@ -90,7 +92,9 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                 {location.pathname.startsWith('/tools') && (
                   <>
                     <BreadcrumbItem>
-                      <BreadcrumbLink href="/tools">工具</BreadcrumbLink>
+                      <BreadcrumbLink asChild>
+                        <Link to="/tools">工具</Link>
+                      </BreadcrumbLink>
                     </BreadcrumbItem>
                     {location.pathname !== '/tools' && (
                       <>
