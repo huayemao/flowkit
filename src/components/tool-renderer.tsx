@@ -2,6 +2,7 @@ import { Tool } from "@/store/app-store";
 import { TextRemoveNewlines } from '../features/text-remove-newlines'
 import { TextOcr } from '../features/text-ocr'
 import { WebAppEmbed } from './web-app-embed'
+import { SvgScaler } from '../features/svg-scaler'
 
 interface ToolRendererProps {
   tool: Tool;
@@ -15,6 +16,8 @@ export function ToolRenderer({ tool }: ToolRendererProps) {
           return <TextRemoveNewlines />;
         case "TextOcr":
           return <TextOcr />;
+        case "SvgScaler":
+          return <SvgScaler />;
         default:
           return <div>未知的组件类型: {tool.component}</div>;
       }

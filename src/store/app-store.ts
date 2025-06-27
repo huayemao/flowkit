@@ -80,6 +80,14 @@ export const defaultTools: Tool[] = [
     path: '/baimiao',
     type: 'web-app',
     url: 'https://web.baimiaoapp.com/'
+  },
+  {
+    id: 'svg-scaler',
+    name: 'SVG 矢量图缩放',
+    description: 'SVG 文件缩放与导出',
+    path: '/svg-scaler',
+    type: 'component',
+    component: 'SvgScaler'
   }
 ]
 

@@ -27,7 +27,12 @@ export function ImageUploader({
     if (!file) return
 
     // 检查文件类型
-    if (accept && !file.type.match(accept.replace('*', '.*'))) {
+    if (
+      accept &&
+      file.type &&
+      !file.type.match(accept.replace('*', '.*')) &&
+      !(accept === 'image/svg+xml' && file.name.toLowerCase().endsWith('.svg'))
+    ) {
       alert('请上传正确的文件类型')
       return
     }

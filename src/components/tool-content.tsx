@@ -12,6 +12,7 @@ import {
   StepperTitle,
   StepperSeparator,
 } from './ui/stepper'
+import { SvgScaler } from '../features/svg-scaler.tsx'
 
 interface ToolContentProps {
   tool: Tool
@@ -52,6 +53,8 @@ export function ToolContent({ tool }: ToolContentProps) {
                 <TextRemoveNewlines />
               ) : t.component === 'TextOcr' ? (
                 <TextOcr />
+              ) : t.component === 'PdfSvgExtract' ? (
+                <SvgScaler />
               ) : (
                 <div>未知组件: {t.component}</div>
               )
