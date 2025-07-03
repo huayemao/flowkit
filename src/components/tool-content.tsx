@@ -13,6 +13,8 @@ import {
   StepperSeparator,
 } from './ui/stepper'
 import { SvgScaler } from '../features/svg-scaler.tsx'
+import { AutoTrimImage } from '../features/auto-trim-image'
+import { ToolRenderer } from './tool-renderer'
 
 interface ToolContentProps {
   tool: Tool
@@ -48,21 +50,7 @@ export function ToolContent({ tool }: ToolContentProps) {
               visibility: t.id === tool.id ? 'visible' : 'hidden'
             }}
           >
-            {t.type === 'component' ? (
-              t.component === 'TextRemoveNewlines' ? (
-                <TextRemoveNewlines />
-              ) : t.component === 'TextOcr' ? (
-                <TextOcr />
-              ) : t.component === 'PdfSvgExtract' ? (
-                <SvgScaler />
-              ) : (
-                <div>未知组件: {t.component}</div>
-              )
-            ) : t.type === 'web-app' && t.url ? (
-              <WebAppEmbed url={t.url} title={t.name} />
-            ) : (
-              <div>未知工具类型</div>
-            )}
+            <ToolRenderer tool={t} />
           </div>
         ))}
       </div>

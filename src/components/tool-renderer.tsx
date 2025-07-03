@@ -3,6 +3,7 @@ import { TextRemoveNewlines } from '../features/text-remove-newlines'
 import { TextOcr } from '../features/text-ocr'
 import { WebAppEmbed } from './web-app-embed'
 import { SvgScaler } from '../features/svg-scaler'
+import { AutoTrimImage } from '../features/auto-trim-image'
 
 interface ToolRendererProps {
   tool: Tool;
@@ -18,6 +19,8 @@ export function ToolRenderer({ tool }: ToolRendererProps) {
           return <TextOcr />;
         case "SvgScaler":
           return <SvgScaler />;
+        case "AutoTrimImage":
+          return <AutoTrimImage />;
         default:
           return <div>未知的组件类型: {tool.component}</div>;
       }

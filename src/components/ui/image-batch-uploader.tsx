@@ -1,0 +1,150 @@
+import { useState, useRef, useEffect } from 'react'
+import { cn } from '../../lib/utils'
+import { Upload } from 'lucide-react'
+import { Button } from './button'
+
+interface ImageBatchUploaderProps {
+  value?: File[]
+  onChange?: (files: File[]) => void
+  loading?: boolean
+  className?: string
+  accept?: string
+  maxSize?: number // 单位：MB
+}
+
+export function ImageBatchUploader({
+  value = [],
+  onChange,
+  loading = false,
+  className,
+  accept = 'image/*',
+  maxSize = 10
+}: ImageBatchUploaderProps) {
+  const [isDragging, setIsDragging] = useState(false)
+  const dropZoneRef = useRef<HTMLDivElement>(null)
+
+  const handleFiles = async (files: FileList | File[]) => {
+    const validFiles: File[] = []
+    Array.from(files).forEach(file => {
+      if (
+        accept &&
+        file.type &&
+        !file.type.match(accept.replace('*', '.*')) &&
+        !(accept === 'image/svg+xml' && file.name.toLowerCase().endsWith('.svg'))
+      ) {
+        return
+      }
+      if (maxSize && file.size > maxSize * 1024 * 1024) {
+        return
+      }
+      validFiles.push(file)
+    })
+    if (validFiles.length > 0) {
+      onChange?.(validFiles)
+    }
+  }
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files && files.length > 0) {
+      await handleFiles(files)
+    }
+  }
+
+  const handlePaste = async (e: ClipboardEvent) => {
+    const items = e.clipboardData?.items
+    if (!items) return
+    const files: File[] = []
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        const file = item.getAsFile()
+        if (file) files.push(file)
+      }
+    }
+    if (files.length > 0) {
+      await handleFiles(files)
+    }
+  }
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(false)
+  }
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(false)
+    const files = e.dataTransfer.files
+    if (files && files.length > 0) {
+      await handleFiles(files)
+    }
+  }
+
+  useEffect(() => {
+    const dropZone = dropZoneRef.current
+    if (dropZone) {
+      dropZone.addEventListener('paste', handlePaste as any)
+      return () => {
+        dropZone.removeEventListener('paste', handlePaste as any)
+      }
+    }
+  }, [])
+
+  return (
+    <div
+      ref={dropZoneRef}
+      className={cn(
+        'relative transition-all duration-200',
+        isDragging && 'ring-2 ring-primary ring-offset-2',
+        className
+      )}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
+      <div className="border-2 border-dashed rounded-lg p-4 h-full flex flex-col items-center justify-center text-muted-foreground gap-4">
+        <Button
+          variant="outline"
+          className="w-[200px]"
+          onClick={() => document.getElementById('batch-file-upload')?.click()}
+        >
+          <Upload className="h-4 w-4 mr-2" />
+          选择图片/文件夹
+        </Button>
+        <input
+          id="batch-file-upload"
+          type="file"
+          accept={accept}
+          className="hidden"
+          multiple
+          // @ts-ignore
+          webkitdirectory="true"
+          onChange={handleFileChange}
+        />
+        <p>支持批量拖拽、粘贴、文件夹选择</p>
+      </div>
+      {value && value.length > 0 && (
+        <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2">
+          {value.map((file, idx) => (
+            <img
+              key={idx}
+              src={URL.createObjectURL(file)}
+              alt={`预览${idx}`}
+              className="max-h-32 max-w-full object-contain border rounded"
+            />
+          ))}
+        </div>
+      )}
+      {loading && (
+        <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      )}
+    </div>
+  )
+} 

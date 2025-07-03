@@ -88,6 +88,14 @@ export const defaultTools: Tool[] = [
     path: '/svg-scaler',
     type: 'component',
     component: 'SvgScaler'
+  },
+  {
+    id: 'auto-trim-image',
+    name: '图片去黑白边',
+    description: '自动批量去除图片黑边或白边',
+    path: '/auto-trim-image',
+    type: 'component',
+    component: 'AutoTrimImage'
   }
 ]
 
