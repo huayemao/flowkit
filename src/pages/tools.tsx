@@ -15,25 +15,113 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu"
-import { useState } from "react"
+import React, { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { WrapText, ScanText, FileText, PenTool, Table, Image as LucideImage, MoveDiagonal, Crop, Link as LucideLink } from 'lucide-react';
+
+// 工具 id 到 lucide-react 组件的映射
+const iconMap = {
+  WrapText,
+  ScanText,
+  FileText,
+  PenTool,
+  Table,
+  Image: LucideImage,
+  MoveDiagonal,
+  Crop,
+  Link: LucideLink,
+};
+
+function ToolIcon({ tool }: { tool: any }) {
+  const [imgError, setImgError] = useState(false);
+  if (tool.type === 'web-app' && tool.url) {
+    try {
+      const u = new URL(tool.url);
+      if (!imgError) {
+        return <img src={u.origin + '/favicon.ico'} alt="icon" className="w-7 h-7 rounded" onError={() => setImgError(true)} />;
+      }
+    } catch {}
+  }
+  if (tool.icon && iconMap[tool.icon]) {
+    const IconComp = iconMap[tool.icon];
+    return <IconComp strokeWidth={1.8} className="w-7 h-7 text-indigo-400" />;
+  }
+  return (
+    <div className="w-7 h-7 rounded bg-gray-200 flex items-center justify-center">
+      <svg viewBox="0 0 32 32" fill="none" className="w-4 h-4 text-gray-400"><circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M10 16l4 4 8-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+    </div>
+  );
+}
+
+function ToolCard({ tool }: { tool: any }) {
+  const navigate = useNavigate();
+  return (
+    <div
+      className="rounded-md flex flex-row items-center p-4 bg-white/95 dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 shadow-sm group transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-200 before:content-[''] before:absolute before:rounded-[inherit] before:-inset-px before:-z-10 before:bg-gradient-to-br before:from-[#cccef8]/60 before:to-[#e0c9fa]/60 before:dark:from-[#2d3367] before:dark:to-[#412e69] relative w-[260px] h-[88px] cursor-pointer mb-3"
+      onClick={() => navigate(`/tools/${tool.id}`)}
+      title={tool.name}
+      style={{ maxWidth: 320 }}
+    >
+      <div className="flex items-center flex-shrink-0 mr-4 ">
+        <ToolIcon tool={tool} />
+      </div>
+      <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
+        <div className="flex items-center justify-between gap-2 mb-1">
+          <span className="text-base font-medium text-gray-900 dark:text-gray-100 truncate max-w-[120px]">{tool.name}</span>
+          <Badge
+            variant={ "outline" }
+            className="ml-1 text-xs flex-shrink-0"
+          >
+            {tool.type === "component" ? "内置" : "Web 应用"}
+          </Badge>
+        </div>
+        <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate max-w-[180px] text-left">{tool.description}</div>
+      </div>
+    </div>
+  );
+}
+
+// 工具详情弹窗
+function ToolDetailDialog({ tool, open, onOpenChange }: { tool: any, open: boolean, onOpenChange: (v: boolean) => void }) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{tool.name}</DialogTitle>
+        </DialogHeader>
+        <div className="flex items-center mb-4">
+          <ToolIcon tool={tool} />
+          <span className="ml-3 text-gray-700 dark:text-gray-200">{tool.type === 'component' ? '内置组件' : 'Web 应用'}</span>
+        </div>
+        <div className="mb-2 text-gray-500 dark:text-gray-400">{tool.description}</div>
+        {tool.type === 'web-app' && tool.url && (
+          <div className="mb-2">
+            <a href={tool.url} target="_blank" rel="noopener noreferrer" className="text-indigo-500 hover:underline break-all">{tool.url}</a>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export default function ToolsPage() {
   const { customTools, addCustomTool, removeCustomTool, updateCustomTool } = useAppStore();
   const navigate = useNavigate();
-
-  const allTools = [...defaultTools, ...customTools];
   const builtinTools = defaultTools;
   const userTools = customTools;
+  const allTools = [...builtinTools, ...userTools];
 
   // 编辑弹窗状态
   const [editTool, setEditTool] = useState(null);
   const [editName, setEditName] = useState("");
   const [editDescription, setEditDescription] = useState("");
   const [editUrl, setEditUrl] = useState("");
+
+  // 工具详情弹窗
+  const [detailTool, setDetailTool] = useState(null);
 
   // 编辑
   const handleEdit = (tool) => {
@@ -64,7 +152,7 @@ export default function ToolsPage() {
   return (
     <div className="container mx-auto py-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">工具</h1>
+        <h1 className="text-3xl font-bold">工具集</h1>
         <AddCustomToolDialog 
           onAdd={addCustomTool} 
           triggerText="添加自定义工具"
@@ -73,39 +161,20 @@ export default function ToolsPage() {
       </div>
       <div className="mb-8">
         <h2 className="text-xl font-semibold mb-2">内置工具</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="flex flex-wrap gap-4">
           {builtinTools.map((tool) => (
-            <Card
-              key={tool.id}
-              className="hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={() => navigate("/tools/" + tool.id)}
-            >
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <CardTitle>{tool.name}</CardTitle>
-                  <Badge
-                    variant={tool.type === "component" ? "default" : "secondary"}
-                  >
-                    {tool.type === "component" ? "组件" : "Web 应用"}
-                  </Badge>
+            <ContextMenu key={tool.id}>
+              <ContextMenuTrigger asChild>
+                <div>
+                  <ToolCard tool={tool} />
                 </div>
-                <CardDescription>{tool.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm text-muted-foreground">
-                  {tool.type === "web-app" && tool.url && (
-                    <a
-                      href={tool.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 hover:underline"
-                    >
-                      {tool.url}
-                    </a>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+              </ContextMenuTrigger>
+              <ContextMenuContent>
+                <ContextMenuItem onClick={() => setDetailTool(tool)}>
+                  查看详情
+                </ContextMenuItem>
+              </ContextMenuContent>
+            </ContextMenu>
           ))}
         </div>
       </div>
@@ -114,40 +183,13 @@ export default function ToolsPage() {
         {userTools.length === 0 ? (
           <div className="text-muted-foreground text-sm">暂无自定义工具</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-wrap gap-4">
             {userTools.map((tool) => (
               <ContextMenu key={tool.id}>
                 <ContextMenuTrigger asChild>
-                  <Card
-                    className="hover:shadow-lg transition-shadow cursor-pointer"
-                    onClick={() => navigate("/tools/" + tool.id)}
-                  >
-                    <CardHeader>
-                      <div className="flex justify-between items-start">
-                        <CardTitle>{tool.name}</CardTitle>
-                        <Badge
-                          variant={tool.type === "component" ? "default" : "secondary"}
-                        >
-                          {tool.type === "component" ? "组件" : "Web 应用"}
-                        </Badge>
-                      </div>
-                      <CardDescription>{tool.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-sm text-muted-foreground">
-                        {tool.type === "web-app" && tool.url && (
-                          <a
-                            href={tool.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-500 hover:underline"
-                          >
-                            {tool.url}
-                          </a>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <div>
+                    <ToolCard tool={tool} />
+                  </div>
                 </ContextMenuTrigger>
                 <ContextMenuContent>
                   <ContextMenuItem onClick={() => handleEdit(tool)}>
@@ -156,10 +198,17 @@ export default function ToolsPage() {
                   <ContextMenuItem onClick={() => handleDelete(tool)}>
                     删除
                   </ContextMenuItem>
+                  <ContextMenuItem onClick={() => setDetailTool(tool)}>
+                    查看详情
+                  </ContextMenuItem>
                 </ContextMenuContent>
               </ContextMenu>
             ))}
           </div>
+        )}
+        {/* 工具详情弹窗 */}
+        {detailTool && (
+          <ToolDetailDialog tool={detailTool} open={!!detailTool} onOpenChange={(v) => { if (!v) setDetailTool(null); }} />
         )}
         {/* 编辑弹窗 */}
         <Dialog open={!!editTool} onOpenChange={(open) => { if (!open) setEditTool(null); }}>

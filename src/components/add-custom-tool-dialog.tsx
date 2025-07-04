@@ -20,14 +20,22 @@ export function AddCustomToolDialog({ onAdd, triggerText = "添加自定义工�
   const [description, setDescription] = useState("")
   const [url, setUrl] = useState("")
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name) return
+    let favicon = ''
+    if (url) {
+      try {
+        const u = new URL(url)
+        favicon = u.origin + '/favicon.ico'
+      } catch {}
+    }
     const newTool: Tool = {
       id: uuidv4(),
       name,
       description,
       type: 'web-app',
-      url
+      url,
+      icon: favicon || undefined
     }
     onAdd(newTool)
     setOpen(false)

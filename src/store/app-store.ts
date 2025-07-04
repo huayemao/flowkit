@@ -9,6 +9,7 @@ export type Tool = {
   type: 'component' | 'web-app'
   component?: string
   url?: string
+  icon?: string // 新增 icon 字段，支持 svg 字符串或图标名
 }
 
 export type Workflow = {
@@ -40,7 +41,8 @@ export const defaultTools: Tool[] = [
     description: '删除文本中的所有换行符',
     path: '/text-remove-newlines',
     type: 'component',
-    component: 'TextRemoveNewlines'
+    component: 'TextRemoveNewlines',
+    icon: 'WrapText' // lucide-react 图标名
   },
   {
     id: 'text-ocr',
@@ -48,39 +50,8 @@ export const defaultTools: Tool[] = [
     description: '识别图片中的文字内容',
     path: '/text-ocr',
     type: 'component',
-    component: 'TextOcr'
-  },
-  {
-    id: 'stackedit',
-    name: 'StackEdit',
-    description: '在线 Markdown 编辑器',
-    path: '/stackedit',
-    type: 'web-app',
-    url: 'https://stackedit.cn/app'
-  },
-  {
-    id: 'excalidraw',
-    name: 'Excalidraw',
-    description: '手绘风格的在线白板工具',
-    path: '/excalidraw',
-    type: 'web-app',
-    url: 'https://excalidraw.com/'
-  },
-  {
-    id: 'tableconvert',
-    name: 'TableConvert',
-    description: '表格转换工具',
-    path: '/tableconvert',
-    type: 'web-app',
-    url: 'https://tableconvert.com/'
-  },
-  {
-    id: 'baimiao',
-    name: '白描',
-    description: '在线图片文字识别工具',
-    path: '/baimiao',
-    type: 'web-app',
-    url: 'https://web.baimiaoapp.com/'
+    component: 'TextOcr',
+    icon: 'ScanText' // lucide-react 图标名
   },
   {
     id: 'svg-scaler',
@@ -88,7 +59,8 @@ export const defaultTools: Tool[] = [
     description: 'SVG 文件缩放与导出',
     path: '/svg-scaler',
     type: 'component',
-    component: 'SvgScaler'
+    component: 'SvgScaler',
+    icon: 'MoveDiagonal' // lucide-react 图标名
   },
   {
     id: 'auto-trim-image',
@@ -96,16 +68,55 @@ export const defaultTools: Tool[] = [
     description: '自动批量去除图片黑边或白边',
     path: '/auto-trim-image',
     type: 'component',
-    component: 'AutoTrimImage'
+    component: 'AutoTrimImage',
+    icon: 'Crop' // lucide-react 图标名
   },
   {
     id: 'convert-image-links-to-wp-proxy',
     name: 'md 图片加转 WP 代理',
-    description: '批量将 Markdown 图片链接转换为 WordPress 代理链接',
+    description: '批量将 Markdown 图片链接转为 WordPress 代理链接',
     path: '/convert-image-links-to-wp-proxy',
     type: 'component',
-    component: 'ConvertImageLinksToWpProxy'
-  }
+    component: 'ConvertImageLinksToWpProxy',
+    icon: 'Link' // lucide-react 图标名
+  },
+  {
+    id: 'stackedit',
+    name: 'StackEdit',
+    description: '在线 Markdown 编辑器',
+    path: '/stackedit',
+    type: 'web-app',
+    url: 'https://stackedit.cn/app',
+    icon: 'FileText' // lucide-react 图标名
+  },
+  {
+    id: 'excalidraw',
+    name: 'Excalidraw',
+    description: '手绘风格的在线白板工具',
+    path: '/excalidraw',
+    type: 'web-app',
+    url: 'https://excalidraw.com/',
+    icon: 'PenTool' // lucide-react 图标名
+  },
+  {
+    id: 'tableconvert',
+    name: 'TableConvert',
+    description: '表格转换工具',
+    path: '/tableconvert',
+    type: 'web-app',
+    url: 'https://tableconvert.com/',
+    icon: 'Table' // lucide-react 图标名
+  },
+  {
+    id: 'baimiao',
+    name: '白描',
+    description: '在线图片文字识别工具',
+    path: '/baimiao',
+    type: 'web-app',
+    url: 'https://web.baimiaoapp.com/',
+    icon: 'Image' // lucide-react 图标名
+  },
+
 ]
 
 const defaultWorkflow: Workflow = {

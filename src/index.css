@@ -4,33 +4,33 @@
  
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 226 100% 99%; /* very light indigo */
     --foreground: 0 0% 3.9%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card: 226 100% 99%;
+    --card-foreground: 226 40% 32%;
  
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover: 226 100% 98%;
+    --popover-foreground: 226 40% 32%;
  
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 226 80% 60%;
+    --primary-foreground: 0 0% 100%;
  
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 226 100% 97%;
+    --secondary-foreground: 226 40% 32%;
  
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: 226 100% 97%;
+    --muted-foreground: 226 20% 50%;
  
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --accent: 226 100% 95%;
+    --accent-foreground: 226 40% 32%;
  
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --border: 226 60% 90%;
+    --input: 226 60% 90%;
+    --ring: 226 80% 80%;
  
     --radius: 0.5rem;
  
@@ -44,64 +44,57 @@
  
     --chart-5: 27 87% 67%;
  
-    --sidebar-background: 0 0% 98%;
- 
-    --sidebar-foreground: 240 5.3% 26.1%;
- 
-    --sidebar-primary: 240 5.9% 10%;
- 
+    --sidebar-background: 226 100% 98%; /* 更浅 indigo，明亮模式 */
+    --sidebar-foreground: 226 40% 32%;
+    --sidebar-primary: 226 60% 44%;
     --sidebar-primary-foreground: 0 0% 98%;
- 
-    --sidebar-accent: 240 4.8% 95.9%;
- 
-    --sidebar-accent-foreground: 240 5.9% 10%;
- 
-    --sidebar-border: 220 13% 91%;
- 
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 226 100% 95%;
+    --sidebar-accent-foreground: 226 40% 32%;
+    --sidebar-border: 226 60% 90%;
+    --sidebar-ring: 226 80% 80%;
   }
  
   .dark {
-    --background: 0 0% 3.9%;
+    --background: 226 40% 16%; /* deep indigo for dark mode */
     --foreground: 0 0% 98%;
  
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 226 40% 18%;
+    --card-foreground: 226 20% 85%;
  
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 226 40% 14%;
+    --popover-foreground: 226 20% 85%;
  
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 226 80% 70%;
+    --primary-foreground: 0 0% 100%;
  
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 226 40% 16%;
+    --secondary-foreground: 226 20% 85%;
  
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted: 226 40% 16%;
+    --muted-foreground: 226 20% 60%;
  
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 226 40% 20%;
+    --accent-foreground: 226 20% 85%;
  
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
  
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --border: 226 40% 18%;
+    --input: 226 40% 18%;
+    --ring: 226 80% 40%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 226 40% 14%; /* 深 indigo，暗色模式 */
+    --sidebar-foreground: 226 20% 85%;
+    --sidebar-primary: 226 60% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 226 40% 20%;
+    --sidebar-accent-foreground: 226 20% 85%;
+    --sidebar-border: 226 40% 18%;
+    --sidebar-ring: 226 80% 40%;
   }
 }
  
