@@ -93,14 +93,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           name: Release ${{ github.ref_name }}
-          body: |
-            ## 更新内容
-            ${{ github.event.head_commit.message }}
-            
-            ## 下载
-            - Windows: 下载 .exe 安装包
-            - macOS: 下载 .dmg 安装包
-            - Linux: 下载 .AppImage 或 .deb 安装包
           draft: false
           prerelease: false
           files: |

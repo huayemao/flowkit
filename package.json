@@ -1,13 +1,14 @@
 {
   "name": "flowkit",
   "private": true,
-  "version": "0.2.6",
+  "version": "0.2.7",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "update-version": "node update-version.cjs"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
