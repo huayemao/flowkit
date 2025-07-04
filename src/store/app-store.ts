@@ -92,7 +92,7 @@ export const defaultTools: Tool[] = [
   },
   {
     id: 'auto-trim-image',
-    name: '图片去黑白边',
+    name: '图片去边框',
     description: '自动批量去除图片黑边或白边',
     path: '/auto-trim-image',
     type: 'component',
@@ -100,7 +100,7 @@ export const defaultTools: Tool[] = [
   },
   {
     id: 'convert-image-links-to-wp-proxy',
-    name: 'Markdown 图片链接转 WP 代理',
+    name: 'md 图片加转 WP 代理',
     description: '批量将 Markdown 图片链接转换为 WordPress 代理链接',
     path: '/convert-image-links-to-wp-proxy',
     type: 'component',

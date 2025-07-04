@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ImageBatchUploader } from '../components/ui/image-batch-uploader'
 import { Button } from '../components/ui/button'
+import { ScrollArea } from '../components/ui/scroll-area'
 
 // 检测并裁剪图片黑/白边
 function autoTrimImage(img: HTMLImageElement, bgColors = [[0,0,0],[255,255,255]], tolerance = 10): Promise<Blob> {
@@ -112,23 +113,44 @@ export function AutoTrimImage() {
   }
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-bold">批量去除图片黑边/白边</h2>
-      <ImageBatchUploader value={files} onChange={setFiles} loading={loading} />
-      <Button onClick={handleProcess} disabled={loading || files.length===0}>开始处理</Button>
-      {results.length > 0 && (
-        <div>
-          <Button onClick={handleDownloadAll} variant="outline">批量下载全部</Button>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-2">
-            {results.map(r => (
-              <div key={r.url} className="flex flex-col items-center">
-                <img src={r.url} alt={r.name} className="max-h-32 max-w-full object-contain border rounded" />
-                <a href={r.url} download={r.name} className="text-xs mt-1 underline">下载</a>
-              </div>
-            ))}
+    <ScrollArea className="rounded-lg bg-muted-50 dark:bg-muted-900 shadow-inner p-4">
+      <div className="space-y-4">
+        <h2 className="text-lg font-bold">批量去除图片边框</h2>
+        <ImageBatchUploader value={files} onChange={setFiles} loading={loading} />
+        <Button onClick={handleProcess} disabled={loading || files.length===0}>开始处理</Button>
+        {results.length > 0 && (
+          <div>
+            <Button onClick={handleDownloadAll} variant="outline">批量下载全部</Button>
+            <div
+              className="grid [grid-template-columns:repeat(auto-fill,minmax(160px,1fr))] gap-4"
+              style={{ backdropFilter: 'blur(2px)' }}
+            >
+              {results.map(r => (
+                <div
+                  key={r.url}
+                  className="flex flex-col items-center"
+                  style={{ minHeight: 120 }}
+                >
+                  <img
+                    src={r.url}
+                    alt={r.name}
+                    className="max-h-28 max-w-full object-contain transition-transform duration-200 hover:scale-105 hover:ring-4 hover:ring-blue-400/60 hover:z-10"
+                    style={{ transition: 'box-shadow 0.2s' }}
+                  />
+                  <div className="w-full flex flex-col items-center mt-1">
+                    <span className="text-xs text-gray-700 font-medium truncate w-full text-center" title={r.name}>{r.name}</span>
+                    <a
+                      href={r.url}
+                      download={r.name}
+                      className="text-xs mt-1 underline text-blue-600 hover:text-blue-800 transition-colors"
+                    >下载</a>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </ScrollArea>
   )
 } 

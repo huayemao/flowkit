@@ -70,16 +70,19 @@ export function ImageUploader({
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     setIsDragging(true)
   }
 
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     setIsDragging(false)
   }
 
   const handleDrop = async (e: React.DragEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     setIsDragging(false)
     
     const file = e.dataTransfer.files?.[0]

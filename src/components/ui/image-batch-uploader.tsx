@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { cn } from '../../lib/utils'
-import { Upload } from 'lucide-react'
+import { Upload, Trash, Images, XIcon } from 'lucide-react'
 import { Button } from './button'
+import { Tooltip, TooltipTrigger, TooltipContent } from './tooltip'
 
 interface ImageBatchUploaderProps {
   value?: File[]
@@ -68,16 +69,19 @@ export function ImageBatchUploader({
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     setIsDragging(true)
   }
 
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     setIsDragging(false)
   }
 
   const handleDrop = async (e: React.DragEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     setIsDragging(false)
     const files = e.dataTransfer.files
     if (files && files.length > 0) {
@@ -107,37 +111,63 @@ export function ImageBatchUploader({
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
-      <div className="border-2 border-dashed rounded-lg p-4 h-full flex flex-col items-center justify-center text-muted-foreground gap-4">
-        <Button
-          variant="outline"
-          className="w-[200px]"
-          onClick={() => document.getElementById('batch-file-upload')?.click()}
-        >
-          <Upload className="h-4 w-4 mr-2" />
-          选择图片/文件夹
-        </Button>
-        <input
-          id="batch-file-upload"
-          type="file"
-          accept={accept}
-          className="hidden"
-          multiple
-          // @ts-ignore
-          webkitdirectory="true"
-          onChange={handleFileChange}
-        />
-        <p>支持批量拖拽、粘贴、文件夹选择</p>
-      </div>
+      {(!value || value.length === 0) && (
+        <div className="border-2 border-dashed rounded-lg p-4 h-96 flex flex-col items-center justify-center text-muted-foreground gap-4">
+          <Button
+            variant="outline"
+            className="w-[200px]"
+            onClick={() => document.getElementById('batch-file-upload')?.click()}
+          >
+            <Upload className="h-4 w-4 mr-2" />
+            选择图片/文件夹
+          </Button>
+          <input
+            id="batch-file-upload"
+            type="file"
+            accept={accept}
+            className="hidden"
+            multiple
+            // @ts-ignore
+            webkitdirectory="true"
+            onChange={handleFileChange}
+          />
+          <p>支持批量拖拽、粘贴、文件夹选择</p>
+        </div>
+      )}
       {value && value.length > 0 && (
-        <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2">
-          {value.map((file, idx) => (
-            <img
-              key={idx}
-              src={URL.createObjectURL(file)}
-              alt={`预览${idx}`}
-              className="max-h-32 max-w-full object-contain border rounded"
-            />
-          ))}
+        <div className="mt-4 bg-muted-100 rounded-lg p-4 border">
+          <div className="flex justify-between items-center mb-2">
+            <span className="flex items-center gap-1 text-sm font-medium text-gray-700">
+              <Images className="w-4 h-4" />
+              {value.length}
+            </span>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={() => onChange?.([])}
+                  aria-label="清空"
+                >
+                  <XIcon className="w-4 h-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>清空</TooltipContent>
+            </Tooltip>
+          </div>
+          <div className="grid [grid-template-columns:repeat(auto-fill,minmax(160px,1fr))] gap-4">
+            {value.map((file, idx) => (
+              <div key={idx} className="flex flex-col items-center">
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt={`预览${idx}`}
+                  className="max-h-32 max-w-full object-contain transition-transform duration-200 hover:scale-105 hover:ring-4 hover:ring-blue-400/60 hover:z-10"
+                  style={{ boxShadow: '0 0 0 0 transparent', background: 'rgba(255,255,255,0.2)' }}
+                />
+                <span className="text-xs text-gray-700 font-medium truncate w-full text-center mt-1" title={file.name}>{file.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
       {loading && (
