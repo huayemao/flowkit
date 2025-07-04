@@ -5,7 +5,7 @@ export type Tool = {
   id: string
   name: string
   description: string
-  path: string
+  path?: string
   type: 'component' | 'web-app'
   component?: string
   url?: string
@@ -29,6 +29,7 @@ export type AppState = {
   updateWorkflow: (workflow: Workflow) => void
   deleteWorkflow: (workflowId: string) => void
   addCustomTool: (tool: Tool) => void
+  updateCustomTool: (tool: Tool) => void
   removeCustomTool: (toolId: string) => void
 }
 
@@ -137,6 +138,9 @@ export const useAppStore = create<AppState>()(
       })),
       addCustomTool: (tool) => set((state) => ({
         customTools: [...state.customTools, tool]
+      })),
+      updateCustomTool: (tool) => set((state) => ({
+        customTools: state.customTools.map((t) => t.id === tool.id ? tool : t)
       })),
       removeCustomTool: (toolId) => set((state) => ({
         customTools: state.customTools.filter((t) => t.id !== toolId)

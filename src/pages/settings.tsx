@@ -9,82 +9,7 @@ import { v4 as uuidv4 } from "uuid"
 import { GripVertical, X, Plus } from "lucide-react"
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog"
-
-function AddCustomToolDialog({ onAdd }: { onAdd: (tool: Tool) => void }) {
-  const [open, setOpen] = useState(false)
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
-  const [url, setUrl] = useState("")
-
-  const handleSubmit = () => {
-    const newTool: Tool = {
-      id: uuidv4(),
-      name,
-      description,
-      path: `/${name.toLowerCase().replace(/\s+/g, '-')}`,
-      type: 'web-app',
-      url
-    }
-    onAdd(newTool)
-    setOpen(false)
-    setName("")
-    setDescription("")
-    setUrl("")
-  }
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Plus className="h-4 w-4 mr-2" />
-          添加自定义工具
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>添加自定义 Web App 工具</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4 py-4">
-          <div className="space-y-2">
-            <Label htmlFor="tool-name">工具名称</Label>
-            <Input
-              id="tool-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="输入工具名称"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="tool-description">工具描述</Label>
-            <Textarea
-              id="tool-description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="输入工具描述"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="tool-url">工具 URL</Label>
-            <Input
-              id="tool-url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="输入工具 URL"
-            />
-          </div>
-          <div className="flex justify-end space-x-2">
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              取消
-            </Button>
-            <Button onClick={handleSubmit}>
-              添加
-            </Button>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-  )
-}
+import { AddCustomToolDialog } from "../components/add-custom-tool-dialog"
 
 export function SettingsPage() {
   const { 
@@ -158,7 +83,9 @@ export function SettingsPage() {
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">工作流设置</h2>
         <div className="space-x-2">
-          <AddCustomToolDialog onAdd={handleAddCustomTool} />
+          <AddCustomToolDialog 
+            onAdd={handleAddCustomTool} 
+          />
           <Button onClick={handleAddWorkflow}>添加工作流</Button>
         </div>
       </div>
