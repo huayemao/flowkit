@@ -59,7 +59,7 @@ export function ToolContent({ tool }: ToolContentProps) {
 
   return (
     <div className="w-full h-full flex flex-col items-center">
-      <div className="p-4 pt-0  min-w-[600px] max-w-5xl">
+      <div className="p-4 pt-0  min-w-[600px] max-w-full">
         <Stepper
           value={currentWorkflow?.tools.findIndex(t => t.id === tool.id)! + 1}
           onValueChange={setActiveStep}

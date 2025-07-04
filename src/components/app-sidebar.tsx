@@ -17,7 +17,7 @@ import {
 import { NavMain } from "@/components/nav-main";
 import { NavWorkflows } from "@/components/nav-projects";
 import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
+import { AppInfoSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -47,21 +47,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // This is sample data.
   const data = {
     user: {
-      name: "shadcn",
-      email: "m@example.com",
-      avatar: "/avatars/shadcn.jpg",
+      name: "huayemao",
+      email: "huayemao4g@gmail.com",
+      avatar: "https://dors.huayemao.fun/fav.ico",
     },
     teams: [
-      {
-        name: "flowkit",
-        logo: WorkflowIcon,
-        plan: "Enterprise",
-      },
-      {
-        name: "Evil Corp.",
-        logo: Command,
-        plan: "Free",
-      },
+      // {
+      //   name: "flowkit",
+      //   logo: WorkflowIcon,
+      //   plan: "Enterprise",
+      // },
+      // {
+      //   name: "Evil Corp.",
+      //   logo: Command,
+      //   plan: "Free",
+      // },
     ],
     navMain: [
       {
@@ -83,15 +83,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <AppInfoSwitcher 
+          teams={data.teams}
+          appName="wtoolkit"
+          appVersion="v0.2.5"
+          updateUrl="https://github.com/huayemao/flowkit/releases"
+        />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavWorkflows workflows={data.workflows} />
       </SidebarContent>
-      <SidebarFooter>
+      {/* <SidebarFooter>
         <NavUser user={data.user} />
-      </SidebarFooter>
+      </SidebarFooter> */}
       <SidebarRail />
     </Sidebar>
   );
