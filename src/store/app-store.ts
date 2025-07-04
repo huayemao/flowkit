@@ -96,6 +96,14 @@ export const defaultTools: Tool[] = [
     path: '/auto-trim-image',
     type: 'component',
     component: 'AutoTrimImage'
+  },
+  {
+    id: 'convert-image-links-to-wp-proxy',
+    name: 'Markdown 图片链接转 WP 代理',
+    description: '批量将 Markdown 图片链接转换为 WordPress 代理链接',
+    path: '/convert-image-links-to-wp-proxy',
+    type: 'component',
+    component: 'ConvertImageLinksToWpProxy'
   }
 ]
 

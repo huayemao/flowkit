@@ -4,6 +4,7 @@ import { TextOcr } from '../features/text-ocr'
 import { WebAppEmbed } from './web-app-embed'
 import { SvgScaler } from '../features/svg-scaler'
 import { AutoTrimImage } from '../features/auto-trim-image'
+import ConvertImageLinksToWpProxy from '../features/convert-image-links-to-wp-proxy'
 
 interface ToolRendererProps {
   tool: Tool;
@@ -14,6 +15,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   TextOcr,
   SvgScaler,
   AutoTrimImage,
+  ConvertImageLinksToWpProxy, // 新增
   // 后续新组件只需在此注册
 };
 
