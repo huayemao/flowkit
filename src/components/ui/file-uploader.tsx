@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { cn } from '../../lib/utils'
-import { Upload, FileText } from 'lucide-react'
+import { Upload, FileText, Trash2, X } from 'lucide-react'
 import { Button } from './button'
 
 interface FileUploaderProps {
   value?: File | null
-  onChange?: (file: File) => void
+  onChange?: (file: File | null) => void
   loading?: boolean
   className?: string
   accept?: string
@@ -28,6 +28,7 @@ export function FileUploader({
 }: FileUploaderProps) {
   const [isDragging, setIsDragging] = useState(false)
   const dropZoneRef = useRef<HTMLDivElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFile = async (file: File) => {
     if (!file) return
@@ -37,7 +38,7 @@ export function FileUploader({
       const acceptedTypes = accept.split(',').map(type => type.trim())
       const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase()
       const fileType = file.type
-      
+
       const isAccepted = acceptedTypes.some(type => {
         if (type.startsWith('.')) {
           return fileExtension === type.toLowerCase()
@@ -48,7 +49,7 @@ export function FileUploader({
           return fileType === type
         }
       })
-      
+
       if (!isAccepted) {
         alert('请上传正确的文件类型')
         return
@@ -64,11 +65,17 @@ export function FileUploader({
     onChange?.(file)
   }
 
+  const handleFileSelect = () => {
+    fileInputRef.current?.click()
+  }
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       await handleFile(file)
     }
+    // 重置 input 值，允许选择相同文件
+    e.target.value = ''
   }
 
   const handlePaste = async (e: ClipboardEvent) => {
@@ -87,6 +94,7 @@ export function FileUploader({
   }
 
   const handleDragOver = (e: React.DragEvent) => {
+    console.log('handleDragOver')
     e.preventDefault()
     e.stopPropagation()
     setIsDragging(true)
@@ -95,14 +103,18 @@ export function FileUploader({
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    setIsDragging(false)
+    // 只有当鼠标真正离开拖拽区域时才设置 isDragging 为 false
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setIsDragging(false)
+    }
   }
 
   const handleDrop = async (e: React.DragEvent) => {
+    console.log('sdfsddf')
     e.preventDefault()
     e.stopPropagation()
     setIsDragging(false)
-    
+
     const files = e.dataTransfer.files
     if (files && files.length > 0) {
       await handleFile(files[0])
@@ -120,7 +132,7 @@ export function FileUploader({
   }, [])
 
   return (
-    <div 
+    <div
       ref={dropZoneRef}
       className={cn(
         "relative transition-all duration-200",
@@ -132,30 +144,34 @@ export function FileUploader({
       onDrop={handleDrop}
     >
              {value ? (
-         <div className="border rounded-lg p-4 h-full flex items-center justify-center relative group">
-           <div className="text-center">
-             <div className="text-green-500 mb-2">
+         <div className="border rounded-lg p-3 h-full relative group">
+           <div className="flex items-center gap-3">
+             <div className="text-muted-foreground">
                {icon}
              </div>
-             <p className="text-sm font-medium text-gray-900">{value.name}</p>
-             <p className="text-xs text-gray-500 mt-1">点击重新选择文件</p>
+             <div className="flex-1 min-w-0">
+               <p className="text-sm font-medium text-foreground truncate">{value.name}</p>
+               <p className="text-xs text-muted-foreground">{(value.size / 1024 / 1024).toFixed(2)} MB</p>
+             </div>
            </div>
-           <Button
-             variant="outline"
-             className="mt-4"
-             onClick={() => document.getElementById('file-upload')?.click()}
+           
+           {/* 删除按钮 - 右上角图标 */}
+           <button
+             onClick={() => onChange?.(null)}
              disabled={loading}
+             className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
+             title="删除文件"
            >
-             <Upload className="h-4 w-4 mr-2" />
-             重新选择
-           </Button>
+             <X className="h-4 w-4 text-gray-500 hover:text-red-500" />
+           </button>
+           
            {loading && (
              <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
              </div>
            )}
          </div>
-       ) : (
+      ) : (
         <div className="border-2 border-dashed rounded-lg p-6 h-full flex flex-col items-center justify-center text-muted-foreground gap-4">
           <div className="text-gray-400">
             {icon}
@@ -163,22 +179,23 @@ export function FileUploader({
           <Button
             variant="outline"
             className="w-[200px]"
-            onClick={() => document.getElementById('file-upload')?.click()}
+            onClick={handleFileSelect}
             disabled={loading}
           >
             <Upload className="h-4 w-4 mr-2" />
             {title}
           </Button>
-          <input
-            id="file-upload"
-            type="file"
-            accept={accept}
-            className="hidden"
-            onChange={handleFileChange}
-          />
           <p>{description}</p>
         </div>
       )}
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept={accept}
+        className="hidden"
+        onChange={handleFileChange}
+      />
     </div>
   )
 }
