@@ -5,6 +5,7 @@ import { WebAppEmbed } from './web-app-embed'
 import { SvgScaler } from '../features/svg-scaler'
 import { AutoTrimImage } from '../features/auto-trim-image'
 import ConvertImageLinksToWpProxy from '../features/convert-image-links-to-wp-proxy'
+import { WordToHtml } from '../features/word-to-html'
 
 interface ToolRendererProps {
   tool: Tool;
@@ -16,6 +17,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   SvgScaler,
   AutoTrimImage,
   ConvertImageLinksToWpProxy, // 新增
+  WordToHtml, // 新增
   // 后续新组件只需在此注册
 };
 

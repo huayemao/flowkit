@@ -81,6 +81,15 @@ export const defaultTools: Tool[] = [
     icon: 'Link' // lucide-react 图标名
   },
   {
+    id: 'word-to-html',
+    name: 'Word转HTML',
+    description: '将Word文档转换为HTML格式',
+    path: '/word-to-html',
+    type: 'component',
+    component: 'WordToHtml',
+    icon: 'FileText' // lucide-react 图标名
+  },
+  {
     id: 'stackedit',
     name: 'StackEdit',
     description: '在线 Markdown 编辑器',
