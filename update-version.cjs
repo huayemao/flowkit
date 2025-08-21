@@ -25,4 +25,10 @@ let cargo = fs.readFileSync(cargoPath, 'utf8');
 cargo = cargo.replace(/version\s*=\s*".*?"/, `version = "${newVersion}"`);
 fs.writeFileSync(cargoPath, cargo);
 
+// 更新版本常量文件
+const versionPath = path.resolve(__dirname, 'src/constants/version.ts');
+let versionContent = fs.readFileSync(versionPath, 'utf8');
+versionContent = versionContent.replace(/export const APP_VERSION = ".*?";/, `export const APP_VERSION = "${newVersion}";`);
+fs.writeFileSync(versionPath, versionContent);
+
 console.log('版本号已更新为', newVersion); 

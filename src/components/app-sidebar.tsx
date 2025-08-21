@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppStore } from "@/store/app-store";
+import { APP_VERSION_DISPLAY } from "@/constants/version";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { workflows, currentWorkflow, setCurrentWorkflow, currentTool } =
@@ -86,7 +87,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <AppInfoSwitcher 
           teams={data.teams}
           appName="wtoolkit"
-          appVersion="v0.2.5"
+          appVersion={APP_VERSION_DISPLAY}
           updateUrl="https://github.com/huayemao/flowkit/releases"
         />
       </SidebarHeader>
