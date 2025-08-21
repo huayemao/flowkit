@@ -1,12 +1,13 @@
 import { Button } from '../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
-import { Textarea } from '../components/ui/textarea'
-import { Copy, Check, FileText, Download } from 'lucide-react'
+import { FileUploader } from '../components/ui/file-uploader'
+import { Copy, Check, Download, Eye, Code, FileText } from 'lucide-react'
 import { useState } from 'react'
 import mammoth from 'mammoth'
 
 export function WordToHtml() {
   const [copied, setCopied] = useState(false)
+  const [viewMode, setViewMode] = useState<'preview' | 'code'>('preview')
   const [state, setState] = useState({
     input: null as File | null,
     output: '',
@@ -14,12 +15,6 @@ export function WordToHtml() {
   })
 
   const handleFileChange = async (file: File) => {
-    // 检查文件类型
-    if (!file.name.toLowerCase().endsWith('.docx') && !file.name.toLowerCase().endsWith('.doc')) {
-      alert('请选择Word文档文件（.docx 或 .doc）')
-      return
-    }
-
     setState({ ...state, input: file, loading: true })
 
     try {
@@ -128,18 +123,6 @@ export function WordToHtml() {
     URL.revokeObjectURL(url)
   }
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault()
-  }
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault()
-    const files = e.dataTransfer.files
-    if (files.length > 0) {
-      handleFileChange(files[0])
-    }
-  }
-
   return (
     <div className="h-full">
       <Card className="h-full">
@@ -153,66 +136,42 @@ export function WordToHtml() {
           <div className="grid grid-cols-2 gap-6 flex-1">
             {/* 左侧：文件上传区域 */}
             <div className="space-y-2">
-              <div
-                className={`border-2 border-dashed rounded-lg p-6 h-full flex flex-col items-center justify-center transition-colors ${
-                  state.loading 
-                    ? 'border-blue-300 bg-blue-50' 
-                    : 'border-gray-300 hover:border-gray-400'
-                }`}
-                onDragOver={handleDragOver}
-                onDrop={handleDrop}
-              >
-                {state.loading ? (
-                  <div className="text-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-                    <p className="text-sm text-gray-600">正在转换中...</p>
-                  </div>
-                ) : state.input ? (
-                  <div className="text-center">
-                    <FileText className="h-12 w-12 text-green-500 mx-auto mb-2" />
-                    <p className="text-sm font-medium text-gray-900">{state.input.name}</p>
-                    <p className="text-xs text-gray-500 mt-1">点击重新选择文件</p>
-                  </div>
-                ) : (
-                  <div className="text-center">
-                    <FileText className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                    <p className="text-sm font-medium text-gray-900">拖拽Word文件到此处</p>
-                    <p className="text-xs text-gray-500 mt-1">或点击选择文件</p>
-                  </div>
-                )}
-                
-                <input
-                  type="file"
-                  accept=".doc,.docx"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0]
-                    if (file) handleFileChange(file)
-                  }}
-                  className="hidden"
-                  id="word-file-input"
-                />
-                <Button
-                  variant="outline"
-                  className="mt-4"
-                  onClick={() => document.getElementById('word-file-input')?.click()}
-                  disabled={state.loading}
-                >
-                  选择Word文件
-                </Button>
-              </div>
+              <FileUploader
+                value={state.input}
+                onChange={handleFileChange}
+                loading={state.loading}
+                accept=".doc,.docx"
+                maxSize={50}
+                title="选择Word文件"
+                description="拖拽Word文件到此处或粘贴文件"
+                icon={<FileText className="h-12 w-12" />}
+                className="h-full"
+              />
             </div>
             
-            {/* 右侧：HTML输出区域 */}
+            {/* 右侧：预览/代码区域 */}
             <div className="space-y-2">
-              <div className="relative h-full">
-                <Textarea
-                  placeholder="转换后的HTML代码将显示在这里..."
-                  value={state.loading ? '正在转换中...' : state.output}
-                  readOnly
-                  className="h-full resize-none font-mono text-sm"
-                />
+              <div className="flex justify-between items-center mb-2">
+                <div className="flex gap-2">
+                  <Button
+                    variant={viewMode === 'preview' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setViewMode('preview')}
+                  >
+                    <Eye className="h-4 w-4 mr-2" />
+                    预览
+                  </Button>
+                  <Button
+                    variant={viewMode === 'code' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setViewMode('code')}
+                  >
+                    <Code className="h-4 w-4 mr-2" />
+                    代码
+                  </Button>
+                </div>
                 {state.output && !state.loading && (
-                  <div className="absolute top-2 right-2 flex gap-2">
+                  <div className="flex gap-2">
                     <Button
                       variant="secondary"
                       size="sm"
@@ -239,6 +198,143 @@ export function WordToHtml() {
                       )}
                     </Button>
                   </div>
+                )}
+              </div>
+              
+              <div className="relative h-full border rounded-lg overflow-hidden">
+                {state.loading ? (
+                  <div className="h-full flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                      <p className="text-sm text-gray-600">正在转换中...</p>
+                    </div>
+                  </div>
+                                 ) : viewMode === 'preview' ? (
+                   <div className="h-full w-full">
+                     <iframe
+                       srcDoc={`
+                         <!DOCTYPE html>
+                         <html>
+                         <head>
+                           <meta charset="UTF-8">
+                           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                           <title>Word转HTML预览</title>
+                           <style>
+                             body {
+                               font-family: 'Times New Roman', serif;
+                               font-size: 12pt;
+                               line-height: 1.5;
+                               color: #000;
+                               margin: 40px;
+                               padding: 0;
+                               background: white;
+                             }
+                             
+                             /* 段落样式 */
+                             p {
+                               margin: 0 0 12pt 0;
+                               padding: 0;
+                             }
+                             
+                             /* 标题样式 */
+                             h1, h2, h3, h4, h5, h6 {
+                               margin: 12pt 0 6pt 0;
+                               padding: 0;
+                               font-weight: bold;
+                             }
+                             
+                             /* 表格样式 */
+                             table {
+                               border-collapse: collapse;
+                               margin: 12pt 0;
+                               width: 100%;
+                             }
+                             
+                             table, th, td {
+                               border: 1px solid #000;
+                               padding: 8px;
+                               vertical-align: top;
+                             }
+                             
+                             /* 文本格式 */
+                             strong, b {
+                               font-weight: bold;
+                             }
+                             
+                             em, i {
+                               font-style: italic;
+                             }
+                             
+                             u {
+                               text-decoration: underline;
+                             }
+                             
+                             del, strike {
+                               text-decoration: line-through;
+                             }
+                             
+                             sub {
+                               vertical-align: sub;
+                               font-size: smaller;
+                             }
+                             
+                             sup {
+                               vertical-align: super;
+                               font-size: smaller;
+                             }
+                             
+                             /* 列表样式 */
+                             ul, ol {
+                               margin: 12pt 0;
+                               padding-left: 24pt;
+                             }
+                             
+                             li {
+                               margin: 6pt 0;
+                             }
+                             
+                             /* 引用样式 */
+                             blockquote {
+                               margin: 12pt 0;
+                               padding-left: 12pt;
+                               border-left: 3px solid #ccc;
+                             }
+                             
+                             /* 图片样式 */
+                             img {
+                               max-width: 100%;
+                               height: auto;
+                               margin: 12pt 0;
+                             }
+                             
+                             /* 链接样式 */
+                             a {
+                               color: #0066cc;
+                               text-decoration: underline;
+                             }
+                             
+                             a:hover {
+                               color: #003366;
+                             }
+                           </style>
+                         </head>
+                         <body>
+                           ${state.output}
+                         </body>
+                         </html>
+                       `}
+                       className="w-full h-full border-0"
+                       title="Word转HTML预览"
+                       sandbox="allow-same-origin"
+                     />
+                   </div>
+                 ) : (
+                  <textarea
+                    value={state.output}
+                    readOnly
+                    className="w-full h-full p-4 font-mono text-sm border-0 resize-none focus:outline-none"
+                    placeholder="转换后的HTML代码将显示在这里..."
+                  />
                 )}
               </div>
             </div>
