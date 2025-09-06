@@ -32,13 +32,25 @@
        component: 'MyFeature', // 注意与映射表 key 保持一致
      }
      ```
-4. **（可选）完善类型声明**
+4. **添加国际化翻译**
+
+   - 打开中英文翻译文件：
+     - `src/i18n/locales/zh/translation.json`
+     - `src/i18n/locales/en/translation.json`
+   - 在 `tools` 部分添加对应的翻译键：
+     ```json
+     "myFeature": {
+       "name": "我的新功能",
+       "description": "功能描述"
+     }
+     ```
+5. **（可选）完善类型声明**
 
    - 如有新类型需求，可在 `src/types.ts` 等处补充。
-5. **（可选）UI/菜单集成**
+6. **（可选）UI/菜单集成**
 
    - 如需在主界面、菜单、侧边栏等处出现，确保相关页面/导航已引用 `defaultTools` 或相关配置。
-6. **测试与调试**
+7. **测试与调试**
 
    - 启动项目，确认新 feature 能在工具列表中被选中、正常渲染和使用。
 

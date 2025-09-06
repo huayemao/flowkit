@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import type { PluginOption } from 'vite'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // 库模式配置
 export const libConfig = defineConfig({
@@ -10,6 +11,14 @@ export const libConfig = defineConfig({
     dts({
       insertTypesEntry: true,
     }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'src/i18n/locales',
+          dest: 'i18n'
+        }
+      ]
+    }) as PluginOption
   ],
   build: {
     lib: {

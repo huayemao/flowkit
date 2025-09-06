@@ -1,0 +1,18 @@
+{
+  "autoTrimImage": {
+    "title": "智能去除图片边框",
+    "description": "智能识别并去除图片边框，支持批量处理",
+    "batchUpload": "批量上传图片",
+    "startProcessing": "开始处理",
+    "exportAll": "导出全部",
+    "dragDrop": "拖拽图片到此处，或点击选择",
+    "supportedFormats": "支持 JPG、PNG、WebP 格式",
+    "processing": "处理中...",
+    "download": "下载",
+    "noImages": "暂无图片",
+    "uploadImages": "上传图片"
+  },
+  "common": {
+    "processing": "处理中..."
+  }
+}

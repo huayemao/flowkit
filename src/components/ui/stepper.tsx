@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { LoaderCircle,CheckIcon } from "lucide-react";
+import { Loader,CheckIcon } from "lucide-react";
 import * as React from "react";
 import { createContext, useContext } from "react";
 
@@ -197,7 +197,7 @@ const StepperIndicator = React.forwardRef<HTMLDivElement, StepperIndicatorProps>
             />
             {isLoading && (
               <span className="absolute transition-all">
-                <LoaderCircle
+                <Loader
                   className="animate-spin"
                   size={14}
                   strokeWidth={2}

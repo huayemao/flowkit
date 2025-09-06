@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "@/i18n"
 import { useNavigate } from "react-router-dom"
 import { useAppStore, defaultTools, Tool } from "../../store/app-store"
 import { Button } from "../ui/button"

@@ -50,6 +50,14 @@
     "convertImageLinks": {
       "name": "Convert Image Links",
       "description": "Convert image links to WordPress proxy format"
+    },
+    "stackedit": {
+      "name": "StackEdit",
+      "description": "Online Markdown editor"
+    },
+    "baimiao": {
+      "name": "Baimiao",
+      "description": "Online OCR text recognition tool"
     }
   },
   "workflows": {

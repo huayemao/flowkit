@@ -1,0 +1,27 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "language": "Language",
+    "clear": "Clear",
+    "preview": "Preview",
+    "english": "English",
+    "chinese": "中文"
+  },
+  "imageUploader": {
+    "selectImages": "Select Images/Folder",
+    "dragDropSupport": "Supports batch drag & drop, paste, folder selection",
+    "dropHere": "Drop image here or click to upload",
+    "uploading": "Uploading...",
+    "uploadSuccess": "Upload successful",
+    "uploadFailed": "Upload failed"
+  },
+  "validation": {
+    "fileTooLarge": "File is too large",
+    "invalidFormat": "Invalid file format"
+  }
+}

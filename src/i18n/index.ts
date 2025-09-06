@@ -1,44 +1,17 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
 
-// 导入翻译文件
+// 从shared-ui重新导出所有i18n功能
+export { initI18n, changeLanguage, useTranslation } from '@flowkit/shared-ui';
+
+// 本地翻译文件导入（供shared-ui使用）
 import enTranslations from './locales/en/translation.json';
 import zhTranslations from './locales/zh/translation.json';
 
-// 获取系统语言
-const getSystemLanguage = () => {
-  // 在 Tauri 环境中，使用 navigator.language
-  const language = navigator.language || 'en';
-  return language.startsWith('zh') ? 'zh' : 'en';
-};
+// 导出本地翻译文件，供shared-ui的i18n配置使用
+export { enTranslations, zhTranslations };
 
-const resources = {
-  en: {
-    translation: enTranslations,
-  },
-  zh: {
-    translation: zhTranslations,
-  },
-};
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: getSystemLanguage(),
-    fallbackLng: 'en',
-    debug: false,
-    interpolation: {
-      escapeValue: false, // React already escapes values
-    },
-    react: {
-      useSuspense: false,
-    },
-  });
 
-// 动态切换语言的函数
-export const changeLanguage = (lng: 'en' | 'zh') => {
-  i18n.changeLanguage(lng);
-};
 
-export default i18n;
+
+
+

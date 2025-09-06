@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Download, Play } from 'lucide-react'
+import { useTranslation } from '@flowkit/shared-ui'
 import { autoTrimImage, getBorderColors } from '../utils/image-trim'
 
 // 使用workspace包导入
@@ -10,6 +11,7 @@ import { ScrollArea } from '@flowkit/shared-ui'
 
 
 export function AutoTrimImage() {
+  const { t } = useTranslation()
   const [files, setFiles] = useState<File[]>([])
   const [results, setResults] = useState<{name: string, url: string}[]>([])
   const [loading, setLoading] = useState(false)
@@ -44,7 +46,7 @@ export function AutoTrimImage() {
   return (
     <ScrollArea className="rounded-lg bg-muted-50 dark:bg-muted-900 shadow-inner p-4">
       <div className="space-y-6">
-        <h2 className="text-lg font-bold">批量去除图片边框</h2>
+        <h2 className="text-lg font-bold">{t('autoTrimImage.batchUpload')}</h2>
         <ImageBatchUploader value={files} onChange={setFiles} loading={loading} />
         
         <div className="flex gap-3">
@@ -54,7 +56,7 @@ export function AutoTrimImage() {
             className="flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
           >
             <Play className="w-4 h-4" />
-            开始处理
+            {loading ? t('common.processing') : t('autoTrimImage.startProcessing')}
           </Button>
           
           {results.length > 0 && (
@@ -63,7 +65,7 @@ export function AutoTrimImage() {
               variant="outline"
             >
               <Download className="w-4 h-4" />
-              导出全部
+              {t('autoTrimImage.exportAll')}
             </Button>
           )}
         </div>
@@ -114,4 +116,4 @@ export function AutoTrimImage() {
       </div>
     </ScrollArea>
   )
-} 
+}

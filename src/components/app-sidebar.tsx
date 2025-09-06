@@ -1,7 +1,6 @@
 import * as React from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/i18n";
 import {
-  AudioWaveform,
   BookOpen,
   Bot,
   Command,
@@ -10,7 +9,6 @@ import {
   Map,
   PieChart,
   Settings2,
-  SquareTerminal,
   Workflow,
   WorkflowIcon,
 } from "lucide-react";
@@ -68,12 +66,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ],
     navMain: [
       {
-        title: t('navigation.workflows'),
+        title: t("navigation.workflows"),
         url: "/workflows",
         icon: Workflow,
       },
       {
-        title: t('navigation.tools'),
+        title: t("navigation.tools"),
         url: "/tools",
         icon: Command,
       },
@@ -86,7 +84,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <AppInfoSwitcher 
+        <AppInfoSwitcher
           teams={data.teams}
           appName="flowkit"
           appVersion={APP_VERSION_DISPLAY}

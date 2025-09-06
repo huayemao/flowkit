@@ -1,5 +1,6 @@
 import '../index.css'
 import { useState, useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Upload, XIcon } from 'lucide-react'
 import { Button } from './button'
 import { cn } from '../lib/utils'
@@ -21,6 +22,7 @@ export function ImageBatchUploader({
   accept = 'image/*',
   maxSize = 10
 }: ImageBatchUploaderProps) {
+  const { t } = useTranslation()
   const [isDragging, setIsDragging] = useState(false)
   const dropZoneRef = useRef<HTMLDivElement>(null)
 
@@ -119,7 +121,7 @@ export function ImageBatchUploader({
             onClick={() => document.getElementById('batch-file-upload')?.click()}
           >
             <Upload className="h-4 w-4 mr-2" />
-            选择图片/文件夹
+            {t('imageUploader.selectImages')}
           </Button>
           <input
             id="batch-file-upload"
@@ -131,21 +133,20 @@ export function ImageBatchUploader({
             webkitdirectory="true"
             onChange={handleFileChange}
           />
-          <p>支持批量拖拽、粘贴、文件夹选择</p>
+          <p>{t('imageUploader.dragDropSupport')}</p>
         </div>
       )}
       {value && value.length > 0 && (
         <div className="mt-4 bg-muted-100 rounded-lg p-4 border">
           <div className="flex justify-between items-center mb-2">
             <span className="flex items-center gap-1 text-sm font-medium text-gray-700">
-              {/* <Images className="w-4 h-4" /> */}
               {value.length}
             </span>
             <Button
               size="icon"
               variant="ghost"
               onClick={() => onChange?.([])}
-              aria-label="清空"
+              aria-label={t('common.clear')}
             >
               <XIcon className="w-4 h-4" />
             </Button>
@@ -155,7 +156,7 @@ export function ImageBatchUploader({
               <div key={idx} className="flex flex-col items-center">
                 <img
                   src={URL.createObjectURL(file)}
-                  alt={`预览${idx}`}
+                  alt={`${t('common.preview')}${idx}`}
                   className="max-h-32 max-w-full object-contain transition-transform duration-200 hover:scale-105 hover:ring-4 hover:ring-blue-400/60 hover:z-10"
                   style={{ boxShadow: '0 0 0 0 transparent', background: 'rgba(255,255,255,0.2)' }}
                 />

@@ -50,6 +50,14 @@
     "convertImageLinks": {
       "name": "转换图片链接",
       "description": "将图片链接转换为WordPress代理格式"
+    },
+    "stackedit": {
+      "name": "StackEdit",
+      "description": "在线Markdown编辑器"
+    },
+    "baimiao": {
+      "name": "白描",
+      "description": "在线OCR文字识别工具"
     }
   },
   "workflows": {

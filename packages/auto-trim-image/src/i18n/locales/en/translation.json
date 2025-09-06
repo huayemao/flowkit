@@ -1,0 +1,18 @@
+{
+  "autoTrimImage": {
+    "title": "Auto Trim Image",
+    "description": "Intelligently identify and remove borders around images, supports batch processing",
+    "batchUpload": "Batch Upload Images",
+    "startProcessing": "Start Processing",
+    "exportAll": "Export All",
+    "dragDrop": "Drag and drop images here, or click to select",
+    "supportedFormats": "Supports JPG, PNG, WebP formats",
+    "processing": "Processing...",
+    "download": "Download",
+    "noImages": "No images uploaded yet",
+    "uploadImages": "Upload Images"
+  },
+  "common": {
+    "processing": "Processing..."
+  }
+}

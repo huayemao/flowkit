@@ -2,11 +2,8 @@ import { ThemeToggle } from "../ui/theme-toggle";
 import { SidebarNav } from "../ui/sidebar-nav";
 import { Settings, Workflow, ChevronDown } from "lucide-react";
 import { useAppStore, defaultTools } from "../../store/app-store";
-import {
-  useLocation,
-  Link
-} from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useLocation, Link } from "react-router-dom";
+import { useTranslation } from "@/i18n";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -27,6 +24,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "../ui/breadcrumb";
+import { LanguageSwitcher } from "../language-switcher";
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
   const { currentWorkflow, currentTool, setCurrentTool } = useAppStore();
@@ -46,67 +44,70 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
             />
             <Breadcrumb>
               <BreadcrumbList>
-                {location.pathname.startsWith('/workflow') && currentWorkflow && (
-                  <>
-                    <BreadcrumbItem>
-                      <BreadcrumbLink asChild>
-                        <Link to={`/workflow/${currentWorkflow.id}`}>
-                          {currentWorkflow.name}
-                        </Link>
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                      <NavigationMenu>
-                        <NavigationMenuList>
-                          <NavigationMenuItem>
-                            <NavigationMenuTrigger className="h-7 px-2 py-1">
-                              {currentTool?.name || t("messages.selectATool")}
-                            </NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                              <ul className="grid w-[200px] gap-1 p-2">
-                                {currentWorkflow.tools.map((tool) => (
-                                  <li key={tool.id}>
-                                    <NavigationMenuLink
-                                      className={cn(
-                                        "block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                                        currentTool?.id === tool.id
-                                          ? "bg-accent text-accent-foreground"
-                                          : ""
-                                      )}
-                                      onClick={(e) => {
-                                        e.preventDefault();
-                                        setCurrentTool(tool);
-                                      }}
-                                    >
-                                      {tool.name}
-                                    </NavigationMenuLink>
-                                  </li>
-                                ))}
-                              </ul>
-                            </NavigationMenuContent>
-                          </NavigationMenuItem>
-                        </NavigationMenuList>
-                      </NavigationMenu>
-                    </BreadcrumbItem>
-                  </>
-                )}
-                {location.pathname.startsWith('/tools') && (
+                {location.pathname.startsWith("/workflow") &&
+                  currentWorkflow && (
+                    <>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                          <Link to={`/workflow/${currentWorkflow.id}`}>
+                            {currentWorkflow.name}
+                          </Link>
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <NavigationMenu>
+                          <NavigationMenuList>
+                            <NavigationMenuItem>
+                              <NavigationMenuTrigger className="h-7 px-2 py-1">
+                                {currentTool?.name || t("messages.selectATool")}
+                              </NavigationMenuTrigger>
+                              <NavigationMenuContent>
+                                <ul className="grid w-[200px] gap-1 p-2">
+                                  {currentWorkflow.tools.map((tool) => (
+                                    <li key={tool.id}>
+                                      <NavigationMenuLink
+                                        className={cn(
+                                          "block select-none space-y-1 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                                          currentTool?.id === tool.id
+                                            ? "bg-accent text-accent-foreground"
+                                            : ""
+                                        )}
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          setCurrentTool(tool);
+                                        }}
+                                      >
+                                        {tool.name}
+                                      </NavigationMenuLink>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </NavigationMenuContent>
+                            </NavigationMenuItem>
+                          </NavigationMenuList>
+                        </NavigationMenu>
+                      </BreadcrumbItem>
+                    </>
+                  )}
+                {location.pathname.startsWith("/tools") && (
                   <>
                     <BreadcrumbItem>
                       <BreadcrumbLink asChild>
                         <Link to="/tools">{t("breadcrumb.tools")}</Link>
                       </BreadcrumbLink>
                     </BreadcrumbItem>
-                    {location.pathname !== '/tools' && (
+                    {location.pathname !== "/tools" && (
                       <>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
                           <BreadcrumbPage>
                             {(() => {
-                              const toolId = location.pathname.split('/').pop();
-                              const tool = defaultTools.find(t => t.id === toolId);
-                              return tool ? t(tool.name) : '';
+                              const toolId = location.pathname.split("/").pop();
+                              const tool = defaultTools.find(
+                                (t) => t.id === toolId
+                              );
+                              return tool ? t(tool.name) : "";
                             })()}
                           </BreadcrumbPage>
                         </BreadcrumbItem>
@@ -117,8 +118,9 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
               </BreadcrumbList>
             </Breadcrumb>
           </div>
-          <div className="ml-auto mr-6">
-          <ThemeToggle />
+          <div className="ml-auto mr-6 flex gap-2">
+            <LanguageSwitcher />
+            <ThemeToggle />
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
@@ -129,6 +131,5 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
         </div>
       </SidebarInset>
     </SidebarProvider>
-
   );
 }

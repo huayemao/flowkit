@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/i18n";
 
 export default function WorkflowsPage() {
   const { workflows } = useAppStore();

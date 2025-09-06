@@ -1,0 +1,27 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "language": "语言",
+    "clear": "清空",
+    "preview": "预览",
+    "english": "English",
+    "chinese": "中文"
+  },
+  "imageUploader": {
+    "selectImages": "选择图片/文件夹",
+    "dragDropSupport": "支持批量拖拽、粘贴、文件夹选择",
+    "dropHere": "拖拽图片到此处或点击上传",
+    "uploading": "上传中...",
+    "uploadSuccess": "上传成功",
+    "uploadFailed": "上传失败"
+  },
+  "validation": {
+    "fileTooLarge": "文件过大",
+    "invalidFormat": "文件格式不支持"
+  }
+}
