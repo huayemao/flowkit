@@ -8,8 +8,15 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "update-version": "node update-version.cjs"
+    "dev:auto-trim-image": "cd packages/auto-trim-image && npm run dev",
+    "dev:shared-ui": "cd packages/shared-ui && npm run dev",
+    "build:auto-trim-image": "cd packages/auto-trim-image && npm run build",
+    "build:shared-ui": "cd packages/shared-ui && npm run build",
+    "postinstall": "npm run build:shared-ui"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
     "@radix-ui/react-avatar": "^1.1.10",

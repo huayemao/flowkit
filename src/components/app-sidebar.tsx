@@ -86,7 +86,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <AppInfoSwitcher 
           teams={data.teams}
-          appName="wtoolkit"
+          appName="flowkit"
           appVersion={APP_VERSION_DISPLAY}
           updateUrl="https://github.com/huayemao/flowkit/releases"
         />
