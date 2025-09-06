@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import {
   AudioWaveform,
   BookOpen,
@@ -30,6 +31,7 @@ import { useAppStore } from "@/store/app-store";
 import { APP_VERSION_DISPLAY } from "@/constants/version";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { t } = useTranslation();
   const { workflows, currentWorkflow, setCurrentWorkflow, currentTool } =
     useAppStore();
 
@@ -66,12 +68,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ],
     navMain: [
       {
-        title: "工作流",
+        title: t('navigation.workflows'),
         url: "/workflows",
         icon: Workflow,
       },
       {
-        title: "工具",
+        title: t('navigation.tools'),
         url: "/tools",
         icon: Command,
       },

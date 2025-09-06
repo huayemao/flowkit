@@ -6,6 +6,7 @@ import {
   useLocation,
   Link
 } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -30,6 +31,7 @@ import {
 export function MainLayout({ children }: { children: React.ReactNode }) {
   const { currentWorkflow, currentTool, setCurrentTool } = useAppStore();
   const location = useLocation();
+  const { t } = useTranslation();
 
   return (
     <SidebarProvider>
@@ -59,7 +61,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                         <NavigationMenuList>
                           <NavigationMenuItem>
                             <NavigationMenuTrigger className="h-7 px-2 py-1">
-                              {currentTool?.name || "选择工具"}
+                              {currentTool?.name || t("messages.selectATool")}
                             </NavigationMenuTrigger>
                             <NavigationMenuContent>
                               <ul className="grid w-[200px] gap-1 p-2">
@@ -93,7 +95,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                   <>
                     <BreadcrumbItem>
                       <BreadcrumbLink asChild>
-                        <Link to="/tools">工具</Link>
+                        <Link to="/tools">{t("breadcrumb.tools")}</Link>
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                     {location.pathname !== '/tools' && (
@@ -101,7 +103,11 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
                           <BreadcrumbPage>
-                            {defaultTools.find(t => t.id === location.pathname.split('/').pop())?.name}
+                            {(() => {
+                              const toolId = location.pathname.split('/').pop();
+                              const tool = defaultTools.find(t => t.id === toolId);
+                              return tool ? t(tool.name) : '';
+                            })()}
                           </BreadcrumbPage>
                         </BreadcrumbItem>
                       </>

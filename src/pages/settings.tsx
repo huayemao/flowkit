@@ -6,10 +6,12 @@ import { Textarea } from "../components/ui/textarea"
 import { ToolSelector } from "../components/workflow/tool-selector"
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { GripVertical, X, Plus } from "lucide-react"
+import { GripVertical, X, Plus, Settings as SettingsIcon } from "lucide-react"
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog"
 import { AddCustomToolDialog } from "../components/add-custom-tool-dialog"
+import { useTranslation } from "react-i18next"
+import { LanguageSwitcher } from "../components/language-switcher"
 
 export function SettingsPage() {
   const { 
@@ -21,13 +23,14 @@ export function SettingsPage() {
     addCustomTool,
     removeCustomTool
   } = useAppStore()
+  const { t } = useTranslation()
   const [editingWorkflow, setEditingWorkflow] = useState<typeof workflows[0] | null>(null)
   const availableTools = [...defaultTools, ...customTools]
 
   const handleAddWorkflow = () => {
     const newWorkflow = {
       id: uuidv4(),
-      name: "新工作流",
+      name: t('workflows.title'),
       description: "",
       tools: []
     }
@@ -81,12 +84,13 @@ export function SettingsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">工作流设置</h2>
-        <div className="space-x-2">
+        <h2 className="text-2xl font-bold">{t('settings.title')}</h2>
+        <div className="flex items-center space-x-2">
+          <LanguageSwitcher />
           <AddCustomToolDialog 
             onAdd={handleAddCustomTool} 
           />
-          <Button onClick={handleAddWorkflow}>添加工作流</Button>
+          <Button onClick={handleAddWorkflow}>{t('workflows.create')}</Button>
         </div>
       </div>
 
@@ -222,4 +226,4 @@ export function SettingsPage() {
       </div>
     </div>
   )
-} 
+}

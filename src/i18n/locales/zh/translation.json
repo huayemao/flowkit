@@ -1,0 +1,113 @@
+{
+  "app": {
+    "title": "FlowKit",
+    "description": "强大的文本处理工具箱"
+  },
+  "navigation": {
+    "nav": "导航",
+    "workflows": "工作流",
+    "tools": "工具",
+    "settings": "设置",
+    "home": "首页",
+    "back": "返回"
+  },
+  "tools": {
+    "title": "工具集",
+    "builtin": "内置工具",
+    "custom": "自定义工具",
+    "addCustom": "添加自定义工具",
+    "noCustom": "暂无自定义工具",
+    "webApp": "Web 应用",
+    "confirmDelete": "确定要删除「{{name}}」吗？",
+    "textRemoveNewlines": {
+      "name": "文本去换行",
+      "description": "删除文本中的所有换行符"
+    },
+    "textOcr": {
+      "name": "OCR文字识别",
+      "description": "从图片中识别文字内容"
+    },
+    "wordToHtml": {
+      "name": "Word转HTML",
+      "description": "将Word文档转换为HTML格式"
+    },
+    "svgScaler": {
+      "name": "SVG缩放",
+      "description": "按比例缩放SVG图像"
+    },
+    "tableconvert": {
+      "name": "表格转换",
+      "description": "转换和格式化表格数据"
+    },
+    "excalidraw": {
+      "name": "Excalidraw",
+      "description": "虚拟协作白板工具"
+    },
+    "autoTrimImage": {
+      "name": "自动裁剪图片",
+      "description": "自动去除图片边框"
+    },
+    "convertImageLinks": {
+      "name": "转换图片链接",
+      "description": "将图片链接转换为WordPress代理格式"
+    }
+  },
+  "workflows": {
+    "title": "工作流",
+    "create": "创建工作流",
+    "edit": "编辑工作流",
+    "delete": "删除工作流",
+    "addTool": "添加工具",
+    "removeTool": "移除工具",
+    "name": "名称",
+    "description": "描述",
+    "tools": "工具",
+    "noTools": "暂无工具",
+    "dragToReorder": "拖拽重新排序"
+  },
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "add": "添加",
+    "remove": "移除",
+    "close": "关闭",
+    "confirm": "确认",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "warning": "警告",
+    "yes": "是",
+    "no": "否",
+    "viewDetails": "查看详情"
+  },
+  "settings": {
+    "title": "设置",
+    "language": {
+      "title": "语言",
+      "english": "English",
+      "chinese": "中文"
+    },
+    "theme": {
+      "title": "主题",
+      "light": "浅色",
+      "dark": "深色",
+      "system": "系统"
+    }
+  },
+  "messages": {
+    "workflowCreated": "工作流创建成功",
+    "workflowUpdated": "工作流更新成功",
+    "workflowDeleted": "工作流删除成功",
+    "toolAdded": "工具添加成功",
+    "toolRemoved": "工具移除成功",
+    "confirmDelete": "确定要删除这个项目吗？",
+    "noToolsAvailable": "暂无可用工具",
+    "selectTool": "选择一个工具开始使用",
+    "selectATool": "选择工具"
+  },
+  "breadcrumb": {
+    "tools": "工具"
+  }
+}

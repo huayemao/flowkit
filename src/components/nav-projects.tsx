@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useTranslation } from "react-i18next";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -37,10 +38,11 @@ export function NavWorkflows({
 }) {
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>工作流</SidebarGroupLabel>
+      <SidebarGroupLabel>{t('navigation.workflows')}</SidebarGroupLabel>
       <SidebarMenu>
         {workflows.map((workflow) => (
           <SidebarMenuItem key={workflow.url}>

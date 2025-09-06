@@ -9,18 +9,20 @@ import {
 } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function WorkflowsPage() {
   const { workflows } = useAppStore();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="container mx-auto py-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">工作流</h1>
+        <h1 className="text-3xl font-bold">{t('workflows.title')}</h1>
         <Button onClick={() => navigate("/workflow/new")}>
           <Plus className="mr-2 h-4 w-4" />
-          新建工作流
+          {t('workflows.create')}
         </Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -36,7 +38,7 @@ export default function WorkflowsPage() {
             </CardHeader>
             <CardContent>
               <div className="text-sm text-muted-foreground">
-                工具数量: {workflow.tools.length}
+                {t('tools.title')}: {workflow.tools.length}
               </div>
             </CardContent>
           </Card>

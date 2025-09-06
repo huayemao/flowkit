@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import { useAppStore, defaultTools, Tool } from "../../store/app-store"
 import { Button } from "../ui/button"
@@ -17,6 +18,7 @@ interface WorkflowEditDialogProps {
 }
 
 export function WorkflowEditDialog({ workflowId, open, onOpenChange }: WorkflowEditDialogProps) {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { 
     workflows, 
@@ -68,11 +70,11 @@ export function WorkflowEditDialog({ workflowId, open, onOpenChange }: WorkflowE
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl">
         <DialogHeader>
-          <DialogTitle>编辑工作流</DialogTitle>
+          <DialogTitle>{t('workflows.edit')}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="name">名称</Label>
+            <Label htmlFor="name">{t('workflows.name')}</Label>
             <Input
               id="name"
               value={editingWorkflow.name}
@@ -82,7 +84,7 @@ export function WorkflowEditDialog({ workflowId, open, onOpenChange }: WorkflowE
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="description">描述</Label>
+            <Label htmlFor="description">{t('workflows.description')}</Label>
             <Textarea
               id="description"
               value={editingWorkflow.description}
@@ -93,7 +95,7 @@ export function WorkflowEditDialog({ workflowId, open, onOpenChange }: WorkflowE
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label>工具</Label>
+              <Label>{t('workflows.tools')}</Label>
               <ToolSelector
                 availableTools={availableTools}
                 selectedToolIds={editingWorkflow.tools.map((t) => t.id)}
@@ -153,14 +155,14 @@ export function WorkflowEditDialog({ workflowId, open, onOpenChange }: WorkflowE
           </div>
           <div className="flex justify-end space-x-2">
             <Button variant="outline" onClick={() => onOpenChange(false)}>
-              取消
+              {t('common.cancel')}
             </Button>
             <Button onClick={handleSaveWorkflow}>
-              保存
+              {t('common.save')}
             </Button>
           </div>
         </div>
       </DialogContent>
     </Dialog>
   )
-} 
+}

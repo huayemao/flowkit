@@ -1,4 +1,8 @@
 import { defaultTools, useAppStore } from "@/store/app-store";
+import { useTranslation } from "react-i18next";
+import { TranslatedTool } from "../components/translated-tool";
+import { LanguageSwitcher } from "../components/language-switcher";
+
 import {
   Card,
   CardContent,
@@ -59,33 +63,38 @@ function ToolIcon({ tool }: { tool: any }) {
 function ToolCard({ tool }: { tool: any }) {
   const navigate = useNavigate();
   return (
-    <div
-      className="rounded-md flex flex-row items-center p-4 bg-white/95 dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 shadow-sm group transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-200 before:content-[''] before:absolute before:rounded-[inherit] before:-inset-px before:-z-10 before:bg-gradient-to-br before:from-[#cccef8]/60 before:to-[#e0c9fa]/60 before:dark:from-[#2d3367] before:dark:to-[#412e69] relative w-[260px] h-[88px] cursor-pointer mb-3"
-      onClick={() => navigate(`/tools/${tool.id}`)}
-      title={tool.name}
-      style={{ maxWidth: 320 }}
-    >
-      <div className="flex items-center flex-shrink-0 mr-4 ">
-        <ToolIcon tool={tool} />
-      </div>
-      <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
-        <div className="flex items-center justify-between gap-2 mb-1">
-          <span className="text-base font-medium text-gray-900 dark:text-gray-100 truncate max-w-[120px]">{tool.name}</span>
-          <Badge
-            variant={ "outline" }
-            className="ml-1 text-xs flex-shrink-0"
-          >
-            {tool.type === "component" ? "内置" : "Web 应用"}
-          </Badge>
+    <TranslatedTool tool={tool}>
+      {(name, description, type) => (
+        <div
+          className="rounded-md flex flex-row items-center p-4 bg-white/95 dark:bg-gray-900/80 border border-gray-100 dark:border-gray-800 shadow-sm group transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-200 before:content-[''] before:absolute before:rounded-[inherit] before:-inset-px before:-z-10 before:bg-gradient-to-br before:from-[#cccef8]/60 before:to-[#e0c9fa]/60 before:dark:from-[#2d3367] before:dark:to-[#412e69] relative w-[260px] h-[88px] cursor-pointer mb-3"
+          onClick={() => navigate(`/tools/${tool.id}`)}
+          title={name}
+          style={{ maxWidth: 320 }}
+        >
+          <div className="flex items-center flex-shrink-0 mr-4 ">
+            <ToolIcon tool={tool} />
+          </div>
+          <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
+            <div className="flex items-center justify-between gap-2 mb-1">
+              <span className="text-base font-medium text-gray-900 dark:text-gray-100 truncate max-w-[120px]">{name}</span>
+              <Badge
+                variant={ "outline" }
+                className="ml-1 text-xs flex-shrink-0"
+              >
+                {type}
+              </Badge>
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate max-w-[180px] text-left">{description}</div>
+          </div>
         </div>
-        <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate max-w-[180px] text-left">{tool.description}</div>
-      </div>
-    </div>
+      )}
+    </TranslatedTool>
   );
 }
 
 // 工具详情弹窗
 function ToolDetailDialog({ tool, open, onOpenChange }: { tool: any, open: boolean, onOpenChange: (v: boolean) => void }) {
+  const { t } = useTranslation();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -94,7 +103,9 @@ function ToolDetailDialog({ tool, open, onOpenChange }: { tool: any, open: boole
         </DialogHeader>
         <div className="flex items-center mb-4">
           <ToolIcon tool={tool} />
-          <span className="ml-3 text-gray-700 dark:text-gray-200">{tool.type === 'component' ? '内置组件' : 'Web 应用'}</span>
+          <span className="ml-3 text-gray-700 dark:text-gray-200">
+            {tool.type === 'component' ? t('tools.builtin') : t('tools.webApp')}
+          </span>
         </div>
         <div className="mb-2 text-gray-500 dark:text-gray-400">{tool.description}</div>
         {tool.type === 'web-app' && tool.url && (
@@ -109,6 +120,7 @@ function ToolDetailDialog({ tool, open, onOpenChange }: { tool: any, open: boole
 
 export default function ToolsPage() {
   const { customTools, addCustomTool, removeCustomTool, updateCustomTool } = useAppStore();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const builtinTools = defaultTools;
   const userTools = customTools;
@@ -133,7 +145,7 @@ export default function ToolsPage() {
 
   // 删除
   const handleDelete = (tool) => {
-    if (window.confirm(`确定要删除「${tool.name}」吗？`)) {
+    if (window.confirm(t('tools.confirmDelete', { name: tool.name }))) {
       removeCustomTool(tool.id);
     }
   };
@@ -152,15 +164,18 @@ export default function ToolsPage() {
   return (
     <div className="container mx-auto py-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">工具集</h1>
-        <AddCustomToolDialog 
-          onAdd={addCustomTool} 
-          triggerText="添加自定义工具"
-          triggerSize="sm"
-        />
+        <h1 className="text-3xl font-bold">{t('tools.title')}</h1>
+        <div className="flex items-center space-x-2">
+          <LanguageSwitcher />
+          <AddCustomToolDialog 
+            onAdd={addCustomTool} 
+            triggerText={t('tools.addCustom')}
+            triggerSize="sm"
+          />
+        </div>
       </div>
       <div className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">内置工具</h2>
+        <h2 className="text-xl font-semibold mb-2">{t('tools.builtin')}</h2>
         <div className="flex flex-wrap gap-4">
           {builtinTools.map((tool) => (
             <ContextMenu key={tool.id}>
@@ -171,7 +186,7 @@ export default function ToolsPage() {
               </ContextMenuTrigger>
               <ContextMenuContent>
                 <ContextMenuItem onClick={() => setDetailTool(tool)}>
-                  查看详情
+                  {t('common.viewDetails')}
                 </ContextMenuItem>
               </ContextMenuContent>
             </ContextMenu>
@@ -179,9 +194,9 @@ export default function ToolsPage() {
         </div>
       </div>
       <div>
-        <h2 className="text-xl font-semibold mb-2">自定义工具</h2>
+        <h2 className="text-xl font-semibold mb-2">{t('tools.custom')}</h2>
         {userTools.length === 0 ? (
-          <div className="text-muted-foreground text-sm">暂无自定义工具</div>
+          <div className="text-muted-foreground text-sm">{t('tools.noCustom')}</div>
         ) : (
           <div className="flex flex-wrap gap-4">
             {userTools.map((tool) => (
@@ -193,63 +208,62 @@ export default function ToolsPage() {
                 </ContextMenuTrigger>
                 <ContextMenuContent>
                   <ContextMenuItem onClick={() => handleEdit(tool)}>
-                    编辑
+                    {t('common.edit')}
                   </ContextMenuItem>
                   <ContextMenuItem onClick={() => handleDelete(tool)}>
-                    删除
-                  </ContextMenuItem>
-                  <ContextMenuItem onClick={() => setDetailTool(tool)}>
-                    查看详情
+                    {t('common.delete')}
                   </ContextMenuItem>
                 </ContextMenuContent>
               </ContextMenu>
             ))}
           </div>
         )}
-        {/* 工具详情弹窗 */}
-        {detailTool && (
-          <ToolDetailDialog tool={detailTool} open={!!detailTool} onOpenChange={(v) => { if (!v) setDetailTool(null); }} />
-        )}
-        {/* 编辑弹窗 */}
-        <Dialog open={!!editTool} onOpenChange={(open) => { if (!open) setEditTool(null); }}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>编辑自定义工具</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Input
-                  value={editName}
-                  onChange={e => setEditName(e.target.value)}
-                  placeholder="工具名称"
-                />
-              </div>
-              <div className="space-y-2">
-                <Textarea
-                  value={editDescription}
-                  onChange={e => setEditDescription(e.target.value)}
-                  placeholder="工具描述"
-                />
-              </div>
-              <div className="space-y-2">
-                <Input
-                  value={editUrl}
-                  onChange={e => setEditUrl(e.target.value)}
-                  placeholder="工具 URL"
-                />
-              </div>
-              <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => setEditTool(null)}>
-                  取消
-                </Button>
-                <Button onClick={handleEditSubmit} disabled={!editName}>
-                  保存
-                </Button>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
       </div>
+      
+      {/* 工具详情弹窗 */}
+      {detailTool && (
+        <ToolDetailDialog tool={detailTool} open={!!detailTool} onOpenChange={(v) => { if (!v) setDetailTool(null); }} />
+      )}
+      
+      {/* 编辑弹窗 */}
+      <Dialog open={!!editTool} onOpenChange={(open) => { if (!open) setEditTool(null); }}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>编辑自定义工具</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Input
+                value={editName}
+                onChange={e => setEditName(e.target.value)}
+                placeholder="工具名称"
+              />
+            </div>
+            <div className="space-y-2">
+              <Textarea
+                value={editDescription}
+                onChange={e => setEditDescription(e.target.value)}
+                placeholder="工具描述"
+              />
+            </div>
+            <div className="space-y-2">
+              <Input
+                value={editUrl}
+                onChange={e => setEditUrl(e.target.value)}
+                placeholder="工具 URL"
+              />
+            </div>
+            <div className="flex justify-end space-x-2">
+              <Button variant="outline" onClick={() => setEditTool(null)}>
+                取消
+              </Button>
+              <Button onClick={handleEditSubmit} disabled={!editName}>
+                保存
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
