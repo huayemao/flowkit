@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import type { PluginOption } from 'vite'
 
-export default defineConfig({
+// 库模式配置
+export const libConfig = defineConfig({
   plugins: [
     react() as PluginOption,
     dts({
@@ -31,3 +32,19 @@ export default defineConfig({
     cssCodeSplit: false,
   },
 })
+
+// 应用模式配置
+export const appConfig = defineConfig({
+  plugins: [
+    react() as PluginOption,
+  ],
+  build: {
+    outDir: 'dist-demo',
+    rollupOptions: {
+      input: './index.html',
+    },
+  },
+})
+
+// 默认导出库模式
+export default libConfig
