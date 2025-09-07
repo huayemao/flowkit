@@ -153,16 +153,25 @@
   "workflows": {
     "title": "工作流",
     "create": "创建工作流",
+    "createNew": "创建工作流",
     "edit": "编辑工作流",
     "delete": "删除工作流",
     "addTool": "添加工具",
     "removeTool": "移除工具",
     "name": "名称",
+    "namePlaceholder": "输入工作流名称",
     "description": "描述",
+    "descriptionPlaceholder": "输入工作流描述",
     "tools": "工具",
     "noTools": "暂无工具",
+    "noDescription": "暂无描述",
     "dragToReorder": "拖拽重新排序",
-    "selectTool": "选择工具"
+    "selectTool": "选择工具",
+    "open": "打开",
+    "emptyTitle": "还没有工作流",
+    "emptyDescription": "创建工作流来组织你的工具",
+    "createFirst": "创建第一个工作流",
+    "addTools": "添加工具"
   },
   "common": {
     "save": "保存",
@@ -183,6 +192,15 @@
   },
   "settings": {
     "title": "设置",
+    "description": "管理应用偏好设置",
+    "languageDescription": "选择应用显示语言",
+    "currentLanguage": "当前语言",
+    "about": "关于",
+    "aboutDescription": "应用信息和版本详情",
+    "version": "版本",
+    "developer": "开发者",
+    "viewOnGitHub": "在 GitHub 查看",
+      "personalPage": "个人主页",
     "language": {
       "title": "语言",
       "english": "English",

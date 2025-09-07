@@ -1,228 +1,86 @@
-import { useAppStore, defaultTools, Tool } from "../store/app-store"
+import { useAppStore } from "../store/app-store"
 import { Button } from "../components/ui/button"
-import { Input } from "../components/ui/input"
-import { Label } from "../components/ui/label"
-import { Textarea } from "../components/ui/textarea"
-import { ToolSelector } from "../components/workflow/tool-selector"
-import { useState } from "react"
-import { v4 as uuidv4 } from "uuid"
-import { GripVertical, X, Plus, Settings as SettingsIcon } from "lucide-react"
-import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog"
-import { AddCustomToolDialog } from "../components/add-custom-tool-dialog"
 import { useTranslation } from "@/i18n"
 import { LanguageSwitcher } from "../components/language-switcher"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
+import { Settings as SettingsIcon, Info, ExternalLink } from "lucide-react"
+import { APP_VERSION_DISPLAY } from "@/constants/version"
+import { USER_INFO } from "@/constants/user-info"
 
 export function SettingsPage() {
-  const { 
-    workflows, 
-    addWorkflow, 
-    updateWorkflow, 
-    deleteWorkflow,
-    customTools,
-    addCustomTool,
-    removeCustomTool
-  } = useAppStore()
   const { t } = useTranslation()
-  const [editingWorkflow, setEditingWorkflow] = useState<typeof workflows[0] | null>(null)
-  const availableTools = [...defaultTools, ...customTools]
-
-  const handleAddWorkflow = () => {
-    const newWorkflow = {
-      id: uuidv4(),
-      name: t('workflows.title'),
-      description: "",
-      tools: []
-    }
-    addWorkflow(newWorkflow)
-    setEditingWorkflow(newWorkflow)
-  }
-
-  const handleSaveWorkflow = () => {
-    if (editingWorkflow) {
-      updateWorkflow(editingWorkflow)
-      setEditingWorkflow(null)
-    }
-  }
-
-  const handleToolSelect = (toolId: string) => {
-    if (!editingWorkflow) return
-    const tool = availableTools.find((t: Tool) => t.id === toolId)
-    if (tool) {
-      setEditingWorkflow({
-        ...editingWorkflow,
-        tools: [...editingWorkflow.tools, tool]
-      })
-    }
-  }
-
-  const handleToolDeselect = (toolId: string) => {
-    if (!editingWorkflow) return
-    setEditingWorkflow({
-      ...editingWorkflow,
-      tools: editingWorkflow.tools.filter((t) => t.id !== toolId)
-    })
-  }
-
-  const handleDragEnd = (result: any) => {
-    if (!editingWorkflow || !result.destination) return
-
-    const items = Array.from(editingWorkflow.tools)
-    const [reorderedItem] = items.splice(result.source.index, 1)
-    items.splice(result.destination.index, 0, reorderedItem)
-
-    setEditingWorkflow({
-      ...editingWorkflow,
-      tools: items
-    })
-  }
-
-  const handleAddCustomTool = (tool: Tool) => {
-    addCustomTool(tool)
-  }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">{t('settings.title')}</h2>
-        <div className="flex items-center space-x-2">
-          <LanguageSwitcher />
-          <AddCustomToolDialog 
-            onAdd={handleAddCustomTool} 
-          />
-          <Button onClick={handleAddWorkflow}>{t('workflows.create')}</Button>
-        </div>
+    <div className="container mx-auto py-6 max-w-4xl">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2">{t('settings.title')}</h1>
+        <p className="text-muted-foreground">{t('settings.description')}</p>
       </div>
 
-      <div className="space-y-4">
-        {workflows.map((workflow) => (
-          <div key={workflow.id} className="rounded-lg border p-4">
-            {editingWorkflow?.id === workflow.id ? (
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">名称</Label>
-                  <Input
-                    id="name"
-                    value={editingWorkflow.name}
-                    onChange={(e) =>
-                      setEditingWorkflow({ ...editingWorkflow, name: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="description">描述</Label>
-                  <Textarea
-                    id="description"
-                    value={editingWorkflow.description}
-                    onChange={(e) =>
-                      setEditingWorkflow({ ...editingWorkflow, description: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label>工具</Label>
-                    <ToolSelector
-                      availableTools={availableTools}
-                      selectedToolIds={editingWorkflow.tools.map((t) => t.id)}
-                      onToolSelect={handleToolSelect}
-                      onToolDeselect={handleToolDeselect}
-                    />
-                  </div>
-                  <DragDropContext onDragEnd={handleDragEnd}>
-                    <Droppable droppableId="tools">
-                      {(provided) => (
-                        <div
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                          className="space-y-2"
-                        >
-                          {editingWorkflow.tools.map((tool, index) => (
-                            <Draggable
-                              key={tool.id}
-                              draggableId={tool.id}
-                              index={index}
-                            >
-                              {(provided) => (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  className="flex items-center justify-between rounded-lg border p-2"
-                                >
-                                  <div className="flex items-center space-x-2">
-                                    <div {...provided.dragHandleProps}>
-                                      <GripVertical className="h-4 w-4 text-muted-foreground" />
-                                    </div>
-                                    <div>
-                                      <h4 className="text-sm font-medium">
-                                        {tool.name}
-                                      </h4>
-                                      <p className="text-xs text-muted-foreground">
-                                        {tool.description}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => handleToolDeselect(tool.id)}
-                                  >
-                                    <X className="h-4 w-4" />
-                                  </Button>
-                                </div>
-                              )}
-                            </Draggable>
-                          ))}
-                          {provided.placeholder}
-                        </div>
-                      )}
-                    </Droppable>
-                  </DragDropContext>
-                </div>
-                <div className="flex justify-end space-x-2">
-                  <Button variant="outline" onClick={() => setEditingWorkflow(null)}>
-                    取消
-                  </Button>
-                  <Button onClick={handleSaveWorkflow}>保存</Button>
-                </div>
+      <div className="space-y-6">
+        {/* 语言设置 */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <SettingsIcon className="h-5 w-5" />
+              {t('settings.language.title')}
+            </CardTitle>
+            <CardDescription>{t('settings.languageDescription')}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <span>{t('settings.currentLanguage')}</span>
+              <LanguageSwitcher />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* 关于应用 */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Info className="h-5 w-5" />
+              {t('settings.about')}
+            </CardTitle>
+            <CardDescription>{t('settings.aboutDescription')}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-medium">{t('settings.version')}</span>
+                <span className="text-sm text-muted-foreground">{APP_VERSION_DISPLAY}</span>
               </div>
-            ) : (
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold">{workflow.name}</h3>
-                  <div className="space-x-2">
-                    <Button
-                      variant="outline"
-                      onClick={() => setEditingWorkflow(workflow)}
-                    >
-                      编辑
-                    </Button>
-                    <Button
-                      variant="destructive"
-                      onClick={() => deleteWorkflow(workflow.id)}
-                    >
-                      删除
-                    </Button>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground">{workflow.description}</p>
-                <div className="mt-2">
-                  <h4 className="text-sm font-medium">包含工具：</h4>
-                  <div className="mt-1 flex flex-wrap gap-2">
-                    {workflow.tools.map((tool) => (
-                      <span
-                        key={tool.id}
-                        className="rounded-full bg-secondary px-2 py-1 text-xs"
-                      >
-                        {tool.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-medium">{t('settings.developer')}</span>
+                <a
+                  href={USER_INFO.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1"
+                >
+                  {USER_INFO.name}
+                  <ExternalLink className="h-3 w-3" />
+                </a>
               </div>
-            )}
-          </div>
-        ))}
+              <div className="pt-4 space-x-2">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => window.open(USER_INFO.repository, '_blank')}
+                >
+                  {t('settings.viewOnGitHub')}
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => window.open(USER_INFO.github, '_blank')}
+                >
+                  {t('settings.personalPage')}
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

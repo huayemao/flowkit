@@ -153,16 +153,25 @@
   "workflows": {
     "title": "Workflows",
     "create": "Create Workflow",
+    "createNew": "Create New Workflow",
     "edit": "Edit Workflow",
     "delete": "Delete Workflow",
     "addTool": "Add Tool",
     "removeTool": "Remove Tool",
     "name": "Name",
+    "namePlaceholder": "Enter workflow name",
     "description": "Description",
+    "descriptionPlaceholder": "Enter workflow description",
     "tools": "Tools",
     "noTools": "No tools yet",
+    "noDescription": "No description",
     "dragToReorder": "Drag to reorder",
-    "selectTool": "Select Tool"
+    "selectTool": "Select Tool",
+    "open": "Open",
+    "emptyTitle": "No workflows yet",
+    "emptyDescription": "Create workflows to organize your tools",
+    "createFirst": "Create first workflow",
+    "addTools": "Add tools"
   },
   "common": {
     "save": "Save",
@@ -183,6 +192,16 @@
   },
   "settings": {
     "title": "Settings",
+    "description": "Manage application preferences",
+    "language": "Language",
+    "languageDescription": "Choose your preferred language for the app",
+    "currentLanguage": "Current Language",
+    "about": "About",
+    "aboutDescription": "Application information and developer details",
+      "version": "Version",
+      "developer": "Developer",
+      "viewOnGitHub": "View on GitHub",
+      "personalPage": "Personal Page",
     "language": {
       "title": "Language",
       "english": "English",

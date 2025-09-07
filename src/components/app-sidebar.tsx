@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useTranslation } from "@/i18n";
+import { USER_INFO } from "@/constants/user-info";
 import {
   BookOpen,
   Bot,
@@ -23,6 +24,9 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppStore } from "@/store/app-store";
@@ -47,11 +51,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   // This is sample data.
   const data = {
-    user: {
-      name: "huayemao",
-      email: "huayemao4g@gmail.com",
-      avatar: "https://dors.huayemao.fun/fav.ico",
-    },
+    user: USER_INFO,
     teams: [
       // {
       //   name: "flowkit",
@@ -95,6 +95,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
         <NavWorkflows workflows={data.workflows} />
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              onClick={() => navigate("/settings")}
+              className={location.pathname === "/settings" ? "bg-accent" : ""}
+            >
+              <Settings2 className="h-4 w-4" />
+              <span>{t("navigation.settings")}</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
       {/* <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter> */}
