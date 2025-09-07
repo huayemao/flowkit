@@ -1,7 +1,7 @@
 {
   "name": "flowkit",
   "private": true,
-  "version": "0.2.9",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,8 @@
     "tauri:auto-trim-image": "cd packages/auto-trim-image && npm run tauri",
     "tauri:dev:auto-trim-image": "cd packages/auto-trim-image && npm run tauri:dev",
     "tauri:build:auto-trim-image": "cd packages/auto-trim-image && npm run tauri:build",
-    "postinstall": "npm run build:shared-ui"
+    "postinstall": "npm run build:shared-ui",
+    "update-version": "node update-version.cjs"
   },
   "workspaces": [
     "packages/*"
