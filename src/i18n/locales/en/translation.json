@@ -19,6 +19,14 @@
     "noCustom": "No custom tools yet",
     "webApp": "Web App",
     "confirmDelete": "Are you sure you want to delete '{{name}}'?",
+    "editCustomTool": "Edit Custom Tool",
+    "addCustomWebApp": "Add Custom Web App Tool",
+    "toolName": "Tool Name",
+    "toolDescription": "Tool Description",
+    "toolUrl": "Tool URL",
+    "enterToolName": "Enter tool name",
+    "enterToolDescription": "Enter tool description",
+    "enterToolUrl": "Enter tool URL",
     "textRemoveNewlines": {
       "name": "Text Remove Newlines",
       "description": "Remove all newline characters from text"
@@ -37,19 +45,101 @@
     },
     "tableconvert": {
       "name": "Table Convert",
-      "description": "Convert and format table data"
+      "description": "Convert and format table data",
+      "title": "TableConvert"
     },
     "excalidraw": {
       "name": "Excalidraw",
-      "description": "A virtual collaborative whiteboard tool"
+      "description": "A virtual collaborative whiteboard tool",
+      "title": "Excalidraw"
     },
     "autoTrimImage": {
       "name": "Auto Trim Image",
       "description": "Automatically remove borders from images"
     },
-    "convertImageLinks": {
+    "convertImageLinksToWpProxy": {
       "name": "Convert Image Links",
       "description": "Convert image links to WordPress proxy format"
+    },
+    "textRemoveNewlines": {
+      "name": "Text Remove Newlines",
+      "description": "Remove all newline characters from text",
+      "title": "Text Processing Tool",
+      "subtitle": "Provides multiple text processing modes, including newline processing and empty line handling",
+      "modes": {
+        "remove-newlines-keep-empty": "Remove newlines but keep empty lines",
+        "remove-all": "Remove all newlines",
+        "remove-empty": "Remove empty lines",
+        "merge-empty": "Merge consecutive empty lines",
+        "trim": "Trim leading and trailing spaces"
+      },
+      "placeholder": {
+        "input": "Enter text to process...",
+        "output": "Processed text will appear here..."
+      },
+      "copy": "Copy",
+      "copied": "Copied"
+    },
+    "textOcr": {
+      "name": "OCR Text Recognition",
+      "description": "Recognize text content from images",
+      "title": "OCR Text Recognition",
+      "subtitle": "Upload images and automatically recognize text content",
+      "loading": "Recognizing...",
+      "error": "Recognition failed, please try again",
+      "placeholder": {
+        "output": "Recognition results will appear here..."
+      },
+      "copy": "Copy",
+      "copied": "Copied"
+    },
+    "wordToHtml": {
+      "name": "Word to HTML",
+      "description": "Convert Word documents to HTML format",
+      "title": "Word to HTML",
+      "subtitle": "Upload Word documents and automatically convert to HTML format",
+      "loading": "Converting...",
+      "preview": "Preview",
+      "code": "Code",
+      "download": "Download",
+      "copy": "Copy",
+      "copied": "Copied",
+      "fileTypes": ".doc,.docx",
+      "selectFile": "Select Word file",
+      "dragDescription": "Drag Word file here or paste file"
+    },
+    "svgScaler": {
+      "name": "SVG Scaler",
+      "description": "Scale SVG images proportionally",
+      "title": "SVG Vector Graphics Scaling",
+      "subtitle": "Upload SVG file, input scaling ratio, dynamically adjust SVG display size.",
+      "scale": "Scale ratio",
+      "targetWidth": "Target width",
+      "setWidth": "Set width",
+      "copy": "Copy SVG code",
+      "copied": "Copied SVG code",
+      "download": "Download SVG file",
+      "reset": "Reset",
+      "fileType": "SVG file",
+      "selectFile": "Please upload SVG file",
+      "uploadHint": "Upload SVG file to start scaling",
+      "placeholder": {
+        "input": "Paste or edit SVG code here..."
+      }
+    },
+    "convertImageLinksToWpProxy": {
+      "name": "Convert Image Links",
+      "description": "Convert image links to WordPress proxy format",
+      "title": "Markdown Image Links to WP Proxy",
+      "subtitle": "Batch convert Markdown image links to WordPress proxy links (i0.wp.com), suitable for image hosting acceleration.",
+      "placeholder": {
+        "input": "Enter Markdown text...",
+        "output": "Converted text will appear here..."
+      },
+      "copy": "Copy",
+      "copied": "Copied",
+      "clear": "Clear",
+      "convert": "Convert"
     },
     "stackedit": {
       "name": "StackEdit",
@@ -71,7 +161,8 @@
     "description": "Description",
     "tools": "Tools",
     "noTools": "No tools yet",
-    "dragToReorder": "Drag to reorder"
+    "dragToReorder": "Drag to reorder",
+    "selectTool": "Select Tool"
   },
   "common": {
     "save": "Save",
@@ -109,6 +200,8 @@
     "workflowUpdated": "Workflow updated successfully",
     "workflowDeleted": "Workflow deleted successfully",
     "toolAdded": "Tool added successfully",
+    "checkUpdates": "Check Updates",
+    "version": "Version",
     "toolRemoved": "Tool removed successfully",
     "confirmDelete": "Are you sure you want to delete this item?",
     "noToolsAvailable": "No tools available",

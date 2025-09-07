@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useTranslation } from "@/i18n"
 import { v4 as uuidv4 } from "uuid"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
@@ -14,11 +15,14 @@ interface AddCustomToolDialogProps {
   triggerSize?: "sm" | "lg" | "default" | "icon"
 }
 
-export function AddCustomToolDialog({ onAdd, triggerText = "添加自定义工具", triggerSize = "sm" }: AddCustomToolDialogProps) {
+export function AddCustomToolDialog({ onAdd, triggerText, triggerSize = "sm" }: AddCustomToolDialogProps) {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [url, setUrl] = useState("")
+
+  const triggerTextValue = triggerText || t('tools.addCustom')
 
   const handleSubmit = async () => {
     if (!name) return
@@ -49,51 +53,51 @@ export function AddCustomToolDialog({ onAdd, triggerText = "添加自定义工�
       <DialogTrigger asChild>
         <Button variant="outline" size={triggerSize}>
           <Plus className="h-4 w-4 mr-2" />
-          {triggerText}
+          {triggerTextValue}
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>添加自定义 Web App 工具</DialogTitle>
+          <DialogTitle>{t('tools.addCustomWebApp')}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="tool-name">工具名称</Label>
+            <Label htmlFor="tool-name">{t('tools.toolName')}</Label>
             <Input
               id="tool-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="输入工具名称"
+              placeholder={t('tools.enterToolName')}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="tool-description">工具描述</Label>
+            <Label htmlFor="tool-description">{t('tools.toolDescription')}</Label>
             <Textarea
               id="tool-description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="输入工具描述"
+              placeholder={t('tools.enterToolDescription')}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="tool-url">工具 URL</Label>
+            <Label htmlFor="tool-url">{t('tools.toolUrl')}</Label>
             <Input
               id="tool-url"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              placeholder="输入工具 URL"
+              placeholder={t('tools.enterToolUrl')}
             />
           </div>
           <div className="flex justify-end space-x-2">
             <Button variant="outline" onClick={() => setOpen(false)}>
-              取消
+              {t('common.cancel')}
             </Button>
             <Button onClick={handleSubmit} disabled={!name}>
-              添加
+              {t('common.add')}
             </Button>
           </div>
         </div>
       </DialogContent>
     </Dialog>
   )
-} 
+}

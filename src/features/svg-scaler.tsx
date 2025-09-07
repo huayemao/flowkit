@@ -4,7 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Copy, Check, Download, RotateCcw } from 'lucide-react';
 import { ScrollArea } from '../components/ui/scroll-area';
 import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
 import { ImageUploader } from '../components/ui/image-uploader';
+import { useTranslation } from '@/i18n';
 
 function processSvg(svgText: string, scale: number): { svgString: string, width: string, height: string, naturalWidth: number } {
   if (!svgText) return { svgString: '', width: '100%', height: 'auto', naturalWidth: 0 };
@@ -36,6 +38,7 @@ function processSvg(svgText: string, scale: number): { svgString: string, width:
 }
 
 export function SvgScaler() {
+  const { t } = useTranslation();
   const [svgFile, setSvgFile] = useState<File | null>(null);
   const [svgContent, setSvgContent] = useState<string>('');
   const [scale, setScale] = useState(1.0);
@@ -44,7 +47,7 @@ export function SvgScaler() {
 
   const handleFileChange = async (file: File) => {
     if (!file || !file.type.includes('image/svg+xml')) {
-      alert('请上传 SVG 文件');
+      alert(t('tools.svgScaler.selectFile'));
       return;
     }
     setSvgFile(file);
@@ -91,8 +94,8 @@ export function SvgScaler() {
     <div className="h-full">
       <Card className="h-full">
         <CardHeader>
-          <CardTitle>SVG 矢量图缩放</CardTitle>
-          <CardDescription>上传 SVG 文件，输入缩放比例，动态调整 SVG 显示尺寸。</CardDescription>
+          <CardTitle>{t('tools.svgScaler.title')}</CardTitle>
+          <CardDescription>{t('tools.svgScaler.subtitle')}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 h-[calc(100%-8rem)]">
           <ScrollArea className="flex-1 border rounded p-2 bg-muted">
@@ -120,7 +123,7 @@ export function SvgScaler() {
                 value={scale}
                 onChange={e => setScale(Number(e.target.value) || 1)}
                 className="w-24"
-                placeholder="缩放比例"
+                placeholder={t('tools.svgScaler.scale')}
               />
               <Input
                 type="number"
@@ -128,20 +131,20 @@ export function SvgScaler() {
                 value={targetWidth}
                 onChange={e => setTargetWidth(Number(e.target.value) || 1)}
                 className="w-28"
-                placeholder="目标宽度"
+                placeholder={t('tools.svgScaler.targetWidth')}
               />
               <Button onClick={handleSetWidth} variant="secondary">
-                设为宽度 {targetWidth}px
+                {t('tools.svgScaler.setWidth')} {targetWidth}px
               </Button>
               <Button onClick={handleCopy}>
                 {copied ? <Check className="h-4 w-4 mr-1" /> : <Copy className="h-4 w-4 mr-1" />}
-                {copied ? '已复制SVG代码' : '复制SVG代码'}
+                {copied ? t('tools.svgScaler.copied') : t('tools.svgScaler.copy')}
               </Button>
               <Button onClick={handleDownload}>
-                <Download className="h-4 w-4 mr-1" />下载SVG文件
+                <Download className="h-4 w-4 mr-1" />{t('tools.svgScaler.download')}
               </Button>
               <Button onClick={handleReset} variant="outline">
-                <RotateCcw className="h-4 w-4 mr-1" />重置
+                <RotateCcw className="h-4 w-4 mr-1" />{t('tools.svgScaler.reset')}
               </Button>
             </div>
           )}
@@ -149,4 +152,4 @@ export function SvgScaler() {
       </Card>
     </div>
   );
-} 
+}

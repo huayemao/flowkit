@@ -297,36 +297,36 @@ export default function ToolsPage() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>编辑自定义工具</DialogTitle>
+            <DialogTitle>{t('tools.editCustomTool')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
               <Input
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
-                placeholder="工具名称"
+                placeholder={t('tools.toolName')}
               />
             </div>
             <div className="space-y-2">
               <Textarea
                 value={editDescription}
                 onChange={(e) => setEditDescription(e.target.value)}
-                placeholder="工具描述"
+                placeholder={t('tools.toolDescription')}
               />
             </div>
             <div className="space-y-2">
               <Input
                 value={editUrl}
                 onChange={(e) => setEditUrl(e.target.value)}
-                placeholder="工具 URL"
+                placeholder={t('tools.toolUrl')}
               />
             </div>
             <div className="flex justify-end space-x-2">
               <Button variant="outline" onClick={() => setEditTool(null)}>
-                取消
+                {t('common.cancel')}
               </Button>
               <Button onClick={handleEditSubmit} disabled={!editName}>
-                保存
+                {t('common.save')}
               </Button>
             </div>
           </div>

@@ -4,16 +4,18 @@ import { Textarea } from '../components/ui/textarea'
 import { Copy, Check } from 'lucide-react'
 import { useState } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
+import { useTranslation } from '@/i18n'
 
 const TEXT_MODES = {
-  'remove-newlines-keep-empty': '删除换行，但保留空行',
-  'remove-all': '移除所有换行',
-  'remove-empty': '移除空行',
-  'merge-empty': '合并连续空行',
-  'trim': '去除前后空格',
+  'remove-newlines-keep-empty': 'remove-newlines-keep-empty',
+  'remove-all': 'remove-all',
+  'remove-empty': 'remove-empty',
+  'merge-empty': 'merge-empty',
+  'trim': 'trim',
 } as const
 
 export function TextRemoveNewlines() {
+  const { t } = useTranslation()
   const [state, setState] = useState({
     input: '',
     output: '',
@@ -65,21 +67,21 @@ export function TextRemoveNewlines() {
     <div className="h-full">
       <Card className="h-full">
         <CardHeader>
-          <CardTitle>文本处理工具</CardTitle>
+          <CardTitle>{t('tools.textRemoveNewlines.title')}</CardTitle>
           <CardDescription>
-            提供多种文本处理模式，包括换行符处理、空行处理等
+            {t('tools.textRemoveNewlines.subtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col h-[calc(100%-8rem)]">
           <div className="mb-4">
             <Select value={state.mode} onValueChange={handleModeChange}>
               <SelectTrigger className="w-[200px]">
-                <SelectValue placeholder="选择处理模式" />
+                <SelectValue placeholder={t('tools.textRemoveNewlines.selectMode')} />
               </SelectTrigger>
               <SelectContent>
-                {Object.entries(TEXT_MODES).map(([value, label]) => (
+                {Object.entries(TEXT_MODES).map(([value]) => (
                   <SelectItem key={value} value={value}>
-                    {label}
+                    {t(`tools.textRemoveNewlines.modes.${value}`)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -89,7 +91,7 @@ export function TextRemoveNewlines() {
           <div className="grid grid-cols-2 gap-6 flex-1">
             <div className="space-y-2">
               <Textarea
-                placeholder="请输入要处理的文本..."
+                placeholder={t('tools.textRemoveNewlines.placeholder.input')}
                 value={state.input}
                 onChange={handleInputChange}
                 className="h-full resize-none"
@@ -99,7 +101,7 @@ export function TextRemoveNewlines() {
             <div className="space-y-2">
               <div className="relative h-full">
                 <Textarea
-                  placeholder="转换后的文本将显示在这里..."
+                  placeholder={t('tools.textRemoveNewlines.placeholder.output')}
                   value={state.output}
                   readOnly
                   className="h-full resize-none"
@@ -114,12 +116,12 @@ export function TextRemoveNewlines() {
                     {copied ? (
                       <>
                         <Check className="h-4 w-4 mr-2" />
-                        已复制
+                        {t('tools.textRemoveNewlines.copied')}
                       </>
                     ) : (
                       <>
                         <Copy className="h-4 w-4 mr-2" />
-                        复制
+                        {t('tools.textRemoveNewlines.copy')}
                       </>
                     )}
                   </Button>
@@ -131,4 +133,4 @@ export function TextRemoveNewlines() {
       </Card>
     </div>
   )
-} 
+}

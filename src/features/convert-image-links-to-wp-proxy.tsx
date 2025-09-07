@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { useTranslation } from '@/i18n';
 import { Button } from '../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { Textarea } from '../components/ui/textarea'
@@ -19,6 +20,7 @@ function convertImageLinksToWpProxy(markdownText: string): string {
 }
 
 export default function ConvertImageLinksToWpProxy() {
+  const { t } = useTranslation();
   const [state, setState] = useState({
     input: '',
     output: ''
@@ -41,16 +43,14 @@ export default function ConvertImageLinksToWpProxy() {
     <div className="h-full">
       <Card className="h-full">
         <CardHeader>
-          <CardTitle>Markdown 图片链接转 WP 代理</CardTitle>
-          <CardDescription>
-            批量将 Markdown 图片链接转换为 WordPress 代理链接（i0.wp.com），适合图床加速。
-          </CardDescription>
+          <CardTitle>{t('tools.convertImageLinksToWpProxy.title')}</CardTitle>
+          <CardDescription>{t('tools.convertImageLinksToWpProxy.subtitle')}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col h-[calc(100%-8rem)]">
           <div className="grid grid-cols-2 gap-6 flex-1">
             <div className="space-y-2">
               <Textarea
-                placeholder="请输入 Markdown 文本..."
+                placeholder={t('tools.convertImageLinksToWpProxy.placeholder.input')}
                 value={state.input}
                 onChange={handleInputChange}
                 className="h-full resize-none"
@@ -59,7 +59,7 @@ export default function ConvertImageLinksToWpProxy() {
             <div className="space-y-2">
               <div className="relative h-full">
                 <Textarea
-                  placeholder="转换后的文本将显示在这里..."
+                  placeholder={t('tools.convertImageLinksToWpProxy.placeholder.output')}
                   value={state.output}
                   readOnly
                   className="h-full resize-none"
@@ -73,11 +73,13 @@ export default function ConvertImageLinksToWpProxy() {
                   >
                     {copied ? (
                       <>
-                        <Check className="h-4 w-4 mr-2" />已复制
+                        <Check className="h-4 w-4 mr-2" />
+                        {t('tools.convertImageLinksToWpProxy.copied')}
                       </>
                     ) : (
                       <>
-                        <Copy className="h-4 w-4 mr-2" />复制
+                        <Copy className="h-4 w-4 mr-2" />
+                        {t('tools.convertImageLinksToWpProxy.copy')}
                       </>
                     )}
                   </Button>
@@ -89,4 +91,4 @@ export default function ConvertImageLinksToWpProxy() {
       </Card>
     </div>
   )
-} 
+}

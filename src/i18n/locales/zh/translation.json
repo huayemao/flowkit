@@ -19,6 +19,14 @@
     "noCustom": "暂无自定义工具",
     "webApp": "Web 应用",
     "confirmDelete": "确定要删除「{{name}}」吗？",
+    "editCustomTool": "编辑自定义工具",
+    "addCustomWebApp": "添加自定义 Web App 工具",
+    "toolName": "工具名称",
+    "toolDescription": "工具描述",
+    "toolUrl": "工具 URL",
+    "enterToolName": "输入工具名称",
+    "enterToolDescription": "输入工具描述",
+    "enterToolUrl": "输入工具 URL",
     "textRemoveNewlines": {
       "name": "文本去换行",
       "description": "删除文本中的所有换行符"
@@ -37,19 +45,101 @@
     },
     "tableconvert": {
       "name": "表格转换",
-      "description": "转换和格式化表格数据"
+      "description": "转换和格式化表格数据",
+      "title": "TableConvert"
     },
     "excalidraw": {
       "name": "Excalidraw",
-      "description": "虚拟协作白板工具"
+      "description": "虚拟协作白板工具",
+      "title": "Excalidraw"
     },
     "autoTrimImage": {
       "name": "自动裁剪图片",
       "description": "自动去除图片边框"
     },
-    "convertImageLinks": {
+    "convertImageLinksToWpProxy": {
       "name": "转换图片链接",
       "description": "将图片链接转换为WordPress代理格式"
+    },
+    "textRemoveNewlines": {
+      "name": "文本去换行",
+      "description": "删除文本中的所有换行符",
+      "title": "文本处理工具",
+      "subtitle": "提供多种文本处理模式，包括换行符处理、空行处理等",
+      "modes": {
+        "remove-newlines-keep-empty": "删除换行，但保留空行",
+        "remove-all": "移除所有换行",
+        "remove-empty": "移除空行",
+        "merge-empty": "合并连续空行",
+        "trim": "去除前后空格"
+      },
+      "placeholder": {
+        "input": "请输入要处理的文本...",
+        "output": "转换后的文本将显示在这里..."
+      },
+      "copy": "复制",
+      "copied": "已复制"
+    },
+    "textOcr": {
+      "name": "OCR文字识别",
+      "description": "从图片中识别文字内容",
+      "title": "OCR 文字识别",
+      "subtitle": "上传图片，自动识别图片中的文字内容",
+      "loading": "正在识别中...",
+      "error": "识别失败，请重试",
+      "placeholder": {
+        "output": "识别结果将显示在这里..."
+      },
+      "copy": "复制",
+      "copied": "已复制"
+    },
+    "wordToHtml": {
+      "name": "Word转HTML",
+      "description": "将Word文档转换为HTML格式",
+      "title": "Word转HTML",
+      "subtitle": "上传Word文档，自动转换为HTML格式",
+      "loading": "正在转换中...",
+      "preview": "预览",
+      "code": "代码",
+      "download": "下载",
+      "copy": "复制",
+      "copied": "已复制",
+      "fileTypes": ".doc,.docx",
+      "selectFile": "选择Word文件",
+      "dragDescription": "拖拽Word文件到此处或粘贴文件"
+    },
+    "svgScaler": {
+      "name": "SVG缩放",
+      "description": "按比例缩放SVG图像",
+      "title": "SVG 矢量图缩放",
+      "subtitle": "上传 SVG 文件，输入缩放比例，动态调整 SVG 显示尺寸。",
+      "scale": "缩放比例",
+      "targetWidth": "目标宽度",
+      "setWidth": "设为宽度",
+      "copy": "复制SVG代码",
+      "copied": "已复制SVG代码",
+      "download": "下载SVG文件",
+      "reset": "重置",
+      "fileType": "SVG 文件",
+      "selectFile": "请上传 SVG 文件",
+      "uploadHint": "上传SVG文件开始缩放",
+      "placeholder": {
+        "input": "在此处粘贴或编辑SVG代码..."
+      }
+    },
+    "convertImageLinksToWpProxy": {
+      "name": "转换图片链接",
+      "description": "将图片链接转换为WordPress代理格式",
+      "title": "Markdown 图片链接转 WP 代理",
+      "subtitle": "批量将 Markdown 图片链接转换为 WordPress 代理链接（i0.wp.com），适合图床加速。",
+      "placeholder": {
+        "input": "请输入 Markdown 文本...",
+        "output": "转换后的文本将显示在这里..."
+      },
+      "copy": "复制",
+      "copied": "已复制",
+      "clear": "清空",
+      "convert": "转换"
     },
     "stackedit": {
       "name": "StackEdit",
@@ -71,7 +161,8 @@
     "description": "描述",
     "tools": "工具",
     "noTools": "暂无工具",
-    "dragToReorder": "拖拽重新排序"
+    "dragToReorder": "拖拽重新排序",
+    "selectTool": "选择工具"
   },
   "common": {
     "save": "保存",
@@ -109,6 +200,8 @@
     "workflowUpdated": "工作流更新成功",
     "workflowDeleted": "工作流删除成功",
     "toolAdded": "工具添加成功",
+    "checkUpdates": "检查更新",
+    "version": "版本号",
     "toolRemoved": "工具移除成功",
     "confirmDelete": "确定要删除这个项目吗？",
     "noToolsAvailable": "暂无可用工具",

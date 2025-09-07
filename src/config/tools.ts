@@ -48,8 +48,8 @@ export const toolConfigs: ToolConfig[] = [
   },
   {
     id: 'convert-image-links-to-wp-proxy',
-    nameKey: 'tools.convertImageLinks.name',
-    descriptionKey: 'tools.convertImageLinks.description',
+    nameKey: 'tools.convertImageLinksToWpProxy.name',
+    descriptionKey: 'tools.convertImageLinksToWpProxy.description',
     path: '/convert-image-links-to-wp-proxy',
     type: 'component',
     component: 'ConvertImageLinksToWpProxy',

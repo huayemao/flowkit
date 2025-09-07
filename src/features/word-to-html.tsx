@@ -4,8 +4,10 @@ import { FileUploader } from '../components/ui/file-uploader'
 import { Copy, Check, Download, Eye, Code, FileText } from 'lucide-react'
 import { useState } from 'react'
 import mammoth from 'mammoth'
+import { useTranslation } from '@/i18n'
 
 export function WordToHtml() {
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const [viewMode, setViewMode] = useState<'preview' | 'code'>('preview')
   const [state, setState] = useState({
@@ -59,7 +61,7 @@ export function WordToHtml() {
       }
     } catch (error) {
       console.error('Word转HTML错误:', error)
-      setState({ ...state, input: file, output: '转换失败，请重试', loading: false })
+      setState({ ...state, input: file, output: t('common.error'), loading: false })
     }
   }
 
@@ -127,9 +129,9 @@ export function WordToHtml() {
     <div className="h-full">
       <Card className="h-full">
         <CardHeader>
-          <CardTitle>Word转HTML</CardTitle>
+          <CardTitle>{t('tools.wordToHtml.title')}</CardTitle>
           <CardDescription>
-            上传Word文档，自动转换为HTML格式
+            {t('tools.wordToHtml.subtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col h-[calc(100%-8rem)]">
@@ -140,10 +142,10 @@ export function WordToHtml() {
                 value={state.input}
                 onChange={handleFileChange}
                 loading={state.loading}
-                accept=".doc,.docx"
+                accept={t('tools.wordToHtml.fileTypes')}
                 maxSize={50}
-                title="选择Word文件"
-                description="拖拽Word文件到此处或粘贴文件"
+                title={t('tools.wordToHtml.selectFile')}
+                description={t('tools.wordToHtml.dragDescription')}
                 icon={<FileText className="h-12 w-12" />}
                 className="h-full"
               />
@@ -159,7 +161,7 @@ export function WordToHtml() {
                     onClick={() => setViewMode('preview')}
                   >
                     <Eye className="h-4 w-4 mr-2" />
-                    预览
+                    {t('tools.wordToHtml.preview')}
                   </Button>
                   <Button
                     variant={viewMode === 'code' ? 'default' : 'outline'}
@@ -167,7 +169,7 @@ export function WordToHtml() {
                     onClick={() => setViewMode('code')}
                   >
                     <Code className="h-4 w-4 mr-2" />
-                    代码
+                    {t('tools.wordToHtml.code')}
                   </Button>
                 </div>
                 {state.output && !state.loading && (
@@ -178,7 +180,7 @@ export function WordToHtml() {
                       onClick={handleDownload}
                     >
                       <Download className="h-4 w-4 mr-2" />
-                      下载
+                      {t('tools.wordToHtml.download')}
                     </Button>
                     <Button
                       variant="secondary"
@@ -188,12 +190,12 @@ export function WordToHtml() {
                       {copied ? (
                         <>
                           <Check className="h-4 w-4 mr-2" />
-                          已复制
+                          {t('tools.wordToHtml.copied')}
                         </>
                       ) : (
                         <>
                           <Copy className="h-4 w-4 mr-2" />
-                          复制
+                          {t('tools.wordToHtml.copy')}
                         </>
                       )}
                     </Button>
@@ -206,7 +208,7 @@ export function WordToHtml() {
                   <div className="h-full flex items-center justify-center">
                     <div className="text-center">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-                      <p className="text-sm text-gray-600">正在转换中...</p>
+                      <p className="text-sm text-gray-600">{t('tools.wordToHtml.loading')}</p>
                     </div>
                   </div>
                                  ) : viewMode === 'preview' ? (
@@ -343,4 +345,4 @@ export function WordToHtml() {
       </Card>
     </div>
   )
-} 
+}

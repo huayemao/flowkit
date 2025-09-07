@@ -1,3 +1,4 @@
+import { useTranslation } from "@/i18n"
 import { Button } from "../ui/button"
 import {
   Dialog,
@@ -24,17 +25,18 @@ export function ToolSelector({
   onToolSelect,
   onToolDeselect,
 }: ToolSelectorProps) {
+  const { t } = useTranslation()
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           <Plus className="mr-2 h-4 w-4" />
-          添加工具
+          {t('workflows.addTool')}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>选择工具</DialogTitle>
+          <DialogTitle>{t('workflows.selectTool')}</DialogTitle>
         </DialogHeader>
         <ScrollArea className="h-[300px] pr-4">
           <div className="space-y-2">
@@ -75,4 +77,4 @@ export function ToolSelector({
       </DialogContent>
     </Dialog>
   )
-} 
+}

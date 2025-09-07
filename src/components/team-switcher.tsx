@@ -1,5 +1,6 @@
 import * as React from "react"
 import { ChevronsUpDown, Plus, Workflow } from "lucide-react"
+import { useTranslation } from "@/i18n"
 
 import {
   DropdownMenu,
@@ -32,6 +33,7 @@ export function AppInfoSwitcher({
   appVersion: string
   updateUrl: string
 }) {
+  const { t } = useTranslation()
   const { isMobile } = useSidebar()
 
   return (
@@ -50,7 +52,7 @@ export function AppInfoSwitcher({
                 <span className="truncate font-semibold">
                 {appName}
                 </span>
-                <span className="truncate text-xs">版本号：{appVersion}</span>
+                <span className="truncate text-xs">{t('messages.version')}：{appVersion}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
@@ -79,14 +81,14 @@ export function AppInfoSwitcher({
             <DropdownMenuSeparator />
             <div className="px-3 py-2 text-xs text-muted-foreground">
               <div>
-                版本号：{appVersion}
+                {t('messages.version')}：{appVersion}
                 <a
                   href={updateUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="ml-2 underline text-blue-500"
                 >
-                  检查更新
+                  {t('messages.checkUpdates')}
                 </a>
               </div>
             </div>

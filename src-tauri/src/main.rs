@@ -1,8 +1,11 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod language;
+
 use tauri::Manager;
 use reqwest::multipart::{Form, Part};
+use language::{get_system_language, LanguageInfo};
 
 #[tauri::command]
 async fn ocr_request(url: String, base64_data: String) -> Result<serde_json::Value, String> {
@@ -43,10 +46,15 @@ async fn ocr_request(url: String, base64_data: String) -> Result<serde_json::Val
     Ok(data)
 }
 
+#[tauri::command]
+async fn get_app_language() -> Result<LanguageInfo, String> {
+    get_system_language().await
+}
+
 fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![ocr_request])
+        .invoke_handler(tauri::generate_handler![ocr_request, get_app_language])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

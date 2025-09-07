@@ -5,10 +5,12 @@ import { Copy, Check } from 'lucide-react'
 import { useState } from 'react'
 import { invoke } from '@tauri-apps/api/core'
 import { ImageUploader } from '../components/ui/image-uploader'
+import { useTranslation } from '@/i18n'
 
 
 
 export function TextOcr() {
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const [textOcrState, setTextOcrState] = useState({
     input: null as File | null,
@@ -39,7 +41,7 @@ export function TextOcr() {
       }
     } catch (error) {
       console.error('OCR 识别错误:', error)
-      setTextOcrState({ ...textOcrState, input: file, output: '识别失败，请重试', loading: false })
+      setTextOcrState({ ...textOcrState, input: file, output: t('tools.textOcr.error'), loading: false })
     }
   }
 
@@ -53,9 +55,9 @@ export function TextOcr() {
     <div className="h-full">
       <Card className="h-full">
         <CardHeader>
-          <CardTitle>OCR 文字识别</CardTitle>
+          <CardTitle>{t('tools.textOcr.title')}</CardTitle>
           <CardDescription>
-            上传图片，自动识别图片中的文字内容
+            {t('tools.textOcr.subtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col h-[calc(100%-8rem)]">
@@ -70,8 +72,8 @@ export function TextOcr() {
             <div className="space-y-2">
               <div className="relative h-full">
                 <Textarea
-                  placeholder="识别结果将显示在这里..."
-                  value={textOcrState.loading ? '正在识别中...' : textOcrState.output}
+                  placeholder={t('tools.textOcr.placeholder.output')}
+                  value={textOcrState.loading ? t('tools.textOcr.loading') : textOcrState.output}
                   readOnly
                   className="h-full resize-none"
                 />
@@ -85,12 +87,12 @@ export function TextOcr() {
                     {copied ? (
                       <>
                         <Check className="h-4 w-4 mr-2" />
-                        已复制
+                        {t('tools.textOcr.copied')}
                       </>
                     ) : (
                       <>
                         <Copy className="h-4 w-4 mr-2" />
-                        复制
+                        {t('tools.textOcr.copy')}
                       </>
                     )}
                   </Button>
@@ -102,4 +104,4 @@ export function TextOcr() {
       </Card>
     </div>
   )
-} 
+}

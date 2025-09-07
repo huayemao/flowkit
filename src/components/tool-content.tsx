@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from '@/i18n'
 import { TextRemoveNewlines } from '../features/text-remove-newlines'
 import { TextOcr } from '../features/text-ocr'
 import { WebAppEmbed } from './web-app-embed'
@@ -92,4 +93,4 @@ export function ToolContent({ tool }: ToolContentProps) {
       </div>
     </div>
   )
-} 
+}

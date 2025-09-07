@@ -17,6 +17,8 @@ const getSavedLanguage = () => {
   if (savedLanguage && ['en', 'zh'].includes(savedLanguage)) {
     return savedLanguage;
   }
+  
+  // 首次运行或没有保存设置时，使用系统语言
   return getSystemLanguage();
 };
 
