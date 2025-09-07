@@ -75,7 +75,7 @@ export function AutoTrimImage() {
             </p>
           </div>
           <div className="flex-1 p-8 flex flex-col">
-            <div className="flex-1 min-h-[400px]">
+            <div className="flex-1 min-h-[300px]">
               <ImageBatchUploader
                 value={files}
                 onChange={setFiles}

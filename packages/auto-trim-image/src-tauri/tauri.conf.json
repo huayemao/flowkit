@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Auto Trim Image",
-  "version": "0.2.9",
-  "identifier": "auto-trim-image.huayemao.run",
+  "version": "0.3.0",
+  "identifier": "itrimmer.huayemao.run",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:5173",
@@ -12,14 +12,18 @@
   "app": {
     "windows": [
       {
-        "title": "Auto Trim Image",
+        "title": "itrimmer",
         "width": 1000,
         "height": 700,
         "minWidth": 800,
         "minHeight": 600,
         "maximized": false,
         "dragDropEnabled": false,
-        "acceptFirstMouse": true
+        "acceptFirstMouse": true,
+        "decorations": false,
+        "transparent": true,
+        "shadow": true,
+        "resizable": true
       }
     ],
     "security": {

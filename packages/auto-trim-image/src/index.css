@@ -103,7 +103,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-transparent text-foreground;
   }
 }
 
@@ -255,4 +255,8 @@
   .dark .overflow-y-auto::-webkit-scrollbar-thumb:hover {
     background: rgba(75, 85, 99, 0.7);
   }
+}
+
+*[data-tauri-drag-region] {
+  app-region: drag;
 }
