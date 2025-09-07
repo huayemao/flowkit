@@ -10,7 +10,8 @@
     "clear": "Clear",
     "preview": "Preview",
     "english": "English",
-    "chinese": "中文"
+    "chinese": "中文",
+    "files": "files"
   },
   "imageUploader": {
     "selectImages": "Select Images/Folder",

@@ -10,7 +10,8 @@
     "clear": "清空",
     "preview": "预览",
     "english": "English",
-    "chinese": "中文"
+    "chinese": "中文",
+    "files": "文件 "
   },
   "imageUploader": {
     "selectImages": "选择图片/文件夹",

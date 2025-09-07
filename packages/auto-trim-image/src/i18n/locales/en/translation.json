@@ -10,7 +10,14 @@
     "processing": "Processing...",
     "download": "Download",
     "noImages": "No images uploaded yet",
-    "uploadImages": "Upload Images"
+    "uploadImages": "Upload Images",
+    "clear": "Clear",
+    "processingImages": "Processing Images",
+    "complete": "Processing Complete",
+    "close": "Close",
+    "downloadAll": "Download All",
+    "imagesSelected": "{{count}} image{{count, plural, one {} other {s}} selected",
+    "imagesProcessed": "{{count}} image{{count, plural, one {} other {s}} processed successfully"
   },
   "common": {
     "processing": "Processing..."
