@@ -1,25 +1,32 @@
 {
   "autoTrimImage": {
-    "title": "itrimmer——图边框去除工具 ",
-    "description": "智能识别并去除图片边框，支持批量处理",
+    "title": "自动裁剪图片",
+    "description": "自动识别图片边缘并裁剪多余空白区域",
     "batchUpload": "批量上传图片",
-    "startProcessing": "开始处理",
-    "exportAll": "导出全部",
-    "dragDrop": "拖拽图片到此处，或点击选择",
-    "supportedFormats": "支持 JPG、PNG、WebP 格式",
-    "processing": "处理中...",
-    "download": "下载",
-    "noImages": "暂无图片",
-    "uploadImages": "上传图片",
-    "clear": "清空",
-    "processingImages": "处理图片中",
-    "complete": "处理完成",
-    "close": "关闭",
-    "downloadAll": "全部下载",
     "imagesSelected": "已选择 {{count}} 张图片",
-    "imagesProcessed": "成功处理了 {{count}} 张图片"
+    "clear": "清空",
+    "startProcessing": "开始处理",
+    "processing": "处理中",
+    "processingImages": "正在处理图片",
+    "complete": "处理完成",
+    "processedCount": "已处理 {{count}} 张图片",
+    "downloadAll": "全部下载",
+    "download": "下载",
+    "close": "关闭",
+    "selectSaveDirectory": "选择保存目录",
+    "downloadCancelled": "下载已取消",
+    "downloading": "正在下载...",
+    "downloadFailed": "下载失败，请重试",
+    "singleFileSaved": "文件 {{filename}} 已保存",
+    "multipleFilesSaved": "{{count}} 个文件已保存",
+    "fileSaved": "文件 {{filename}} 已保存",
+    "open": "打开",
+    "openFolder": "打开文件夹",
+    "openFolderError": "打开文件夹失败",
+    "reDownload": "重新下载"
+
   },
   "common": {
-    "processing": "处理中..."
+    "processing": "处理中"
   }
 }

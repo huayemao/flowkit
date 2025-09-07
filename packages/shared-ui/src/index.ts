@@ -5,6 +5,10 @@ export { Button } from './components/button'
 export { ScrollArea } from './components/scroll-area'
 export { ImageBatchUploader } from './components/image-batch-uploader'
 export { ThemeToggle } from './components/theme-toggle'
+export { Toaster } from './components/sonner'
+
+// 通知和工具
+export { toast } from 'sonner'
 
 // i18n 相关
 export { initI18n, changeLanguage, useTranslation } from './i18n'

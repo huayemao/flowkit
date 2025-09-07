@@ -186,8 +186,8 @@ export function ImageBatchUploader({
         </div>
       )}
       {value && value.length > 0 && (
-        <div className="mt-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/60 dark:border-gray-700/60 shadow-[0_4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.1)]">
-          <div className="flex justify-between items-center mb-4">
+        <div className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl p-4 border border-gray-200/60 dark:border-gray-700/60 shadow-[0_4px_20px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.1)] h-full flex flex-col">
+          <div className="flex justify-between items-center mb-3 flex-shrink-0">
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 {value.length} {t("common.files")}
@@ -214,34 +214,36 @@ export function ImageBatchUploader({
             </Button>
           </div>
 
-          <div className="grid [grid-template-columns:repeat(auto-fill,minmax(140px,1fr))] gap-3">
-            {value.map((file, idx) => (
-              <div key={idx} className="group relative">
-                <div className="relative rounded-xl overflow-hidden bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 transition-all duration-300 hover:shadow-md hover:shadow-gray-200/20 dark:hover:shadow-gray-900/20">
-                  <div className="aspect-square flex items-center justify-center p-2">
-                    <img
-                      src={URL.createObjectURL(file)}
-                      alt={`${t("common.preview")}${idx}`}
-                      className="max-h-24 max-w-full object-contain rounded-lg"
-                    />
+          <div className="flex-1 overflow-y-auto">
+            <div className="grid [grid-template-columns:repeat(auto-fill,minmax(140px,1fr))] gap-3 pr-2">
+              {value.map((file, idx) => (
+                <div key={idx} className="group relative">
+                  <div className="relative rounded-xl overflow-hidden bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 transition-all duration-300 hover:shadow-md hover:shadow-gray-200/20 dark:hover:shadow-gray-900/20">
+                    <div className="aspect-square flex items-center justify-center p-2">
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt={`${t("common.preview")}${idx}`}
+                        className="max-h-24 max-w-full object-contain rounded-lg"
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                  <div className="mt-2 px-1">
+                    <span
+                      className="text-xs font-medium text-gray-700 dark:text-gray-300 block truncate"
+                      title={file.name}
+                    >
+                      {file.name}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400 font-light">
+                      {file.size > 1024 * 1024
+                        ? `${(file.size / (1024 * 1024)).toFixed(1)} MB`
+                        : `${(file.size / 1024).toFixed(0)} KB`}
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-2 px-1">
-                  <span
-                    className="text-xs font-medium text-gray-700 dark:text-gray-300 block truncate"
-                    title={file.name}
-                  >
-                    {file.name}
-                  </span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400 font-light">
-                    {file.size > 1024 * 1024
-                      ? `${(file.size / (1024 * 1024)).toFixed(1)} MB`
-                      : `${(file.size / 1024).toFixed(0)} KB`}
-                  </span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       )}
