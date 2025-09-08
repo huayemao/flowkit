@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Auto Trim Image",
+  "productName": "i-trim",
   "version": "0.3.0",
-  "identifier": "itrimmer.huayemao.run",
+  "identifier": "i-trim.huayemao.run",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:5173",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "itrimmer",
+        "title": "i-trim",
         "width": 1000,
         "height": 720,
         "minWidth": 800,
