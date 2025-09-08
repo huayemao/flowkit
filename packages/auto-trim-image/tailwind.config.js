@@ -89,11 +89,56 @@ module.exports = {
   				to: {
   					height: 0
   				}
+  			},
+  			'float': {
+  				'0%': {
+  					transform: 'translate(0, 0) scale(1)',
+  					opacity: 0.3
+  				},
+  				'50%': {
+  					transform: 'translate(320px, 90px) scale(2)',
+  					opacity: 0.1
+  				},
+  				'100%': {
+  					transform: 'translate(-320px, 190px) scale(1)',
+  					opacity: 0.3
+  				}
+  			},
+  			'float-reverse': {
+  				'0%': {
+  					transform: 'translate(-200px, 0) scale(1)',
+  					opacity: 0.1
+  				},
+  				'100%': {
+  					transform: 'translate(0, 90px) scale(2)',
+  					opacity: 0.3
+  				}
+  			},
+  			'float-updown': {
+  				'0%': {
+  					transform: 'translate(0, 0) scale(1)',
+  					opacity: 0.3
+  				},
+  				'100%': {
+  					transform: 'translate(320px, -100px) scale(3)',
+  					opacity: 0.1
+  				}
   			}
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+  			'float': 'float 5s ease-in-out infinite alternate',
+  			'float-reverse': 'float-reverse 5s ease-in-out infinite alternate',
+  			'float-updown': 'float-updown 5s ease-in-out infinite alternate'
+  		},
+  		animationDelay: {
+  			'1000': '1s',
+  			'2000': '2s',
+  			'3000': '3s'
+  		},
+  		animationTimingFunction: {
+  			'in-out-slow': 'cubic-bezier(0.65, 0, 0.35, 1)'
   		}
   	}
   },

@@ -135,14 +135,31 @@ export function AutoTrimImage() {
       <Toaster />
       {/* 上传区域 */}
       <div className="h-4/5 w-4/5 flex flex-col max-w-4xl mx-auto">
-        <div className=" bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg flex-1 flex flex-col">
-          <div className="p-6 text-center border-b border-gray-200/50 dark:border-gray-700/50 flex-shrink-0">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-              {t("autoTrimImage.title")}
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              {t("autoTrimImage.description")}
-            </p>
+        <div className="backdrop-blur-xl rounded-2xl  flex-1 flex flex-col gap-12">
+          <div className="flex items-center justify-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+              <svg
+                className="w-10 h-10 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+            <div className="ml-4">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                {t("autoTrimImage.title")}
+              </h1>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {t("autoTrimImage.description")}
+              </p>
+            </div>
           </div>
           <div className="flex-1 flex flex-col min-h-0">
             <div className="flex-1 p-6 overflow-hidden">
@@ -251,11 +268,10 @@ export function AutoTrimImage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className={`w-full h-8 text-sm border transition-all duration-300 ${
-                            r.downloaded
-                              ? "bg-green-50 text-green-700 border-green-200 hover:bg-green-100 dark:bg-green-900/20 dark:text-green-400 dark:border-green-700"
-                              : "text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 border-gray-200 dark:border-gray-600"
-                          }`}
+                          className={`w-full h-8 text-sm border transition-all duration-300 ${r.downloaded
+                            ? "bg-green-50 text-green-700 border-green-200 hover:bg-green-100 dark:bg-green-900/20 dark:text-green-400 dark:border-green-700"
+                            : "text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 border-gray-200 dark:border-gray-600"
+                            }`}
                           onClick={() => handleImageAction(r, i)}
                         >
                           {r.downloaded ? (
