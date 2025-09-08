@@ -141,24 +141,24 @@ export function ImageBatchUploader({
 
             {/* 按钮 - 更高级的哑光按钮 */}
             <Button
-              variant="ghost"
-              className="relative px-10 py-4 text-sm font-medium rounded-full 
-                         bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm 
-                         border border-gray-200/60 dark:border-gray-700/60
-                         text-gray-700 dark:text-gray-200
-                         hover:bg-white/90 dark:hover:bg-gray-700/90
-                         hover:border-gray-300/80 dark:hover:border-gray-600/80
-                         hover:text-gray-900 dark:hover:text-gray-100
-                         hover:shadow-md hover:shadow-gray-200/20 dark:hover:shadow-gray-900/20
-                         transform hover:scale-[1.02] active:scale-[0.98]
-                         transition-all duration-300 ease-out"
-              onClick={() =>
-                document.getElementById("batch-file-upload")?.click()
-              }
-            >
-              <Upload className="h-4 w-4 mr-2 opacity-70" />
-              {t("imageUploader.selectImages")}
-            </Button>
+                variant="ghost"
+                className="relative px-10 py-4 text-sm font-medium rounded-full 
+                           bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm 
+                           border border-gray-200/60 dark:border-gray-700/60
+                           text-gray-700 dark:text-gray-200
+                           hover:bg-white/90 dark:hover:bg-gray-700/90
+                           hover:border-gray-300/80 dark:hover:border-gray-600/80
+                           hover:text-gray-900 dark:hover:text-gray-100
+                           hover:shadow-md hover:shadow-gray-200/20 dark:hover:shadow-gray-900/20
+                           transform hover:scale-[1.02] active:scale-[0.98]
+                           transition-all duration-300 ease-out"
+                onClick={() =>
+                  document.getElementById("batch-file-upload")?.click()
+                }
+              >
+                <Upload className="h-4 w-4 mr-2 opacity-70" />
+                {t("imageUploader.selectImages")}
+              </Button>
 
             <input
               id="batch-file-upload"
@@ -166,8 +166,7 @@ export function ImageBatchUploader({
               accept={accept}
               className="hidden"
               multiple
-              // @ts-ignore
-              webkitdirectory="true"
+        
               onChange={handleFileChange}
             />
 
@@ -175,11 +174,11 @@ export function ImageBatchUploader({
             <div className="flex items-center gap-3 text-xs">
               <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-400 backdrop-blur-sm">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-                拖拽上传
+                {t("imageUploader.tagDrop")}
               </span>
               <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-400 backdrop-blur-sm">
                 <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
-                粘贴图片
+                {t("imageUploader.tagPaste")}
               </span>
             </div>
           </div>
