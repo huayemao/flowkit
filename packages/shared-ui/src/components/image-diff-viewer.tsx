@@ -28,7 +28,7 @@ export function ImageDiffViewer({
   onMaximizeChange
 }: ImageDiffViewerProps) {
   const { t } = useTranslation();
-  const [compareMode, setCompareMode] = useState<CompareMode>('side-by-side');
+  const [compareMode, setCompareMode] = useState<CompareMode>('overlay');
   const [isDragging, setIsDragging] = useState(false);
   const [sliderPosition, setSliderPosition] = useState(50); // 用于叠加模式
   const [showOriginal, setShowOriginal] = useState(true); // 用于切换模式

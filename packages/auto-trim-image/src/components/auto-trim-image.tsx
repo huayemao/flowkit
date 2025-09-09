@@ -11,6 +11,7 @@ import { ImageBatchUploader } from "@flowkit/shared-ui";
 import { Button } from "@flowkit/shared-ui";
 import { ImageDiffViewer } from "@flowkit/shared-ui";
 import { DialogLite, DialogLiteContent, DialogLiteContentWithClose, DialogLiteHeader, DialogLiteTitle, DialogLiteClose } from "@flowkit/shared-ui";
+import { useEffect } from "react";
 
 interface ProcessedImage {
   name: string;
@@ -28,6 +29,7 @@ export function AutoTrimImage() {
   const [showPreview, setShowPreview] = useState(false);
   const [selectedImage, setSelectedImage] = useState<ProcessedImage | null>(null);
   const [showDiffViewer, setShowDiffViewer] = useState(false);
+  const [downloadedStatus, setDownloadedStatus] = useState(false); // 用于DiffViewer的下载状态
 
   const handleProcess = async (filesToProcess: File[]) => {
     setLoading(true);
@@ -60,21 +62,39 @@ export function AutoTrimImage() {
     setResults(outs);
     setLoading(false);
     setProgress(0);
-    setShowPreview(true);
+    
+    // 如果只有一张图片，直接打开差异对比查看器
+    if (outs.length === 1) {
+      setSelectedImage(outs[0]);
+      setShowDiffViewer(true);
+    } else {
+      setShowPreview(true);
+    }
   };
 
   // 处理图片点击事件，打开差异对比查看器
   const handleImageClick = (image: ProcessedImage) => {
     setSelectedImage(image);
+    setDownloadedStatus(image.downloaded); // 同步下载状态
     setShowDiffViewer(true);
-    console.log(123)
   };
 
   // 关闭差异对比查看器
   const handleCloseDiffViewer = () => {
     setShowDiffViewer(false);
     setSelectedImage(null);
+    setDownloadedStatus(false); // 重置下载状态
   };
+
+  // 当结果更新时，如果当前选中的图片已在结果列表中，更新其下载状态
+  useEffect(() => {
+    if (selectedImage && showDiffViewer) {
+      const updatedImage = results.find(r => r.name === selectedImage.name);
+      if (updatedImage) {
+        setDownloadedStatus(updatedImage.downloaded);
+      }
+    }
+  }, [results, selectedImage, showDiffViewer]);
 
   const handleDownloadAll = () => {
     results.forEach((result, index) => {
@@ -94,7 +114,7 @@ export function AutoTrimImage() {
     );
   };
 
-  const downloadImage = async (image: ProcessedImage, index: number) => {
+  const downloadImage = async (image: ProcessedImage, index: number, fromDiffViewer: boolean = false) => {
     const a = document.createElement("a");
     a.href = image.url;
     a.download = image.name;
@@ -107,6 +127,11 @@ export function AutoTrimImage() {
       )
     );
 
+    // 如果是从差异查看器下载的，同步更新差异查看器的下载状态
+    if (fromDiffViewer && selectedImage && selectedImage.name === image.name) {
+      setDownloadedStatus(true);
+    }
+
     // 显示单个文件下载成功提示
     toast.success(t("autoTrimImage.fileSaved", { filename: image.name }), {
       duration: 3000,
@@ -117,11 +142,11 @@ export function AutoTrimImage() {
     });
   };
 
-  const handleImageAction = async (image: ProcessedImage, index: number) => {
+  const handleImageAction = async (image: ProcessedImage, index: number, fromDiffViewer: boolean = false) => {
     if (image.downloaded) {
       handleOpenDownloadFolder(image.name);
     } else {
-      downloadImage(image, index);
+      downloadImage(image, index, fromDiffViewer);
     }
   };
 
@@ -332,13 +357,52 @@ export function AutoTrimImage() {
           <DialogLiteContentWithClose onClose={() => setShowDiffViewer(false)}
             className="absolute left-0 right-0 top-0 bottom-0 m-auto max-w-6xl max-h-[90vh] w-[95%] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
           >
-            <ImageDiffViewer
-              originalImageUrl={URL.createObjectURL(selectedImage.originalFile)}
-              processedImageUrl={selectedImage.url}
-              onClose={handleCloseDiffViewer}
-              title={selectedImage.name}
-              className="h-full"
-            />
+            <div className="h-full flex flex-col">
+              {/* 顶部控制栏 - 仅显示标题 */}
+              <div className="border-b border-gray-200 dark:border-gray-800 p-4 flex justify-between items-center bg-gray-50 dark:bg-gray-950">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white m-0">
+                  {selectedImage.name}
+                </h3>
+              </div>
+              
+              {/* 图片差异查看器 */}
+              <ImageDiffViewer
+                originalImageUrl={URL.createObjectURL(selectedImage.originalFile)}
+                processedImageUrl={selectedImage.url}
+                onClose={handleCloseDiffViewer}
+                className="flex-1"
+              />
+              
+              {/* 底部下载按钮区域 */}
+              <div className="border-t border-gray-200 dark:border-gray-800 p-4 bg-gray-50 dark:bg-gray-950 flex justify-center">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className={`h-8 text-sm border transition-all duration-300 ${downloadedStatus
+                    ? "bg-green-50 text-green-700 border-green-200 hover:bg-green-100 dark:bg-green-900/20 dark:text-green-400 dark:border-green-700"
+                    : "text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 border-gray-200 dark:border-gray-600"
+                  }`}
+                  onClick={() => {
+                    const imageIndex = results.findIndex(r => r.name === selectedImage.name);
+                    if (imageIndex !== -1) {
+                      handleImageAction(selectedImage, imageIndex, true);
+                    }
+                  }}
+                >
+                  {downloadedStatus ? (
+                    <>
+                      <CheckCircle className="w-3 h-3 mr-1" />
+                      {t("autoTrimImage.open")}
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-3 h-3 mr-1" />
+                      {t("autoTrimImage.download")}
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
           </DialogLiteContentWithClose>
         </DialogLite>
       )
