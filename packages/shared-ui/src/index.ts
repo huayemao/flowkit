@@ -6,6 +6,7 @@ export { ScrollArea } from './components/scroll-area'
 export { ImageBatchUploader } from './components/image-batch-uploader'
 export { ThemeToggle } from './components/theme-toggle'
 export { Toaster } from './components/sonner'
+export { ImageDiffViewer } from './components/image-diff-viewer'
 
 // 通知和工具
 export { toast } from 'sonner'

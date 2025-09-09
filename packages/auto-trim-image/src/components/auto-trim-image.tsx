@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Download, Image, FolderOpen, CheckCircle } from "lucide-react";
+import { Download, Image, FolderOpen, CheckCircle, ZoomInIcon } from "lucide-react";
 import { useTranslation } from "../i18n";
 import { autoTrimImage, getBorderColors } from "../utils/image-trim";
 import { Toaster, toast } from "@flowkit/shared-ui";
@@ -9,11 +9,13 @@ import { openPath } from "@tauri-apps/plugin-opener";
 // 使用workspace包导入
 import { ImageBatchUploader } from "@flowkit/shared-ui";
 import { Button } from "@flowkit/shared-ui";
+import { ImageDiffViewer } from "@flowkit/shared-ui";
 
 interface ProcessedImage {
   name: string;
   url: string;
   downloaded: boolean;
+  originalFile: File; // 存储原始文件
 }
 
 export function AutoTrimImage() {
@@ -23,6 +25,8 @@ export function AutoTrimImage() {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<ProcessedImage | null>(null);
+  const [showDiffViewer, setShowDiffViewer] = useState(false);
 
   const handleProcess = async (filesToProcess: File[]) => {
     setLoading(true);
@@ -46,6 +50,7 @@ export function AutoTrimImage() {
         name: file.name.replace(/\.(jpg|jpeg|png|webp)$/i, "") + "-trim.png",
         url: URL.createObjectURL(blob),
         downloaded: false,
+        originalFile: file, // 保存原始文件引用
       });
 
       setProgress(((i + 1) / filesToProcess.length) * 100);
@@ -55,6 +60,19 @@ export function AutoTrimImage() {
     setLoading(false);
     setProgress(0);
     setShowPreview(true);
+  };
+
+  // 处理图片点击事件，打开差异对比查看器
+  const handleImageClick = (image: ProcessedImage) => {
+    setSelectedImage(image);
+    setShowDiffViewer(true);
+    console.log(123)
+  };
+
+  // 关闭差异对比查看器
+  const handleCloseDiffViewer = () => {
+    setShowDiffViewer(false);
+    setSelectedImage(null);
   };
 
   const handleDownloadAll = () => {
@@ -251,12 +269,24 @@ export function AutoTrimImage() {
                 {results.map((r, i) => (
                   <div key={i} className="group">
                     <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-300">
-                      <div className="aspect-square mb-3">
+                      <div className="aspect-square mb-3 relative overflow-hidden">
                         <img
                           src={r.url}
                           alt={r.name}
-                          className="w-full h-full object-cover rounded-md"
+                          className="w-full h-full object-cover rounded-md transition-transform duration-500 group-hover:scale-105"
                         />
+                        {/* 点击覆盖层 - 统一的点击处理 */}
+                        <div 
+                          className="absolute inset-0 cursor-pointer bg-black/0 group-hover:bg-black/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation(); // 阻止事件冒泡
+                            handleImageClick(r);
+                          }}
+                        >
+                          <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md p-2 rounded-full shadow-md transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <ZoomInIcon className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                          </div>
+                        </div>
                       </div>
                       <div className="space-y-2">
                         <p
@@ -294,6 +324,16 @@ export function AutoTrimImage() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* 图片差异对比查看器 */}
+      {showDiffViewer && selectedImage && (
+        <ImageDiffViewer
+          originalImageUrl={URL.createObjectURL(selectedImage.originalFile)}
+          processedImageUrl={selectedImage.url}
+          onClose={handleCloseDiffViewer}
+          title={selectedImage.name}
+        />
       )}
     </div>
   );
