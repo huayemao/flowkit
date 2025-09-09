@@ -17,3 +17,5 @@ export { LanguageSwitcher } from './components/language-switcher'
 
 // 工具函数
 export { cn } from './lib/utils'
+export * from './components/dialog'
+export * from './components/dialog-lite'

@@ -10,6 +10,7 @@ import { openPath } from "@tauri-apps/plugin-opener";
 import { ImageBatchUploader } from "@flowkit/shared-ui";
 import { Button } from "@flowkit/shared-ui";
 import { ImageDiffViewer } from "@flowkit/shared-ui";
+import { DialogLite, DialogLiteContent, DialogLiteContentWithClose, DialogLiteHeader, DialogLiteTitle, DialogLiteClose } from "@flowkit/shared-ui";
 
 interface ProcessedImage {
   name: string;
@@ -219,23 +220,24 @@ export function AutoTrimImage() {
         </div>
       )}
 
-      {/* 处理结果 Dialog */}
+      {/* 处理结果 Dialog - 使用 absolute 定位，避免覆盖标题栏 */}
       {showPreview && results.length > 0 && (
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center z-40 p-4">
-          <div className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90%] flex flex-col border border-gray-200/50 dark:border-gray-700/50">
-            <div className="p-6 border-b border-gray-200/50 dark:border-gray-700/50 flex items-center justify-between flex-shrink-0">
+        <DialogLite open={true} onOpenChange={(open) => !open && setShowPreview(false)}>
+          <DialogLiteContent
+            className="absolute left-0 right-0 top-0 bottom-0 m-auto max-w-6xl max-h-[90vh] w-[90%] bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50"
+          >
+            <DialogLiteHeader className="border-b border-gray-200/50 dark:border-gray-700/50 pb-3 relative">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                <DialogLiteTitle className="text-xl font-bold text-gray-900 dark:text-gray-100">
                   {t("autoTrimImage.complete")}
-                </h3>
+                </DialogLiteTitle>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  <Image className="w-4 h-4 inline-block mr-1" />{" "}
-                  {t("autoTrimImage.imagesProcessed", {
+                  <Image className="w-4 h-4 inline-block mr-1" />{t("autoTrimImage.imagesProcessed", {
                     count: results.length,
                   })}
                 </p>
               </div>
-              <div className="flex gap-3">
+              <div className="flex justify-end gap-3 mt-3 px-2 absolute right-4 ">
                 <Button
                   onClick={handleDownloadAll}
                   className="bg-indigo-600 hover:bg-indigo-700 text-white"
@@ -251,21 +253,19 @@ export function AutoTrimImage() {
                   <FolderOpen className="w-4 h-4 mr-2" />
                   {t("autoTrimImage.openFolder")}
                 </Button>
-                <Button
-                  onClick={() => {
-                    setShowPreview(false);
-                    clearResults();
-                  }}
-                  variant="outline"
-                  className="border-gray-300 dark:border-gray-600"
-                >
-                  {t("autoTrimImage.close")}
-                </Button>
+                <DialogLiteClose>
+                  <Button
+                    variant="outline"
+                    className="border-gray-300 dark:border-gray-600"
+                    onClick={clearResults}
+                  >
+                    {t("autoTrimImage.close")}
+                  </Button>
+                </DialogLiteClose>
               </div>
-            </div>
-
-            <div className="flex-1 overflow-y-auto p-6">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            </DialogLiteHeader>
+            <div className="flex-1 overflow-y-auto p-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {results.map((r, i) => (
                   <div key={i} className="group">
                     <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-300">
@@ -276,7 +276,7 @@ export function AutoTrimImage() {
                           className="w-full h-full object-cover rounded-md transition-transform duration-500 group-hover:scale-105"
                         />
                         {/* 点击覆盖层 - 统一的点击处理 */}
-                        <div 
+                        <div
                           className="absolute inset-0 cursor-pointer bg-black/0 group-hover:bg-black/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
                           onClick={(e) => {
                             e.stopPropagation(); // 阻止事件冒泡
@@ -322,19 +322,27 @@ export function AutoTrimImage() {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
+          </DialogLiteContent>
+        </DialogLite>
       )}
 
-      {/* 图片差异对比查看器 */}
+      {/* 图片差异对比查看器 - 使用DialogLite包裹 */}
       {showDiffViewer && selectedImage && (
-        <ImageDiffViewer
-          originalImageUrl={URL.createObjectURL(selectedImage.originalFile)}
-          processedImageUrl={selectedImage.url}
-          onClose={handleCloseDiffViewer}
-          title={selectedImage.name}
-        />
-      )}
-    </div>
+        <DialogLite open={true} onOpenChange={(open) => !open && handleCloseDiffViewer()}>
+          <DialogLiteContentWithClose onClose={() => setShowDiffViewer(false)}
+            className="absolute left-0 right-0 top-0 bottom-0 m-auto max-w-6xl max-h-[90vh] w-[95%] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
+          >
+            <ImageDiffViewer
+              originalImageUrl={URL.createObjectURL(selectedImage.originalFile)}
+              processedImageUrl={selectedImage.url}
+              onClose={handleCloseDiffViewer}
+              title={selectedImage.name}
+              className="h-full"
+            />
+          </DialogLiteContentWithClose>
+        </DialogLite>
+      )
+      }
+    </div >
   );
 }
