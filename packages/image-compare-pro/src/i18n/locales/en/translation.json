@@ -1,0 +1,18 @@
+{
+  "imageDiff": {
+    "title": "Image Compare Pro",
+    "description": "Compare images side by side, overlay or switch between them to see differences clearly",
+    "original": "Original",
+    "processed": "Processed",
+    "originalImage": "Original Image",
+    "processedImage": "Processed Image",
+    "sideBySide": "Side by Side",
+    "overlay": "Overlay",
+    "switch": "Switch",
+    "maximize": "Maximize",
+    "minimize": "Minimize",
+    "moveLeft": "Move Left",
+    "moveRight": "Move Right",
+    "verticalLayoutTip": "Images are displayed vertically due to space constraints"
+  }
+}

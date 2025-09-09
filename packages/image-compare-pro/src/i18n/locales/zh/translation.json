@@ -1,0 +1,18 @@
+{
+  "imageDiff": {
+    "title": "图片对比专家",
+    "description": "并排、叠加或切换查看图片差异，让细节一览无余",
+    "original": "原图",
+    "processed": "处理后",
+    "originalImage": "原始图片",
+    "processedImage": "处理后图片",
+    "sideBySide": "并排对比",
+    "overlay": "叠加对比",
+    "switch": "切换对比",
+    "maximize": "最大化",
+    "minimize": "最小化",
+    "moveLeft": "向左移动",
+    "moveRight": "向右移动",
+    "verticalLayoutTip": "由于空间限制，图片以垂直方式显示"
+  }
+}
