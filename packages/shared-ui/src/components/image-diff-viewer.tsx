@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { X, Maximize, Minimize, MoveLeft, MoveRight, Eye } from 'lucide-react';
+import { X, Maximize, Minimize, MoveLeft, MoveRight, Eye, Check, Info } from 'lucide-react';
 import { Button } from './button';
 import { ScrollArea } from './scroll-area';
 import { cn } from '../lib/utils';
@@ -196,13 +196,14 @@ export function ImageDiffViewer({
         <div ref={contentRef} className="flex flex-col items-center p-6">
           {/* 并排对比模式 */}
           {compareMode === 'side-by-side' && (
-            <div className={`${shouldUseVerticalLayout() ? 'flex-col' : 'flex-col md:flex-row'} gap-4 items-center w-full`}>
-              <div className="flex-1 flex flex-col items-center">
-                <div className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+            <div className={`${shouldUseVerticalLayout() ? 'flex-col' : 'flex-col md:flex-row'} gap-6 items-center w-full`}>
+              <div className="flex-1 flex flex-col items-center transition-all duration-300 hover:shadow-md">
+                <div className="mb-3 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium flex items-center gap-1.5">
+                  <Eye className="w-3.5 h-3.5" />
                   {t('imageDiff.original')}
                 </div>
                 <div
-                  className="relative border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm"
+                  className="relative border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:border-blue-300 dark:hover:border-blue-600"
                   style={{ maxWidth: '100%', width: `${getDisplayWidth()}px` }}
                 >
                   <img
@@ -215,12 +216,13 @@ export function ImageDiffViewer({
                 </div>
               </div>
 
-              <div className="flex-1 flex flex-col items-center">
-                <div className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <div className="flex-1 flex flex-col items-center transition-all duration-300 hover:shadow-md">
+                <div className="mb-3 px-4 py-1.5 rounded-full bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-sm font-medium flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5" />
                   {t('imageDiff.processed')}
                 </div>
                 <div
-                  className="relative border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm"
+                  className="relative border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:border-green-300 dark:hover:border-green-600"
                   style={{ maxWidth: '100%', width: `${getDisplayWidth()}px` }}
                 >
                   <img
@@ -234,7 +236,8 @@ export function ImageDiffViewer({
 
               {/* 布局提示 */}
               {shouldUseVerticalLayout() && (
-                <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-3 bg-gray-50 dark:bg-gray-800/50 px-3 py-1.5 rounded-md">
+                  <Info className="w-3.5 h-3.5 inline mr-1" />
                   {t('imageDiff.verticalLayoutTip')}
                 </div>
               )}

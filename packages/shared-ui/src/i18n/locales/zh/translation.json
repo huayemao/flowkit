@@ -27,5 +27,20 @@
   "validation": {
     "fileTooLarge": "文件过大",
     "invalidFormat": "文件格式不支持"
+  },
+  "imageDiff": {
+    "sideBySide": "并排显示",
+    "overlay": "叠加显示",
+    "switch": "切换显示",
+    "minimize": "最小化",
+    "maximize": "最大化",
+    "original": "原图",
+    "processed": "处理后",
+    "originalImage": "原始图片",
+    "processedImage": "处理后图片",
+    "verticalLayoutTip": "因屏幕宽度限制，已切换为垂直布局",
+    "moveLeft": "向左移动",
+    "moveRight": "向右移动",
+    "description": "支持多种视图模式对比原始图片与处理后图片"
   }
 }

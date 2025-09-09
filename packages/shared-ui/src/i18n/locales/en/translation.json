@@ -26,5 +26,20 @@
   "validation": {
     "fileTooLarge": "File is too large",
     "invalidFormat": "Invalid file format"
+  },
+  "imageDiff": {
+    "sideBySide": "Side by Side",
+    "overlay": "Overlay",
+    "switch": "Switch",
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "original": "Original",
+    "processed": "Processed",
+    "originalImage": "Original Image",
+    "processedImage": "Processed Image",
+    "verticalLayoutTip": "Displayed vertically due to screen width",
+    "moveLeft": "Move left",
+    "moveRight": "Move right",
+    "description": "Compare original and processed images with multiple view modes"
   }
 }

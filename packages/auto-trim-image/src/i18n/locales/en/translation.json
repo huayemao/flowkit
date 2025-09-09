@@ -4,6 +4,7 @@
     "description": "Automatically identify image edges and crop excess blank areas",
     "batchUpload": "Batch Upload Images",
     "imagesSelected": "{{count}} images selected",
+    "imagesProcessed": "{{count}} images processed",
     "clear": "Clear",
     "startProcessing": "Start Processing",
     "processing": "Processing",
