@@ -13,6 +13,13 @@
     "minimize": "Minimize",
     "moveLeft": "Move Left",
     "moveRight": "Move Right",
-    "verticalLayoutTip": "Images are displayed vertically due to space constraints"
+    "verticalLayoutTip": "Images are displayed vertically due to space constraints",
+    "exitTip": "Click outside the window to exit",
+    "uploadFirstImage": "Please upload Image 1",
+    "uploadSecondImage": "Please upload Image 2",
+    "quickCompareTip": "Tip: You can select two images at once to start comparing quickly",
+    "uploadedFirstImage": "Uploaded Image 1",
+    "stepTwo": "Step 2: Select Image 2",
+    "supportedFormats": "Supports common image formats like JPG, PNG, WebP, file size not exceeding 20MB"
   }
 }

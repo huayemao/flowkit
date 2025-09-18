@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { ThemeToggle, LanguageSwitcher, ImageDiffViewer, ImageBatchUploader, Input } from '@flowkit/shared-ui';
 import { WindowControls } from './components/window-controls';
+import { useTranslation } from './i18n';
 
 function App() {
+  const { t } = useTranslation();
   const [originalImageUrl, setOriginalImageUrl] = useState<string | null>(null);
   const [processedImageUrl, setProcessedImageUrl] = useState<string | null>(null);
   const [isMaximized, setIsMaximized] = useState(false);
@@ -91,7 +93,7 @@ function App() {
               originalImageUrl={originalImageUrl}
               processedImageUrl={processedImageUrl}
               onClose={resetUpload}
-              title="Image Compare Pro 图片对比结果"
+              title={t('imageDiff.title')}
               isMaximized={isMaximized}
               onMaximizeChange={setIsMaximized}
               className="flex-1"
@@ -100,7 +102,7 @@ function App() {
             <div className="flex-1 w-full max-w-4xl mx-auto p-6">
               {/* 上传进度提示 */}
               <div className="mb-8 text-center">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Image Compare Pro</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('imageDiff.title')}</h2>
                 <div className="flex items-center justify-center gap-4 mb-2 mt-6">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${uploadStep === 'original' ? 'bg-indigo-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'}`}>
                     1
@@ -111,17 +113,17 @@ function App() {
                   </div>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400">
-                    {uploadStep === 'original' ? '请上传图片1' : '请上传图片2'}
+                    {uploadStep === 'original' ? t('imageDiff.uploadFirstImage') : t('imageDiff.uploadSecondImage')}
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    提示：您可以直接一次性选择两张图片快速开始比较
+                    {t('imageDiff.quickCompareTip')}
                   </p>
               </div>
 
               {/* 如果正在上传第二张图，显示已上传的原图预览 */}
               {uploadStep === 'processed' && originalImageUrl && (
                 <div className="mt-6 p-4 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-200/60 dark:border-gray-700/60">
-                  <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">已上传的图片1</h3>
+                  <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('imageDiff.uploadedFirstImage')}</h3>
                   <div className="flex items-center gap-4">
                     <img
                       src={originalImageUrl}
@@ -158,7 +160,7 @@ function App() {
                       htmlFor="processed-image-upload"
                       className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer"
                     >
-                      第二步：选择图片2
+                      {t('imageDiff.stepTwo')}
                     </label>
                     <Input
                       id="processed-image-upload"
@@ -172,8 +174,8 @@ function App() {
                       ref={secondImageInputRef}
                     />
                     <p className="text-xs text-gray-500 dark:text-gray-400">
-                      支持 JPG、PNG、WebP 等常见图片格式，文件大小不超过 20MB
-                    </p>
+                    {t('imageDiff.supportedFormats')}
+                  </p>
                   </div>
                 </div>
               )}

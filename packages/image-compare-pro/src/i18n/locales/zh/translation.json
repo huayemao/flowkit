@@ -13,6 +13,13 @@
     "minimize": "最小化",
     "moveLeft": "向左移动",
     "moveRight": "向右移动",
-    "verticalLayoutTip": "由于空间限制，图片以垂直方式显示"
+    "verticalLayoutTip": "由于空间限制，图片以垂直方式显示",
+    "exitTip": "点击窗口外部退出",
+    "uploadFirstImage": "请上传图片1",
+    "uploadSecondImage": "请上传图片2",
+    "quickCompareTip": "提示：您可以直接一次性选择两张图片快速开始比较",
+    "uploadedFirstImage": "已上传的图片1",
+    "stepTwo": "第二步：选择图片2",
+    "supportedFormats": "支持 JPG、PNG、WebP 等常见图片格式，文件大小不超过 20MB"
   }
 }
