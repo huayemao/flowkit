@@ -2,6 +2,7 @@ import './index.css'
 
 // UI 组件
 export { Button } from './components/button'
+export { Input } from './components/input'
 export { ScrollArea } from './components/scroll-area'
 export { ImageBatchUploader } from './components/image-batch-uploader'
 export { ThemeToggle } from './components/theme-toggle'

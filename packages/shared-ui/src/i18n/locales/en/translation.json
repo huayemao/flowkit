@@ -40,6 +40,7 @@
     "verticalLayoutTip": "Displayed vertically due to screen width",
     "moveLeft": "Move left",
     "moveRight": "Move right",
-    "description": "Compare original and processed images with multiple view modes"
+    "description": "Compare original and processed images with multiple view modes",
+    "exitTip": "Press Escape to exit"
   }
 }

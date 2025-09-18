@@ -41,6 +41,7 @@
     "verticalLayoutTip": "因屏幕宽度限制，已切换为垂直布局",
     "moveLeft": "向左移动",
     "moveRight": "向右移动",
-    "description": "支持多种视图模式对比原始图片与处理后图片"
+    "description": "支持多种视图模式对比原始图片与处理后图片",
+    "exitTip": "按Escape键退出"
   }
 }
