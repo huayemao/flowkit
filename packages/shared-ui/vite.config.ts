@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
+import path from 'path'
 
 export default defineConfig({
   plugins: [
@@ -12,6 +13,11 @@ export default defineConfig({
   css: {
     postcss: './postcss.config.js',
   },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
   build: {
     lib: {
       entry: './src/index.ts',
@@ -20,7 +26,7 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'lucide-react',"tailwindcss"],
+      external: ['react', 'react-dom', 'lucide-react', "tailwindcss"],
       output: {
         globals: {
           react: 'React',

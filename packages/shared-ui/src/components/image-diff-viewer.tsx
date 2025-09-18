@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { X, Maximize, Minimize, MoveLeft, MoveRight, Eye, Check, Info } from 'lucide-react';
 import { Button } from './button';
 import { ScrollArea } from './scroll-area';
+import { Tabs, TabsList, TabsTrigger } from './tabs';
 import { cn } from '../lib/utils';
 import { useTranslation } from '../i18n';
 
@@ -37,7 +38,6 @@ export function ImageDiffViewer({
   const sliderRef = useRef<HTMLDivElement>(null);
   const originalImgRef = useRef<HTMLImageElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-
   // 加载原始图片以获取其尺寸
   useEffect(() => {
     const img = new Image();
@@ -48,21 +48,20 @@ export function ImageDiffViewer({
     img.src = originalImageUrl;
   }, [originalImageUrl]);
 
-  // 计算显示宽度，确保不超过容器
-  const getDisplayWidth = () => {
-    if (!contentRef.current) return originalImageWidth;
-
-    const containerWidth = contentRef.current.clientWidth - 48; // 减去padding
-    // 最大宽度为容器宽度的90%，或者原始图片宽度，取较小值
-    return Math.min(originalImageWidth, containerWidth * 0.9);
-  };
-
   // 检测并排模式是否需要切换为纵向
   const shouldUseVerticalLayout = () => {
     if (!contentRef.current) return false;
-    const containerWidth = contentRef.current.clientWidth - 48; // 减去padding
-    // 如果两张图片并排的总宽度超过容器宽度的95%，则切换为纵向
-    return (getDisplayWidth() * 2) > (containerWidth * 0.95);
+
+    // 计算图片宽高比
+    const aspectRatio = originalImageWidth > 0 && originalImageHeight > 0
+      ? originalImageWidth / originalImageHeight
+      : 1; // 默认宽高比为1
+
+
+    const isWideImage = aspectRatio > 1.5;
+    console.log(aspectRatio, isWideImage)
+
+    return isWideImage;
   };
 
   // 处理叠加模式的滑块拖动
@@ -144,92 +143,71 @@ export function ImageDiffViewer({
   return (
     <div className={cn(`w-full h-full flex flex-col`, className)}>
       {/* 顶部控制栏 */}
-      <div className="border-b border-gray-200 dark:border-gray-800 pb-4 pt-3 px-10 bg-gray-50 dark:bg-gray-950 rounded-t-xl">
+      <div className="border-b border-gray-200 dark:border-gray-800 pb-4 pt-3 px-10  rounded-t-xl">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white m-0">{title}</h3>
           <div className="flex items-center gap-2">
             {/* 对比模式选择器 */}
-            <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 rounded-md p-1">
-              <Button
-                size="sm"
-                variant="ghost"
-                className={`h-8 px-3 rounded ${compareMode === 'side-by-side' ? 'bg-white dark:bg-gray-700 shadow-sm' : ''}`}
-                onClick={() => setCompareMode('side-by-side')}
-              >
-                {t('imageDiff.sideBySide')}
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                className={`h-8 px-3 rounded ${compareMode === 'overlay' ? 'bg-white dark:bg-gray-700 shadow-sm' : ''}`}
-                onClick={() => setCompareMode('overlay')}
-              >
-                {t('imageDiff.overlay')}
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                className={`h-8 px-3 rounded ${compareMode === 'switch' ? 'bg-white dark:bg-gray-700 shadow-sm' : ''}`}
-                onClick={() => setCompareMode('switch')}
-              >
-                {t('imageDiff.switch')}
-              </Button>
-            </div>
-
-            {onMaximizeChange && (
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-8 w-8 p-0 rounded-full"
-                onClick={handleMaximizeToggle}
-                title={isMaximized ? t('imageDiff.minimize') : t('imageDiff.maximize')}
-              >
-                {isMaximized ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
-              </Button>
-            )}
+            <Tabs
+              value={compareMode}
+              onValueChange={(value) => setCompareMode(value as CompareMode)}
+              className="w-auto"
+            >
+              <TabsList>
+                <TabsTrigger value="side-by-side" className="h-8 px-3">
+                  {t('imageDiff.sideBySide')}
+                </TabsTrigger>
+                <TabsTrigger value="overlay" className="h-8 px-3">
+                  {t('imageDiff.overlay')}
+                </TabsTrigger>
+                <TabsTrigger value="switch" className="h-8 px-3">
+                  {t('imageDiff.switch')}
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
         </div>
       </div>
 
       {/* 图片展示区域 */}
-      <ScrollArea className="flex-1 overflow-auto">
-        <div ref={contentRef} className="flex flex-col items-center p-6">
+      <ScrollArea className="flex-1 overflow-y-auto">
+        <div ref={contentRef} className="flex flex-col items-center p-6 w-full">
           {/* 并排对比模式 */}
           {compareMode === 'side-by-side' && (
-            <div className={`${shouldUseVerticalLayout() ? 'flex-col' : 'flex-col md:flex-row'} gap-6 items-center w-full`}>
-              <div className="flex-1 flex flex-col items-center transition-all duration-300 hover:shadow-md">
+            <div className={cn('flex flex-col items-center w-full', {
+              'md:flex-row': !shouldUseVerticalLayout(),
+            })}>
+              <div className="w-full md:w-1/2 flex flex-col items-center transition-all duration-300 hover:shadow-md px-2">
                 <div className="mb-3 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium flex items-center gap-1.5">
                   <Eye className="w-3.5 h-3.5" />
                   {t('imageDiff.original')}
                 </div>
                 <div
-                  className="relative border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:border-blue-300 dark:hover:border-blue-600"
-                  style={{ maxWidth: '100%', width: `${getDisplayWidth()}px` }}
+                  className="relative border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:border-blue-300 dark:hover:border-blue-600 w-full"
+                  style={shouldUseVerticalLayout() ? { height: '40vh' } : {}}
                 >
                   <img
                     ref={originalImgRef}
                     src={originalImageUrl}
                     alt={t('imageDiff.originalImage')}
-                    className="w-full object-contain"
-                    style={{ minHeight: '200px' }}
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </div>
 
-              <div className="flex-1 flex flex-col items-center transition-all duration-300 hover:shadow-md">
+              <div className="w-full md:w-1/2 flex flex-col items-center transition-all duration-300 hover:shadow-md px-2">
                 <div className="mb-3 px-4 py-1.5 rounded-full bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-sm font-medium flex items-center gap-1.5">
                   <Check className="w-3.5 h-3.5" />
                   {t('imageDiff.processed')}
                 </div>
                 <div
-                  className="relative border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:border-green-300 dark:hover:border-green-600"
-                  style={{ maxWidth: '100%', width: `${getDisplayWidth()}px` }}
+                  className="relative border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm transition-all duration-300 hover:border-green-300 dark:hover:border-green-600 w-full"
+                  style={shouldUseVerticalLayout() ? { height: '40vh' } : {}}
                 >
                   <img
                     src={processedImageUrl}
                     alt={t('imageDiff.processedImage')}
-                    className="w-full object-contain"
-                    style={{ minHeight: '200px' }}
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </div>
@@ -247,39 +225,14 @@ export function ImageDiffViewer({
           {/* 叠加对比模式 */}
           {compareMode === 'overlay' && (
             <div className="w-full flex flex-col items-center">
-              <div className="flex items-center gap-2 mb-3">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="h-8 w-8 p-0 rounded-full"
-                  onClick={() => adjustSlider('left')}
-                  title={t('imageDiff.moveLeft')}
-                >
-                  <MoveLeft className="w-4 h-4" />
-                </Button>
-
-                <div className="text-sm text-gray-600 dark:text-gray-400">
-                  {Math.round(sliderPosition)}%
-                </div>
-
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="h-8 w-8 p-0 rounded-full"
-                  onClick={() => adjustSlider('right')}
-                  title={t('imageDiff.moveRight')}
-                >
-                  <MoveRight className="w-4 h-4" />
-                </Button>
-              </div>
 
               <div
                 className="relative border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm"
                 style={{
                   maxWidth: '100%',
-                  width: `${getDisplayWidth()}px`,
-                  height: originalImageHeight > 0 ? `${(getDisplayWidth() / originalImageWidth) * originalImageHeight}px` : 'auto',
-                  minHeight: '300px'
+                  width: `90%`,
+                  // 使用CSS属性确保纵向不滚动且图片撑满高度
+                  height: '80vh', // 最大高度为视口高度的70%
                 }}
               >
                 {/* 原始图片 - 只显示在分隔线左侧 */}
@@ -347,7 +300,7 @@ export function ImageDiffViewer({
             <div className="w-full flex flex-col items-center">
               <div
                 className="relative border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm"
-                style={{ maxWidth: '100%', width: `${getDisplayWidth()}px` }}
+                style={{ maxWidth: '100%', width: `90%` }}
               >
                 <img
                   src={showOriginal ? originalImageUrl : processedImageUrl}
@@ -366,13 +319,6 @@ export function ImageDiffViewer({
           )}
         </div>
       </ScrollArea>
-
-      {/* 底部说明 */}
-      <div className="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 rounded-b-xl">
-        <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-          {t('imageDiff.description')}
-        </p>
-      </div>
     </div>
   );
 }
