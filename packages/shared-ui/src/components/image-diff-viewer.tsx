@@ -213,7 +213,7 @@ export function ImageDiffViewer({
                 className="relative w-fit mx-0 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm"
                 style={{
                   maxWidth: "100%",
-                  height: "80vh", // 最大高度为视口高度的80%
+                  maxHeight: "80vh", // 最大高度为视口高度的80%
                 }}
               >
                 {/* 原始图片 - 固定在底部 */}
@@ -224,10 +224,9 @@ export function ImageDiffViewer({
                   style={{
                     userSelect: "none",
                     pointerEvents: "none",
-                    clipPath: `inset(0 ${100-left}% 0 0 )`,
+                    clipPath: `inset(0 ${100 - left}% 0 0 )`,
                   }}
                 />
-
                 <div className="absolute inset-0 flex justify-center items-center w-full h-full">
                   <img
                     src={processedImageUrl}
