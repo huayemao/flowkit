@@ -367,6 +367,7 @@ export function AutoTrimImage() {
               
               {/* 图片差异查看器 */}
               <ImageDiffViewer
+                title={t('autoTrimImage.processResult')}
                 originalImageUrl={URL.createObjectURL(selectedImage.originalFile)}
                 processedImageUrl={selectedImage.url}
                 onClose={handleCloseDiffViewer}

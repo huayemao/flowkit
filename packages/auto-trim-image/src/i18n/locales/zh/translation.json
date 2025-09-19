@@ -3,6 +3,7 @@
     "title": "自动裁剪图片",
     "description": "自动识别图片边缘并裁剪多余空白区域",
     "batchUpload": "批量上传图片",
+    "processResult": "处理结果",
     "imagesSelected": "已选择 {{count}} 张图片",
     "imagesProcessed": "已处理 {{count}} 张图片",
     "clear": "清空",

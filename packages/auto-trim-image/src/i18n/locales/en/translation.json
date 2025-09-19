@@ -3,6 +3,7 @@
     "title": "Auto Trim Image",
     "description": "Automatically identify image edges and crop excess blank areas",
     "batchUpload": "Batch Upload Images",
+    "processResult": "Process Result",
     "imagesSelected": "{{count}} images selected",
     "imagesProcessed": "{{count}} images processed",
     "clear": "Clear",
