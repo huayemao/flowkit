@@ -18,10 +18,10 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "pnpm run generate-exports &&tsc && vite build",
+    "watch": "tsc -w & vite build --watch",
     "preview": "vite preview",
-    "generate-exports": "node generate-exports.js",
-    "postinstall": "npm run generate-exports"
+    "generate-exports": "node generate-exports.js"
   },
   "peerDependencies": {
     "react": "^18.3.1",
