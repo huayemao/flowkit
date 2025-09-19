@@ -1,6 +1,6 @@
 [package]
 name = "auto-trim-image"
-version = "0.2.9"
+version = "0.3.1"
 description = "A Tauri App for Auto Trim Image"
 authors = ["you"]
 edition = "2021"
