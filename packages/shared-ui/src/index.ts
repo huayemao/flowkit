@@ -1,14 +1,22 @@
 import './index.css'
 
+
 // UI 组件
-export { Button } from './components/button'
-export { Input } from './components/input'
-export { ScrollArea } from './components/scroll-area'
+export * from './components/button'
+export * from './components/dialog-lite'
+export * from './components/dialog'
+export * from './components/dropdown-menu'
+export * from './components/image-batch-uploader'
+export * from './components/image-diff-viewer'
+export * from './components/input'
+export * from './components/language-switcher'
 export * from './components/resizable'
-export { ImageBatchUploader } from './components/image-batch-uploader'
-export { ThemeToggle } from './components/theme-toggle'
-export { Toaster } from './components/sonner'
-export { ImageDiffViewer } from './components/image-diff-viewer'
+export * from './components/scroll-area'
+export * from './components/sonner'
+export * from './components/tabs'
+export * from './components/theme-toggle'
+
+
 
 // 通知和工具
 export { toast } from 'sonner'
