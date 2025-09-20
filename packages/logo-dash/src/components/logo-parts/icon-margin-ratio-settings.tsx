@@ -1,4 +1,5 @@
 import React from 'react';
+import { Slider } from '@flowkit/shared-ui';
 
 interface IconMarginRatioSettingsProps {
   iconMarginRatio: number;
@@ -18,14 +19,13 @@ export const IconMarginRatioSettings: React.FC<IconMarginRatioSettingsProps> = (
     <div className="space-y-3">
       <h2 className="text-lg font-semibold">{t('logoDash.iconMarginRatio')}</h2>
       <div className="flex items-center gap-3">
-        <input
-          type="range"
-          min="0"
-          max="0.4"
-          step="0.05"
-          value={iconMarginRatio}
-          onChange={(e) => onIconMarginRatioChange(parseFloat(e.target.value))}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        <Slider
+          min={0}
+          max={0.4}
+          step={0.05}
+          value={[iconMarginRatio]}
+          onValueChange={([value]) => onIconMarginRatioChange(value)}
+          className="w-full"
         />
         <span className="w-16 text-center font-medium">{percentageValue}%</span>
       </div>

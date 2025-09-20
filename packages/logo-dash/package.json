@@ -17,14 +17,15 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "build:lib": "tsc && vite build",
-    "build:demo": "vite build --config vite.config.app.ts",
-    "preview": "vite preview",
+    "dev": "pnpm run build:shared-ui && vite",
+    "build": "pnpm run build:shared-ui && tsc && vite build",
+    "build:lib": "pnpm run build:shared-ui && tsc && vite build",
+    "build:demo": "pnpm run build:shared-ui && vite build --config vite.config.app.ts",
+    "preview": "pnpm run build:shared-ui && vite preview",
     "tauri": "tauri",
-    "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build"
+    "tauri:dev": "pnpm run build:shared-ui && tauri dev",
+    "tauri:build": "pnpm run build:shared-ui && tauri build",
+    "build:shared-ui": "cd ../../ && pnpm run build:shared-ui"
   },
   "dependencies": {
     "@flowkit/shared-ui": "workspace:^1.0.0",
