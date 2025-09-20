@@ -1,6 +1,6 @@
 {
   "name": "@flowkit/image-compare-pro",
-  "version": "0.1.0",
+  "version": "0.3.2",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -25,7 +25,8 @@
     "tauri": "tauri",
     "tauri:dev": "pnpm run build:shared-ui && tauri dev",
     "tauri:build": "pnpm run build:shared-ui && tauri build",
-    "build:shared-ui": "cd ../../ && pnpm run build:shared-ui"
+    "build:shared-ui": "cd ../../ && pnpm run build:shared-ui",
+    "update-version": "node update-version.cjs"
   },
   "dependencies": {
     "@flowkit/shared-ui": "workspace:^1.0.0",
