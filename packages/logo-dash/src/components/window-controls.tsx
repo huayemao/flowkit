@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // 检查是否在 Tauri 环境中
-const isTauri = true;
+const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 
 export function WindowControls() {
   const [isMaximized, setIsMaximized] = useState(false);
@@ -60,7 +60,11 @@ export function WindowControls() {
     await appWindow.close();
   };
 
-  // 更新返回部分
+  // 只有在 Tauri 环境中才渲染窗口控制按钮
+  if (!isTauri) {
+    return null;
+  }
+
   return (
     <div className="flex items-center">
       <button
@@ -80,11 +84,11 @@ export function WindowControls() {
       >
         {isMaximized ? (
           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M4 4h16v16H4V4zm2 2v12h12V6H6z" />
+            <path d="M8 8H5v11h11v-3h3v-3h-3v-3h3V8h-3V5h-3v3H8v3z" />
           </svg>
         ) : (
           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M4 4h16v16H4V4zm2 2v12h12V6H6z" />
+            <path d="M14 14H8v-4h6V8l6 6-6 6v-4zm8-10V7h-3V4H3v3H0v10h3v3h18v-3h3V4h-3z" />
           </svg>
         )}
       </button>
