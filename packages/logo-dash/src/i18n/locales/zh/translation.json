@@ -28,7 +28,16 @@
 
   },
   "logoDash": {
-    "title": "Logo制作工具",
+    "title": "LogoDash - Logo设计工具 | 轻松创建专业标志",
+    "description": "LogoDash 是一款专业的 Logo 设计工具，帮助您快速创建精美、专业的标志，支持自定义背景、图标、文字等元素。",
+    "keywords": "Logo设计,标志制作,Logo工具,专业Logo,Logo生成器,免费Logo设计",
+    "author": "FlowKit Team",
+    "copyright": "© 2024 FlowKit",
+    "ogTitle": "LogoDash - Logo设计工具",
+    "ogDescription": "LogoDash 是一款专业的 Logo 设计工具，帮助您快速创建精美、专业的标志。",
+    "twitterTitle": "LogoDash - Logo设计工具",
+    "twitterDescription": "LogoDash 是一款专业的 Logo 设计工具，帮助您快速创建精美、专业的标志。",
+    "canonicalUrl": "./",
     "background": "背景",
     "icon": "图标",
     "text": "文字",

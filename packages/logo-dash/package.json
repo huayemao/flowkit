@@ -26,7 +26,7 @@
     "tauri:dev": "pnpm run build:shared-ui && tauri dev",
     "tauri:build": "pnpm run build:shared-ui && tauri build",
     "build:shared-ui": "cd ../../ && pnpm run build:shared-ui",
-    "build:multilingual": "node scripts/build-multilingual.js"
+    "build:multilingual": "pnpm run build:demo && node scripts/build-multilingual.js"
   },
   "dependencies": {
     "@flowkit/shared-ui": "workspace:^1.0.0",

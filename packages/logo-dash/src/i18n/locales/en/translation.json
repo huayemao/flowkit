@@ -28,7 +28,16 @@
 
   },
   "logoDash": {
-    "title": "LogoDash",
+    "title": "LogoDash - Logo Design Tool",
+    "description": "Logo design tool, create professional logos easily",
+    "keywords": "logo design, logo maker, design tool, professional logo, logo generator, free logo design",
+    "author": "FlowKit Team",
+    "copyright": "© 2024 FlowKit",
+    "ogTitle": "LogoDash - Logo Design Tool",
+    "ogDescription": "Logo design tool, create professional logos easily",
+    "twitterTitle": "LogoDash - Logo Design Tool",
+    "twitterDescription": "Logo design tool, create professional logos easily",
+    "canonicalUrl": "./",
     "background": "Background",
     "icon": "Icon",
     "text": "Text",
