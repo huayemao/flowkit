@@ -29,6 +29,7 @@
   },
   "logoDash": {
     "title": "LogoDash",
+    "description": "Logo design tool, create professional logos easily",
     "background": "Background",
     "icon": "Icon",
     "text": "Text",

@@ -9,9 +9,14 @@ async function main() {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
 
-  // 支持的语言
+  // 支持的语言和语言代码映射
   const supportedLangs = ['en', 'zh'];
   const defaultLang = 'en';
+  // 语言代码映射配置
+  const langCodeMap = {
+    'en': 'en-US',
+    'zh': 'zh-CN'
+  };
   const rootDir = resolve(__dirname, '..');
   const distDir = resolve(rootDir, 'dist-demo');
 
@@ -73,12 +78,20 @@ async function main() {
     
     // 修改HTML内容
     let modifiedHtml = defaultHtmlContent
-      // 设置lang属性
-      .replace('<html lang="zh-CN">', `<html lang="${lang === 'zh' ? 'zh-CN' : 'en-US'}">`)
+      // 设置lang属性 - 使用语言代码映射表
+      .replace(/<html lang="[^"]+">/, `<html lang="${langCodeMap[lang] || lang}">`)
       // 更新title和meta description
       .replace('<title>Auto Trim Image</title>', `<title>${logoDashTranslations.title || 'LogoDash'}</title>`)
-      .replace('<meta name="description" content="智能识别并去除图片周围的边框，支持批量处理" />', 
-               `<meta name="description" content="${logoDashTranslations.description || 'Logo design tool, create professional logos easily'}" />`);
+      .replace('<meta name="description" content="this is the description" />', 
+               `<meta name="description" content="${logoDashTranslations.description || translations.autoTrimImage?.description || 'Logo design tool, create professional logos easily'}" />`);
+    
+    // 对于非默认语言，修复静态资源路径，返回一级目录
+    if (lang !== defaultLang) {
+      modifiedHtml = modifiedHtml
+        .replace(/src=".\/assets\//g, 'src="../assets/')
+        .replace(/href=".\/assets\//g, 'href="../assets/')
+        .replace(/href="\/vite.svg/g, 'href="../vite.svg');
+    }
     
     // 写入修改后的HTML文件
     writeFileSync(htmlOutputPath, modifiedHtml, 'utf-8');

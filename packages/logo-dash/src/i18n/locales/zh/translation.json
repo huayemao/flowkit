@@ -29,6 +29,7 @@
   },
   "logoDash": {
     "title": "Logo制作工具",
+    "description": "Logo设计工具，轻松创建专业标志",
     "background": "背景",
     "icon": "图标",
     "text": "文字",
