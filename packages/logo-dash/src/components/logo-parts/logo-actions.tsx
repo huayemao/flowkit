@@ -24,7 +24,6 @@ export const LogoActions: React.FC<LogoActionsProps> = ({
   isGridVisible,
   onCopyToClipboard,
   onGenerateRandomLogo,
-  onToggleGrid,
   onExportAsPNG,
   onExportAsSVG,
   onImportTemplate,
@@ -55,15 +54,7 @@ export const LogoActions: React.FC<LogoActionsProps> = ({
           <Layout size={16} />
           {t('logoDash.random')}
         </Button>
-        
-        <Button 
-          onClick={onToggleGrid}
-          variant="secondary"
-          size="sm"
-          className="flex items-center gap-1"
-        >
-          {isGridVisible ? '隐藏网格' : '显示网格'}
-        </Button>
+
       </div>
       
       <div className="flex flex-col gap-3 w-full">

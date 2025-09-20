@@ -119,7 +119,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
     isCustomColor: false,
     customBackgroundColor: "#4F46E5",
     isGradient: true,
-    sizePreset: "medium",
+    sizePreset: "small",
     customSize: { width: 512, height: 512 },
     lineThickness: 2,
     iconMarginRatio: 0.2, // 默认边距比例为20%
@@ -241,7 +241,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
   };
 
   return (
-    <div className={`flex flex-col min-h-screen p-4 sm:p-6 ${className || ""}`}>
+    <div className={`flex flex-col min-h-full p-4 sm:p-6 ${className || ""}`}>
       <Toaster />
 
       <div className="max-w-6xl mx-auto w-full">
@@ -268,7 +268,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
 
           {/* 右侧：设置区域 */}
           <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-            <ScrollArea className="h-[500px]">
+            <ScrollArea>
               <div className="space-y-6">
                 <BackgroundSettings
                   isGradient={config.isGradient}
@@ -313,13 +313,13 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
                   t={t}
                 />
 
-                <SizeSettings
+                {/* <SizeSettings
                   sizePreset={config.sizePreset}
                   customSize={config.customSize}
                   onSizePresetChange={handleSizePresetChange}
                   onCustomSizeChange={handleCustomSizeChange}
                   t={t}
-                />
+                /> */}
               </div>
             </ScrollArea>
           </div>

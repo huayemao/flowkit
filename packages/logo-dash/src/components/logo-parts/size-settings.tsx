@@ -23,8 +23,8 @@ export const SizeSettings: React.FC<SizeSettingsProps> = ({
         <Button 
           onClick={() => onSizePresetChange('small')}
           variant={sizePreset === 'small' ? 'default' : 'secondary'}
-          size="sm"
-          className="aspect-video flex flex-col justify-center"
+          size="lg"
+          className="aspect-video flex flex-col justify-around"
         >
           <span className="text-sm">{t('logoDash.small')}</span>
           <span className="text-xs text-gray-500">256 × 256</span>
@@ -32,8 +32,8 @@ export const SizeSettings: React.FC<SizeSettingsProps> = ({
         <Button 
           onClick={() => onSizePresetChange('medium')}
           variant={sizePreset === 'medium' ? 'default' : 'secondary'}
-          size="sm"
-          className="aspect-video flex flex-col justify-center"
+          size="lg"
+          className="aspect-video flex flex-col justify-around"
         >
           <span className="text-sm">{t('logoDash.medium')}</span>
           <span className="text-xs text-gray-500">512 × 512</span>
@@ -41,8 +41,8 @@ export const SizeSettings: React.FC<SizeSettingsProps> = ({
         <Button 
           onClick={() => onSizePresetChange('large')}
           variant={sizePreset === 'large' ? 'default' : 'secondary'}
-          size="sm"
-          className="aspect-video flex flex-col justify-center"
+          size="lg"
+          className="aspect-video flex flex-col justify-around"
         >
           <span className="text-sm">{t('logoDash.large')}</span>
           <span className="text-xs text-gray-500">1024 × 1024</span>
@@ -50,7 +50,7 @@ export const SizeSettings: React.FC<SizeSettingsProps> = ({
         <Button 
           onClick={() => onSizePresetChange('custom')}
           variant={sizePreset === 'custom' ? 'default' : 'secondary'}
-          size="sm"
+          size="lg"
           className="aspect-video flex items-center justify-center"
         >
           {t('logoDash.custom')}
