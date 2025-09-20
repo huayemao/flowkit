@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "i-trim",
+  "version": "0.3.0",
+  "identifier": "i-trim.huayemao.run",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:5173",
+    "beforeBuildCommand": "npx vite build --config vite.config.app.ts",
+    "frontendDist": "../dist-demo"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "i-trim",
+        "width": 1000,
+        "height": 720,
+        "minWidth": 800,
+        "minHeight": 600,
+        "maximized": false,
+        "dragDropEnabled": false,
+        "acceptFirstMouse": true,
+        "decorations": false,
+        "transparent": true,
+        "shadow": true,
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}
