@@ -13,6 +13,7 @@ import { SizeSettings } from "./logo-parts/size-settings";
 import { LogoPreview } from "./logo-parts/logo-preview";
 import { LogoActions } from "./logo-parts/logo-actions";
 import { LineThicknessSettings } from "./logo-parts/line-thickness-settings";
+import { IconMarginRatioSettings } from "./logo-parts/icon-margin-ratio-settings";
 import ReactDOM from "react-dom";
 
 // 导入类型和工具函数
@@ -121,6 +122,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
     sizePreset: "medium",
     customSize: { width: 512, height: 512 },
     lineThickness: 2,
+    iconMarginRatio: 0.2, // 默认边距比例为20%
   });
 
   const [showIconPicker, setShowIconPicker] = useState<boolean>(false);
@@ -185,6 +187,11 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
   // 处理线条粗细变化
   const handleLineThicknessChange = (thickness: number) => {
     setConfig((prev) => ({ ...prev, lineThickness: thickness }));
+  };
+
+  // 处理图标边距比例变化
+  const handleIconMarginRatioChange = (ratio: number) => {
+    setConfig((prev) => ({ ...prev, iconMarginRatio: ratio }));
   };
 
   // 导出为 PNG
@@ -289,6 +296,12 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
                 <LineThicknessSettings
                   lineThickness={config.lineThickness}
                   onLineThicknessChange={handleLineThicknessChange}
+                  t={t}
+                />
+
+                <IconMarginRatioSettings
+                  iconMarginRatio={config.iconMarginRatio}
+                  onIconMarginRatioChange={handleIconMarginRatioChange}
                   t={t}
                 />
 

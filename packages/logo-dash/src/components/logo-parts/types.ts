@@ -22,6 +22,7 @@ export interface LogoConfig {
   sizePreset: 'small' | 'medium' | 'large' | 'custom';
   customSize: { width: number; height: number };
   lineThickness: number; // 线条粗细，默认值为1
+  iconMarginRatio: number; // 图标与边框的边距比例，默认值为0.2
 }
 
 // 定义Logo尺寸接口

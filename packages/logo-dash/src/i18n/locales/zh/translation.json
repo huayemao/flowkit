@@ -65,7 +65,9 @@
     "selectIcon": "选择图标",
     "searchIcons": "搜索图标...",
     "noIconsFound": "未找到图标",
-    "searching": "搜索中..."
+    "searching": "搜索中...",
+    "iconMarginRatio": "图标边距比例",
+    "lineThickness": "线宽"
   },
   "common": {
     "processing": "处理中",

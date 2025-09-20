@@ -20,7 +20,6 @@ interface LogoActionsProps {
 }
 
 export const LogoActions: React.FC<LogoActionsProps> = ({
-  config,
   isLoading,
   isGridVisible,
   onCopyToClipboard,
@@ -30,6 +29,7 @@ export const LogoActions: React.FC<LogoActionsProps> = ({
   onExportAsSVG,
   onImportTemplate,
   onSaveAsTemplate,
+  // @ts-ignore
   onLogoCreated,
   t
 }) => {

@@ -65,7 +65,9 @@
     "selectIcon": "Select Icon",
     "searchIcons": "Search icons...",
     "noIconsFound": "No icons found",
-    "searching": "Searching..."
+    "searching": "Searching...",
+    "iconMarginRatio": "Icon Margin Ratio",
+    "lineThickness": "Line Thickness"
   },
   "common": {
     "processing": "Processing",

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import ReactDOMServer from 'react-dom/server';
 import ReactDOM from 'react-dom';
 import * as LucideIcons from 'lucide-react';
 import { LogoConfig } from './types';
@@ -40,7 +39,8 @@ export const LogoPreview: React.FC<LogoPreviewProps> = ({ config, isGridVisible 
 
     // 创建图标
     const IconComponent = LucideIcons[config.icon as keyof typeof LucideIcons] || LucideIcons['Download'];
-    const iconSize = Math.min(size.width, size.height) * 0.4;
+    // 使用iconMarginRatio来计算图标大小，实现边距效果
+    const iconSize = Math.min(size.width, size.height) * (1 - 2 * config.iconMarginRatio);
     const iconElement = React.createElement(IconComponent as any, {
       className: 'text-white',
       size: iconSize,

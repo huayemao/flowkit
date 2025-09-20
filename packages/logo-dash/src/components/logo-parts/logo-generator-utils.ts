@@ -53,5 +53,7 @@ export const generateRandomLogoConfig = (
     // 30% 的概率添加随机文字
     customText: Math.random() > 0.7 ? generateRandomText() : '',
     textColor: Math.random() > 0.5 ? '#FFFFFF' : '#000000',
+    // 保持当前的图标边距比例不变
+    iconMarginRatio: currentConfig.iconMarginRatio,
   };
 };

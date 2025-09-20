@@ -44,7 +44,8 @@ export const exportAsPNG = async (
     // 绘制图标
     // @ts-ignore
     const IconComponent = LucideIcons[config.icon as IconKey] || LucideIcons['Download'];
-    const iconSize = Math.min(size.width, size.height) * 0.4;
+    // 图标大小 = 最小尺寸 * (1 - 2 * 边距比例)，确保图标在边距内
+    const iconSize = Math.min(size.width, size.height) * (1 - 2 * config.iconMarginRatio);
     const iconCanvas = document.createElement('canvas');
     iconCanvas.width = iconSize;
     iconCanvas.height = iconSize;
@@ -132,7 +133,8 @@ export const exportAsSVG = async (
 ): Promise<void> => {
   try {
     const size = getSizeByPreset(config.sizePreset, config.customSize);
-    const iconSize = Math.min(size.width, size.height) * 0.4;
+    // 图标大小 = 最小尺寸 * (1 - 2 * 边距比例)，确保图标在边距内
+    const iconSize = Math.min(size.width, size.height) * (1 - 2 * config.iconMarginRatio);
     const textSize = Math.min(size.width, size.height) * 0.12;
 
     // 创建 SVG 内容
@@ -242,7 +244,8 @@ export const copyToClipboard = async (
     // 绘制图标
     // @ts-ignore
     const IconComponent = LucideIcons[config.icon as IconKey] || LucideIcons['Download'];
-    const iconSize = Math.min(size.width, size.height) * 0.4;
+    // 图标大小 = 最小尺寸 * (1 - 2 * 边距比例)，确保图标在边距内
+    const iconSize = Math.min(size.width, size.height) * (1 - 2 * config.iconMarginRatio);
     const iconSvg = React.createElement(IconComponent as any, {
       size: iconSize,
       color: config.iconColor,
