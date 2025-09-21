@@ -25,9 +25,8 @@ export const generateRandomText = (): string => {
     'Lab',
     'Creative',
   ];
-  return `${adjectives[Math.floor(Math.random() * adjectives.length)]}${
-    nouns[Math.floor(Math.random() * nouns.length)]
-  }`;
+  return `${adjectives[Math.floor(Math.random() * adjectives.length)]}${nouns[Math.floor(Math.random() * nouns.length)]
+    }`;
 };
 
 /**
@@ -49,10 +48,10 @@ export const generateRandomLogoConfig = (
     icon: randomIcon,
     isGradient: Math.random() > 0.3,
     isCustomColor: false,
-    iconColor: Math.random() > 0.5 ? '#FFFFFF' : '#000000',
+    iconColor: '#FFFFFF',
     // 30% 的概率添加随机文字
     customText: Math.random() > 0.7 ? generateRandomText() : '',
-    textColor: Math.random() > 0.5 ? '#FFFFFF' : '#000000',
+    textColor: '#FFFFFF',
     // 保持当前的图标边距比例不变
     iconMarginRatio: currentConfig.iconMarginRatio,
   };
