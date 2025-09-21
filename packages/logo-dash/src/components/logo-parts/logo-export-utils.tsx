@@ -137,70 +137,74 @@ export const exportAsSVG = async (
     const iconSize = Math.min(size.width, size.height) * (1 - 2 * config.iconMarginRatio);
     const textSize = Math.min(size.width, size.height) * 0.12;
 
-    // 创建 SVG 内容
-    let svgContent = `<svg width="${size.width}" height="${size.height}" xmlns="http://www.w3.org/2000/svg">`;
-
-    // 添加背景
-    if (config.isGradient && !config.isCustomColor) {
-      svgContent += '<defs>';
-      svgContent += `<linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">`;
-      const colors = getGradientColors(config.gradientStyle);
-      svgContent += `<stop offset="0%" stop-color="${colors.startColor}"/>`;
-      svgContent += `<stop offset="100%" stop-color="${colors.endColor}"/>`;
-      svgContent += '</linearGradient>';
-      svgContent += '</defs>';
-      svgContent += `<rect width="100%" height="100%" rx="12" fill="url(#gradient)"/>`;
-    } else {
-      svgContent += `<rect width="100%" height="100%" rx="12" fill="${config.isCustomColor ? config.customBackgroundColor : '#4F46E5'
-        }"/>`;
-    }
-
-    // 添加图标
-    // @ts-ignore
-    const IconComponent = LucideIcons[config.icon as IconKey] || LucideIcons['Download'];
-    const iconSvg = React.createElement(IconComponent as any, {
-      size: iconSize,
-      color: config.iconColor,
-      strokeWidth: config.lineThickness,
-    });
-    const iconString = ReactDOMServer.renderToString(iconSvg);
-    const parser = new DOMParser();
-    const iconDoc = parser.parseFromString(iconString, 'image/svg+xml');
-    const svgElement = iconDoc.querySelector('svg');
-
-    if (svgElement) {
-      // 提取有用的属性，但排除会导致重复定义的属性（如xmlns）
-      const iconAttributes = Array.from(svgElement.attributes)
-        .filter(attr => ['width', 'height', 'viewBox', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin'].includes(attr.name))
-        .map(attr => `${attr.name}="${attr.value}"`)
-        .join(' ');
+    // 创建SVG组件
+    const SvgLogo = () => {
+      // @ts-ignore
+      const IconComponent = LucideIcons[config.icon as IconKey] || LucideIcons['Download'];
       
-      // 提取内部内容，并处理stroke和fill属性
-      let iconContent = svgElement.innerHTML;
-      
-      // 处理currentColor
-      iconContent = iconContent.replace(/stroke="currentColor"/g, `stroke="${config.iconColor}"`);
-      
-      // 移除内部元素中的xmlns属性
-      iconContent = iconContent.replace(/xmlns="http:\/\/www\.w3\.org\/2000\/svg"/g, '');
-      
-      // 保留fill="none"属性，确保图标为线条风格
-      const hasFillNone = svgElement.outerHTML.includes('fill="none"');
+      // 计算图标位置和缩放
+      const scale = 1; // React SVG图标会自动处理缩放
+      const iconProps = {
+        size: iconSize,
+        color: config.iconColor,
+        strokeWidth: config.lineThickness,
+        style: {
+          transform: `translate(${(size.width - iconSize) / 2}px, ${(size.height - iconSize) / 2}px)`
+        }
+      };
 
-      svgContent += `<g transform="translate(${(size.width - iconSize) / 2}, ${(size.height - iconSize) / 2})">`;
-      svgContent += `<g ${hasFillNone ? 'fill="none"' : `fill="${config.iconColor}"`} ${iconAttributes}>`;
-      svgContent += iconContent;
-      svgContent += '</g></g>';
-    }
+      return (
+        <svg width={size.width} height={size.height} xmlns="http://www.w3.org/2000/svg">
+          {/* 背景 */}
+          {config.isGradient && !config.isCustomColor ? (
+            <>
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  {(() => {
+                    const colors = getGradientColors(config.gradientStyle);
+                    return (
+                      <>
+                        <stop offset="0%" stopColor={colors.startColor} />
+                        <stop offset="100%" stopColor={colors.endColor} />
+                      </>
+                    );
+                  })()}
+                </linearGradient>
+              </defs>
+              <rect width="100%" height="100%" rx="12" fill="url(#gradient)" />
+            </>
+          ) : (
+            <rect 
+              width="100%" 
+              height="100%" 
+              rx="12" 
+              fill={config.isCustomColor ? config.customBackgroundColor : '#4F46E5'}
+            />
+          )}
 
-    // 添加文字
-    if (config.customText) {
-      svgContent += `<text x="${size.width / 2}" y="${size.height - textSize / 2
-        }" font-family="Arial" font-weight="bold" font-size="${textSize}" fill="${config.textColor
-        }" text-anchor="middle">${config.customText}</text>`;
-    }
+          {/* 图标 */}
+          <IconComponent {...iconProps} />
 
-    svgContent += '</svg>';
+          {/* 文字 */}
+          {config.customText && (
+            <text 
+              x={size.width / 2} 
+              y={size.height - textSize / 2} 
+              fontFamily="Arial" 
+              fontWeight="bold" 
+              fontSize={textSize} 
+              fill={config.textColor}
+              textAnchor="middle"
+            >
+              {config.customText}
+            </text>
+          )}
+        </svg>
+      );
+    };
+
+    // 使用ReactDOMServer渲染SVG组件
+    const svgContent = ReactDOMServer.renderToString(<SvgLogo />);
 
     // 使用 Web API 下载文件
     const blob = new Blob([svgContent], { type: 'image/svg+xml' });
