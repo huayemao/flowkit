@@ -81,12 +81,12 @@ export const IconPicker: React.FC<IconPickerProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle>{t('logoDash.selectIcon')}</DialogTitle>
+      <DialogContent className="sm:max-w-[600px] min-w-[300px] max-h-[90vh] overflow-hidden flex flex-col">
+        <DialogHeader className="pb-2 border-b">
+          <DialogTitle className="text-lg font-semibold">{t('logoDash.selectIcon')}</DialogTitle>
         </DialogHeader>
         
-        <div className="py-4">
+        <div className="py-4 flex-grow flex flex-col min-h-0">
           {/* 搜索框 */}
           <div className="mb-4">
             <Input
@@ -99,14 +99,14 @@ export const IconPicker: React.FC<IconPickerProps> = ({
           
           {/* 分类标签 - 只在没有搜索时显示 */}
           {!searchTerm.trim() && (
-            <div className="flex overflow-x-auto gap-2 mb-4 pb-2">
+            <div className="flex overflow-x-auto gap-2 mb-4 pb-2 pr-1 -mx-1 px-1 scrollbar-thin scrollbar-thumb-muted">
               {Object.keys(iconCategories).map(category => (
                 <Button
                   key={category}
                   onClick={() => onSelectCategory(category)}
                   variant={selectedCategory === category ? 'default' : 'secondary'}
                   size="sm"
-                  className="whitespace-nowrap"
+                  className="whitespace-nowrap transition-all hover:scale-105"
                 >
                   {category.charAt(0).toUpperCase() + category.slice(1)}
                 </Button>
@@ -115,11 +115,11 @@ export const IconPicker: React.FC<IconPickerProps> = ({
           )}
           
           {/* 图标网格 - 如果有搜索结果，显示搜索结果，否则显示当前分类的图标 */}
-          <div className="grid grid-cols-5 gap-3 max-h-[400px] overflow-y-auto">
+          <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-7 gap-2 flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-muted">
             {/* 显示加载中状态 */}
             {isSearching && searchTerm.trim().length >= 2 ? (
-              <div className="col-span-5 flex justify-center items-center h-[400px]">
-                <div className="flex flex-col items-center space-y-2">
+              <div className="col-span-full flex justify-center items-center h-[300px]">
+                <div className="flex flex-col items-center space-y-3">
                   <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500"></div>
                   <span className="text-gray-500">{t('logoDash.searching')}</span>
                 </div>
@@ -138,14 +138,15 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                     onSelectIcon(iconName);
                     onOpenChange(false);
                   }}
-                  className={`p-3 rounded-lg flex flex-col items-center justify-center hover:bg-gray-100 transition-colors
-                    ${selectedIcon === iconName ? 'bg-indigo-100 text-indigo-600' : ''}`}
+                  className={`p-2 rounded-lg flex flex-col items-center justify-center hover:bg-gray-100 transition-all transform hover:scale-105
+                    ${selectedIcon === iconName ? 'bg-indigo-100 text-indigo-600 ring-2 ring-indigo-300' : ''}`}
                   title={iconName}
+                  aria-label={iconName}
                 >
-                  <DynamicIconComponent icon={iconName} size={24} />
-                  <span className="text-xs mt-2 truncate text-center w-full">{iconName}</span>
+                  <DynamicIconComponent icon={iconName} size={20} />
+                  <span className="text-xs mt-1 truncate text-center w-full line-clamp-1">{iconName}</span>
                   {searchTerm.trim().length >= 2 && (
-                    <span className="text-xs text-gray-500 truncate text-center w-full">
+                    <span className="text-xs text-gray-500 truncate text-center w-full line-clamp-1">
                       {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
                     </span>
                   )}
@@ -157,8 +158,12 @@ export const IconPicker: React.FC<IconPickerProps> = ({
           
           {/* 搜索结果为空时的提示 */}
           {debouncedSearchTerm.trim() && filteredIcons.length === 0 && (
-            <div className="text-center py-8 text-gray-500">
-              {t('logoDash.noIconsFound')}
+            <div className="flex-grow flex items-center justify-center p-8 text-gray-500">
+              <div className="text-center">
+                <div className="text-xl mb-2">🔍</div>
+                <p>{t('logoDash.noIconsFound')}</p>
+                <p className="text-sm mt-1">{t('logoDash.tryDifferentSearch') || '尝试其他关键词搜索'}</p>
+              </div>
             </div>
           )}
         </div>

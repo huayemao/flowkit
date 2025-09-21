@@ -25,9 +25,7 @@ import {
   importTemplate,
   saveAsTemplate,
 } from "./logo-parts/logo-export-utils";
-import {
-  generateRandomLogoConfig,
-} from "./logo-parts/logo-generator-utils";
+import { generateRandomLogoConfig } from "./logo-parts/logo-generator-utils";
 
 export interface LogoMakerProps {
   className?: string;
@@ -244,99 +242,97 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
     <div className={`flex flex-col min-h-full p-4 sm:p-6 ${className || ""}`}>
       <Toaster />
 
-      <div className="max-w-6xl mx-auto w-full">
-        {/* 主内容区域 - 两列布局 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {/* 左侧：预览区域 */}
-          <div className="flex flex-col items-center">
-            <LogoPreview config={config} isGridVisible={isGridVisible} />
-            <LogoActions
-              config={config}
-              isLoading={isLoading}
-              isGridVisible={isGridVisible}
-              onCopyToClipboard={handleCopyToClipboard}
-              onGenerateRandomLogo={generateRandomLogo}
-              onToggleGrid={toggleGrid}
-              onExportAsPNG={handleExportAsPNG}
-              onExportAsSVG={handleExportAsSVG}
-              onImportTemplate={handleImportTemplate}
-              onSaveAsTemplate={handleSaveAsTemplate}
-              onLogoCreated={onLogoCreated}
-              t={t}
-            />
-          </div>
+      {/* 主内容区域 - 两列布局 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        {/* 左侧：预览区域 */}
+        <div className="flex flex-col items-center">
+          <LogoPreview config={config} isGridVisible={isGridVisible} />
+          <LogoActions
+            config={config}
+            isLoading={isLoading}
+            isGridVisible={isGridVisible}
+            onCopyToClipboard={handleCopyToClipboard}
+            onGenerateRandomLogo={generateRandomLogo}
+            onToggleGrid={toggleGrid}
+            onExportAsPNG={handleExportAsPNG}
+            onExportAsSVG={handleExportAsSVG}
+            onImportTemplate={handleImportTemplate}
+            onSaveAsTemplate={handleSaveAsTemplate}
+            onLogoCreated={onLogoCreated}
+            t={t}
+          />
+        </div>
 
-          {/* 右侧：设置区域 */}
-          <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-            <ScrollArea>
-              <div className="space-y-6">
-                <BackgroundSettings
-                  isGradient={config.isGradient}
-                  gradientStyle={config.gradientStyle}
-                  isCustomColor={config.isCustomColor}
-                  customBackgroundColor={config.customBackgroundColor}
-                  onIsGradientChange={handleIsGradientChange}
-                  onGradientStyleChange={handleGradientStyleChange}
-                  onCustomBackgroundColorChange={
-                    handleCustomBackgroundColorChange
-                  }
-                  t={t}
-                />
+        {/* 右侧：设置区域 */}
+        <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
+          <ScrollArea>
+            <div className="space-y-6">
+              <BackgroundSettings
+                isGradient={config.isGradient}
+                gradientStyle={config.gradientStyle}
+                isCustomColor={config.isCustomColor}
+                customBackgroundColor={config.customBackgroundColor}
+                onIsGradientChange={handleIsGradientChange}
+                onGradientStyleChange={handleGradientStyleChange}
+                onCustomBackgroundColorChange={
+                  handleCustomBackgroundColorChange
+                }
+                t={t}
+              />
 
-                <IconSelector
-                  icon={config.icon}
-                  iconColor={config.iconColor}
-                  gradientStyle={config.gradientStyle}
-                  isCustomColor={config.isCustomColor}
-                  onOpenIconPicker={() => setShowIconPicker(true)}
-                  onIconColorChange={handleIconColorChange}
-                  t={t}
-                />
+              <IconSelector
+                icon={config.icon}
+                iconColor={config.iconColor}
+                gradientStyle={config.gradientStyle}
+                isCustomColor={config.isCustomColor}
+                onOpenIconPicker={() => setShowIconPicker(true)}
+                onIconColorChange={handleIconColorChange}
+                t={t}
+              />
 
-                <LineThicknessSettings
-                  lineThickness={config.lineThickness}
-                  onLineThicknessChange={handleLineThicknessChange}
-                  t={t}
-                />
+              <LineThicknessSettings
+                lineThickness={config.lineThickness}
+                onLineThicknessChange={handleLineThicknessChange}
+                t={t}
+              />
 
-                <IconMarginRatioSettings
-                  iconMarginRatio={config.iconMarginRatio}
-                  onIconMarginRatioChange={handleIconMarginRatioChange}
-                  t={t}
-                />
+              <IconMarginRatioSettings
+                iconMarginRatio={config.iconMarginRatio}
+                onIconMarginRatioChange={handleIconMarginRatioChange}
+                t={t}
+              />
 
-                <TextSettings
-                  customText={config.customText}
-                  textColor={config.textColor}
-                  onTextChange={handleTextChange}
-                  onTextColorChange={handleTextColorChange}
-                  t={t}
-                />
+              <TextSettings
+                customText={config.customText}
+                textColor={config.textColor}
+                onTextChange={handleTextChange}
+                onTextColorChange={handleTextColorChange}
+                t={t}
+              />
 
-                {/* <SizeSettings
+              {/* <SizeSettings
                   sizePreset={config.sizePreset}
                   customSize={config.customSize}
                   onSizePresetChange={handleSizePresetChange}
                   onCustomSizeChange={handleCustomSizeChange}
                   t={t}
                 /> */}
-              </div>
-            </ScrollArea>
-          </div>
+            </div>
+          </ScrollArea>
         </div>
-
-        {/* 图标选择器对话框 */}
-        <IconPicker
-          open={showIconPicker}
-          onOpenChange={setShowIconPicker}
-          selectedIcon={config.icon}
-          onSelectIcon={handleSelectIcon}
-          iconCategories={iconCategories}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          t={t}
-        />
       </div>
+
+      {/* 图标选择器对话框 */}
+      <IconPicker
+        open={showIconPicker}
+        onOpenChange={setShowIconPicker}
+        selectedIcon={config.icon}
+        onSelectIcon={handleSelectIcon}
+        iconCategories={iconCategories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        t={t}
+      />
     </div>
   );
 }
