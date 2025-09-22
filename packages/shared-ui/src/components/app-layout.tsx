@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
-import { LanguageSwitcher, ScrollArea, ThemeToggle } from '@flowkit/shared-ui';
 import { WindowControls } from './window-controls';
+import { ScrollArea } from './scroll-area';
+import { LanguageSwitcher } from './language-switcher';
+import { ThemeToggle } from './theme-toggle';
 
 interface AppLayoutProps {
   children: ReactNode;
