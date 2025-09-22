@@ -57,7 +57,7 @@ export const LogoActions: React.FC<LogoActionsProps> = ({
 
       </div>
       
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 w-2/3">
         <Button 
           onClick={onExportAsPNG}
           variant="default"
