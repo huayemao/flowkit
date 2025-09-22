@@ -100,7 +100,7 @@ export const iconCategories: IconCategories = {
 };
 
 iconCategories.other = validIcons.filter(
-  (icon) => !Object.values(iconCategories).flat().includes(icon)
+  (icon) => !icon.startsWith('Lucide') && !Object.values(iconCategories).flat().includes(icon)
 );
 
 export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
@@ -118,7 +118,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
     isGradient: true,
     sizePreset: "small",
     customSize: { width: 512, height: 512 },
-    lineThickness: 2,
+    lineThickness: 1,
     iconMarginRatio: 0.2, // 默认边距比例为20%
   });
 
