@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { LanguageSwitcher, ThemeToggle } from '@flowkit/shared-ui';
+import { LanguageSwitcher, ScrollArea, ThemeToggle } from '@flowkit/shared-ui';
 import { WindowControls } from './window-controls';
 
 interface AppLayoutProps {
@@ -16,10 +16,10 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         <div className="absolute inset-0 bg-gradient-to-br from-slate-50/95 via-white/95 to-slate-100/95 dark:from-gray-900/95 dark:via-gray-800/95 dark:to-gray-900/95 backdrop-blur-xl" />
 
         {/* 动态光效 */}
-        <div className="absolute top-0 -left-4 w-96 h-96 bg-purple-300 dark:bg-purple-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 dark:opacity-40 animate-float" />
-        <div className="absolute top-0 -right-4 w-96 h-96 bg-yellow-300 dark:bg-yellow-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 dark:opacity-40 animate-float-updown" />
-        <div className="absolute -bottom-8 left-20 w-96 h-96 bg-pink-300 dark:bg-pink-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 dark:opacity-40 animate-float-reverse" />
-        <div className="absolute -bottom-16 right-20 w-96 h-96 bg-pink-300 dark:bg-pink-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 dark:opacity-40 animate-float-updown" />
+        <div className="absolute top-0 -left-4 w-36 h-36 md:w-96 md:h-96 bg-purple-300 dark:bg-purple-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 dark:opacity-40 animate-float" />
+        <div className="absolute top-0 -right-4 w-36 h-36 md:w-96 md:h-96 bg-yellow-300 dark:bg-yellow-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 dark:opacity-40 animate-float-updown" />
+        <div className="absolute -bottom-8 left-20 w-36 h-36 md:w-96 md:h-96 bg-pink-300 dark:bg-pink-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 dark:opacity-40 animate-float-reverse" />
+        <div className="absolute -bottom-16 right-20 w-36 h-36 md:w-96 md:h-96 bg-pink-300 dark:bg-pink-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 dark:opacity-40 animate-float-updown" />
 
         {/* 网格背景 */}
         <div className="absolute inset-0 bg-grid-pattern opacity-5 dark:opacity-10" />
@@ -34,9 +34,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         <div className="h-12 w-full"></div>
 
         {/* 主内容区域 */}
-        <div className="w-full flex-1 flex flex-col items-center overflow-hidden">
+        <ScrollArea className="w-full flex-1 flex flex-col items-center overflow-hidden overflow-y-auto">
           {children}
-        </div>
+        </ScrollArea>
 
         {/* 顶部控制栏 */}
         <div data-tauri-drag-region className="w-full fixed top-0 left-0 right-0">

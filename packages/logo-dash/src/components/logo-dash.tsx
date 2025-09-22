@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "../i18n";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Toaster } from "@flowkit/shared-ui";
+import { Card, CardContent, CardHeader, CardTitle, Toaster } from "@flowkit/shared-ui";
 import * as LucideIcons from "lucide-react";
 
 // 导入所有子组件
@@ -245,7 +244,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
       {/* 主内容区域 - 两列布局 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {/* 左侧：预览区域 */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center justify-center">
           <LogoPreview config={config} isGridVisible={isGridVisible} />
           <LogoActions
             config={config}
@@ -264,22 +263,12 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
         </div>
 
         {/* 右侧：设置区域 */}
-        <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-          <ScrollArea>
-            <div className="space-y-6">
-              <BackgroundSettings
-                isGradient={config.isGradient}
-                gradientStyle={config.gradientStyle}
-                isCustomColor={config.isCustomColor}
-                customBackgroundColor={config.customBackgroundColor}
-                onIsGradientChange={handleIsGradientChange}
-                onGradientStyleChange={handleGradientStyleChange}
-                onCustomBackgroundColorChange={
-                  handleCustomBackgroundColorChange
-                }
-                t={t}
-              />
-
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t('logoDash.icon')}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
               <IconSelector
                 icon={config.icon}
                 iconColor={config.iconColor}
@@ -289,7 +278,6 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
                 onIconColorChange={handleIconColorChange}
                 t={t}
               />
-
               <LineThicknessSettings
                 lineThickness={config.lineThickness}
                 onLineThicknessChange={handleLineThicknessChange}
@@ -302,6 +290,34 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
                 t={t}
               />
 
+            </CardContent>
+            {/* <SizeSettings
+                  sizePreset={config.sizePreset}
+                  customSize={config.customSize}
+                  onSizePresetChange={handleSizePresetChange}
+                  onCustomSizeChange={handleCustomSizeChange}
+                  t={t}
+                /> */}
+          </Card>
+          <BackgroundSettings
+            isGradient={config.isGradient}
+            gradientStyle={config.gradientStyle}
+            isCustomColor={config.isCustomColor}
+            customBackgroundColor={config.customBackgroundColor}
+            onIsGradientChange={handleIsGradientChange}
+            onGradientStyleChange={handleGradientStyleChange}
+            onCustomBackgroundColorChange={
+              handleCustomBackgroundColorChange
+            }
+            t={t}
+          />
+
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{t('logoDash.text')}</CardTitle>
+            </CardHeader>
+            <CardContent>
               <TextSettings
                 customText={config.customText}
                 textColor={config.textColor}
@@ -309,16 +325,8 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
                 onTextColorChange={handleTextColorChange}
                 t={t}
               />
-
-              {/* <SizeSettings
-                  sizePreset={config.sizePreset}
-                  customSize={config.customSize}
-                  onSizePresetChange={handleSizePresetChange}
-                  onCustomSizeChange={handleCustomSizeChange}
-                  t={t}
-                /> */}
-            </div>
-          </ScrollArea>
+            </CardContent>
+          </Card>
         </div>
       </div>
 

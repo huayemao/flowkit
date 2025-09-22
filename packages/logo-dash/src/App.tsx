@@ -10,7 +10,7 @@ function App() {
   const { t } = useTranslation();
   return (
     <AppLayout>
-      <div className="max-w-7xl self-stretch lg:min-w-[960px]  mx-auto">
+      <div className="max-w-7xl self-stretch lg:min-w-[960px]  mx-auto w-full">
         <LogoDash />
       </div>
     </AppLayout>

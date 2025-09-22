@@ -34,7 +34,7 @@ export const LogoActions: React.FC<LogoActionsProps> = ({
 }) => {
   return (
     <>
-      <div className="flex gap-2 flex-wrap justify-center mb-6">
+      <div className="flex gap-2 flex-wrap justify-center  mb-6">
         <Button 
           onClick={onCopyToClipboard}
           variant="default"
@@ -49,7 +49,7 @@ export const LogoActions: React.FC<LogoActionsProps> = ({
           onClick={onGenerateRandomLogo}
           variant="secondary"
           size="sm"
-          className="flex items-center gap-1"
+          className="flex items-center gap-3"
         >
           <Layout size={16} />
           {t('logoDash.random')}
@@ -57,7 +57,7 @@ export const LogoActions: React.FC<LogoActionsProps> = ({
 
       </div>
       
-      <div className="flex flex-col gap-3 w-full">
+      <div className="flex flex-col gap-3">
         <Button 
           onClick={onExportAsPNG}
           variant="default"

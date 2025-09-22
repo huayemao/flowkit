@@ -17,7 +17,6 @@ export const TextSettings: React.FC<TextSettingsProps> = ({
 }) => {
   return (
     <div className="space-y-3">
-      <h2 className="text-lg font-semibold">{t('logoDash.text')}</h2>
       <input 
         type="text" 
         value={customText} 

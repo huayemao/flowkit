@@ -14,7 +14,7 @@ export const LineThicknessSettings: React.FC<LineThicknessSettingsProps> = ({
 }) => {
   return (
     <div className="space-y-3">
-      <h2 className="text-lg font-semibold">{t('logoDash.lineThickness')}</h2>
+      <h3 className="font-semibold">{t('logoDash.lineThickness')}</h3>
       <div className="flex items-center gap-3">
         <Slider
           min={0.5}

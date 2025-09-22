@@ -17,7 +17,7 @@ export const IconMarginRatioSettings: React.FC<IconMarginRatioSettingsProps> = (
   
   return (
     <div className="space-y-3">
-      <h2 className="text-lg font-semibold">{t('logoDash.iconMarginRatio')}</h2>
+      <h3 className="font-semibold">{t('logoDash.iconMarginRatio')}</h3>
       <div className="flex items-center gap-3">
         <Slider
           min={0}
