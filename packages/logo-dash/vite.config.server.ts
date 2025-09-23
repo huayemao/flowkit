@@ -5,10 +5,12 @@ import { resolve } from 'path'
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: 'dist-demo',
+    outDir: 'dist/server',
     rollupOptions: {
       input: resolve(__dirname, 'index.html'),
     },
+    ssrManifest: true,
+    ssr: "src/entry-server.tsx",
   },
   base: './',
 })

@@ -1,59 +1,18 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from "vite";
 import react from '@vitejs/plugin-react'
-import dts from 'vite-plugin-dts'
-import type { PluginOption } from 'vite'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
-
-// 库模式配置
-export const libConfig = defineConfig({
-  plugins: [
-    react() as PluginOption,
-    dts({
-      insertTypesEntry: true,
-    }),
-    viteStaticCopy({
-      targets: [
-        {
-          src: 'src/i18n/locales',
-          dest: 'i18n'
-        }
-      ]
-    }) as PluginOption
-  ],
-  build: {
-    lib: {
-      entry: './src/index.ts',
-      name: 'AutoTrimImage',
-      formats: ['es'],
-      fileName: 'index',
-    },
-    rollupOptions: {
-      external: ['react', 'react-dom', 'lucide-react', '@flowkit/shared-ui'],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          'lucide-react': 'LucideReact',
-          '@flowkit/shared-ui': 'SharedUI',
-        },
-      },
-    },
-    cssCodeSplit: false,
-  },
-})
+import { resolve } from 'path'
 
 // 应用模式配置
-export const appConfig = defineConfig({
+export default defineConfig({
   plugins: [
-    react() as PluginOption,
+    react(),
   ],
   build: {
-    outDir: 'dist-demo',
+    ssrManifest: ".vite/ssr-manifest.json",
+    outDir: "dist/static",
     rollupOptions: {
-      input: './index.html',
+      input: resolve(__dirname, 'index.html'),
     },
   },
+  base: './',
 })
-
-// 默认导出库模式
-export default libConfig

@@ -1,12 +1,20 @@
+import "./index.css";
+import "@flowkit/shared-ui/dist/index.css";
+import enTranslations from "./i18n/locales/en/translation.json";
+import zhTranslations from "./i18n/locales/zh/translation.json";
+
 import {
-  ThemeToggle,
-  LanguageSwitcher,
+  initI18n,
   useTranslation,
   AppLayout,
 } from "@flowkit/shared-ui";
 import { LogoDash } from "./components/logo-dash";
 
+initI18n({ zhTranslations, enTranslations });
+
+
 function App() {
+
   const { t } = useTranslation();
   return (
     <AppLayout>

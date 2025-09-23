@@ -13,6 +13,9 @@ const getSystemLanguage = () => {
 
 // 获取保存的语言或系统语言
 const getSavedLanguage = () => {
+  if (typeof window === 'undefined') {
+    return getSystemLanguage();
+  }
   const savedLanguage = localStorage.getItem('flowkit-language');
   if (savedLanguage && ['en', 'zh'].includes(savedLanguage)) {
     return savedLanguage;
