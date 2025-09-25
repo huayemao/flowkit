@@ -31,7 +31,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       </div>
 
       {/* 内容层 */}
-      <div className="fixed inset-0 h-screen z-10 flex flex-col items-center justify-around">
+      <div className="fixed inset-0 h-screen z-10 flex flex-col items-center justify-around ">
         {/* 顶部栏 - 标题栏区域 */}
         <div className="h-12 w-full"></div>
 
