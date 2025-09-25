@@ -7,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './dropdown-menu';
+import { supportedLanguages, languageDisplayNames, languageFlags } from '../i18n';
 
 export function LanguageSwitcher() {
   const { i18n, t } = useTranslation();
@@ -27,19 +28,17 @@ export function LanguageSwitcher() {
           <span className="sr-only">{t('common.language')}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem
-          onClick={() => changeLanguage('en')}
-          className={currentLanguage === 'en' ? 'bg-accent' : ''}
-        >
-          {t('common.english')}
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => changeLanguage('zh')}
-          className={currentLanguage === 'zh' ? 'bg-accent' : ''}
-        >
-          {t('common.chinese')}
-        </DropdownMenuItem>
+      <DropdownMenuContent align="end" className="w-48">
+        {supportedLanguages.map((lang) => (
+          <DropdownMenuItem
+            key={lang}
+            onClick={() => changeLanguage(lang)}
+            className={`flex items-center gap-2 ${currentLanguage === lang ? 'bg-accent' : ''}`}
+          >
+            <span className="w-6 text-center">{languageFlags[lang as keyof typeof languageFlags] || ''}</span>
+            <span>{languageDisplayNames[lang as keyof typeof languageDisplayNames] || lang}</span>
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
