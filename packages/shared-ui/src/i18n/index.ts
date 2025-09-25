@@ -115,7 +115,7 @@ export const initI18n = (translations?: {
   enTranslations?: any;
   zhTranslations?: any;
   [key: string]: any;
-}) => {
+}, defaultLanguage?: string) => {
   // 如果已经初始化，直接返回
   if (i18n.isInitialized) {
     return i18n;
@@ -155,7 +155,8 @@ export const initI18n = (translations?: {
     .use(initReactI18next)
     .init({
       resources,
-      lng: getSavedLanguage(),
+      // 优先使用传入的默认语言参数，如果没有则使用保存的语言
+      lng: defaultLanguage && supportedLanguages.includes(defaultLanguage) ? defaultLanguage : getSavedLanguage(),
       fallbackLng: 'en',
       debug: true,
       interpolation: {

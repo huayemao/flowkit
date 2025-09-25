@@ -30,7 +30,7 @@ export const preloadCommonTranslations = async () => {
         // 可以根据实际使用情况调整预加载的语言列表
         const translationPromises = languages.map(async (lang) => {
             const translations = await importTranslations(lang);
-            return { [lang+'Translations']: translations };
+            return { [lang + 'Translations']: translations };
         });
 
         const results = await Promise.all(translationPromises);
@@ -54,16 +54,16 @@ import zhTranslations from "./locales/zh/translation.json";
 export { enTranslations, zhTranslations };
 
 
-export const init18n = async () => {
+export const init18n = async (language?: string) => {
     try {
         // 预加载常用语言翻译
         const translations = await preloadCommonTranslations();
         // 初始化i18n
-        sharedInitI18n(translations);
+       return await sharedInitI18n(translations, language);
     } catch (error) {
         console.error('Failed to initialize i18n:', error);
         // 降级处理：仅使用英文
-        sharedInitI18n({});
+       return await sharedInitI18n({});
     }
 };
 

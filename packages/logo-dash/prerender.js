@@ -31,10 +31,12 @@ try {
     let render = (await import('./dist/server/entry-server.js')).render
 
     for (const route of routes) {
+                // 确定当前路由的语言
+        const lang = route === '/' ? 'en' : route.split('/')[1]
+
         const rendered = await render(route, languages)
 
-        // 确定当前路由的语言
-        const lang = route === '/' ? 'en' : route.split('/')[1]
+
 
         const html = template
             .replace(`<!--app-head-->`, rendered.head ?? '')

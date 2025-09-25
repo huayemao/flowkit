@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { renderToString } from 'react-dom/server'
 import App from './App'
+import { init18n } from './i18n'
 
 
 // 动态导入翻译文件
@@ -51,14 +52,16 @@ const getSeoContent = async (url: string) => {
 }
 
 export async function render(url: string, languages: string[]) {
+  const seoContent = await getSeoContent(url)
+  const i18nInstance = await init18n(seoContent.language)
+  i18nInstance.changeLanguage(seoContent.language)
   const html = renderToString(
     <StrictMode>
       <App />
     </StrictMode>,
   )
 
-  const seoContent = await getSeoContent(url)
-  
+
   // 计算base URL - 对于所有路由，使用根路径作为base URL
   // 这样所有资源路径都从根目录开始解析，解决二级目录下资源加载问题
   const baseUrl = '/'
