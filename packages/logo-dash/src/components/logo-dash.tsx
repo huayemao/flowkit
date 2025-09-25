@@ -109,7 +109,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
   // 状态管理
   const [config, setConfig] = useState<LogoConfig>({
     gradientStyle: "indigoToPurple",
-    icon: "Download",
+    icon: "Pickaxe",
     customText: "",
     textColor: "#FFFFFF",
     iconColor: "#FFFFFF",
@@ -247,10 +247,10 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
         <div className="flex flex-col items-center justify-center">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              {t('logoDash.title', { defaultValue: 'Logo Generator' })}
+              {t('logoDash.title').split('-')[0].trim()}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 max-w-md">
-              {t('logoDash.description', { defaultValue: 'Create professional logos with customizable icons, colors, and text in minutes.' })}
+              {t('logoDash.title').split('-').pop()?.trim()}
             </p>
           </div>
           <LogoPreview config={config} isGridVisible={isGridVisible} />
