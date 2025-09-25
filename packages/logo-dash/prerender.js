@@ -15,19 +15,27 @@ const templateHtml = fs.readFileSync('./dist/static/index.html', 'utf-8')
 // Serve HTML
 try {
 
+    // 动态获取所有支持的语言
+    const localesDir = path.resolve(__dirname, 'src/i18n/locales')
+    const languages = fs.readdirSync(localesDir).filter(name => {
+        const fullPath = path.join(localesDir, name)
+        return fs.statSync(fullPath).isDirectory()
+    })
+
+    // 为每种语言生成路由
+    const routes = ['/'].concat(languages.filter(lang => lang !== 'en').map(lang => `/${lang}`))
+
     /** @type {string} */
     let template = templateHtml
     /** @type {import('./src/entry-server.js').render} */
     let render = (await import('./dist/server/entry-server.js')).render
 
-    const routes = ['/','/zh']
-
     for (const route of routes) {
-        const rendered = await render(route)
+        const rendered = await render(route, languages)
 
         // 确定当前路由的语言
-        const lang = route === '/zh' ? 'zh' : 'en'
-        
+        const lang = route === '/' ? 'en' : route.split('/')[1]
+
         const html = template
             .replace(`<!--app-head-->`, rendered.head ?? '')
             .replace(`<!--app-html-->`, rendered.html ?? '')
