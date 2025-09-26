@@ -20,7 +20,6 @@
 
         clearTimeout(timeoutId);
 
-        console.log(response.ok,response.status,response.statusText)
         if (response.ok) {
           const endTime = performance.now();
           const contentLength = response.headers.get('content-length');

@@ -75,6 +75,8 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
         'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
         'https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4',
         'https://media.w3.org/2010/05/sintel/trailer.mp4',
+        'https://sf1-cdn-tos.huoshanstatic.com/obj/media-fe/xgplayer_doc_video/mp4/xgplayer-demo-360p.mp4',
+        'https://stream7.iqilu.com/10339/upload_transcode/202002/09/20200209105011F0zPoYzHry.mp4',
         'https://vjs.zencdn.net/v/oceans.mp4' // 保留原有的视频链接作为备选
       ];
 
