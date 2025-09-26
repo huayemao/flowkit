@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from '../i18n';
-import { Button } from '@flowkit/shared-ui';
-import { Card, CardContent } from '@flowkit/shared-ui';
-import { Progress } from '@flowkit/shared-ui';
-import { toast } from '@flowkit/shared-ui';
+  import { Button, Card, CardContent, Progress, toast } from '@flowkit/shared-ui';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@flowkit/shared-ui';
 import { VideoClip, VideoInfo, SplitMode } from '../types';
 import { loadFFmpeg, splitVideo } from '../services/ffmpegService';
@@ -84,6 +81,122 @@ const VideoSplitter: React.FC = () => {
     }
   };
 
+  // 加载示例视频
+  const [isLoadingSampleVideo, setIsLoadingSampleVideo] = useState<boolean>(false);
+  const [sampleVideoLoadProgress, setSampleVideoLoadProgress] = useState<number>(0);
+
+  const loadSampleVideo = async () => {
+    try {
+      setIsLoadingSampleVideo(true);
+      setSampleVideoLoadProgress(0);
+      
+      const sampleVideoUrl = 'https://vjs.zencdn.net/v/oceans.mp4';
+      
+      // 同时获取视频信息以填充videoInfo
+      const probeResponse = await fetch(sampleVideoUrl, {
+        method: 'HEAD'
+      });
+      const contentLength = probeResponse.headers.get('content-length');
+      
+      // 直接使用URL进行流式播放，让用户立即开始观看
+      setVideoUrl(sampleVideoUrl);
+      
+      // 创建一个虚拟文件对象，用于传递给handleFileSelect
+      const virtualFile = new File([new Blob()], 'oceans.mp4', { type: 'video/mp4' });
+      setVideoFile(virtualFile);
+      
+      // 设置基本的视频信息
+      setVideoInfo({
+        duration: 0, // 将在视频元数据加载后更新
+        size: contentLength ? parseInt(contentLength) : 0,
+        format: 'video/mp4',
+        resolution: '未知', // 将在视频元数据加载后更新
+        width: 0,
+        height: 0
+      });
+      
+      // 在后台异步加载完整的blob，加载完成后更新为blob URL
+      // 同时监控真实的加载进度
+      const controller = new AbortController();
+      const signal = controller.signal;
+      const expectedSize = contentLength ? parseInt(contentLength) : 0;
+      
+      fetch(sampleVideoUrl, { signal })
+        .then(response => {
+          const reader = response.body?.getReader();
+          if (!reader) {
+            throw new Error('Response body is not readable');
+          }
+          
+          let receivedLength = 0;
+          const chunks: Uint8Array[] = [];
+          
+          const readData = async () => {
+            try {
+              const { done, value } = await reader.read();
+              if (done) {
+                // 所有数据已读取完毕
+                const blob = new Blob(chunks);
+                const blobUrl = URL.createObjectURL(blob);
+                const actualFile = new File([blob], 'oceans.mp4', { type: 'video/mp4' });
+                
+                // 更新为blob URL和实际文件对象
+                setVideoUrl(blobUrl);
+                setVideoFile(actualFile);
+                
+                // 更新视频信息
+                if (contentLength) {
+                  setVideoInfo(prev => (prev ? { ...prev, size: parseInt(contentLength) } : prev));
+                }
+                
+                // 完成加载
+                setSampleVideoLoadProgress(100);
+                setIsLoadingSampleVideo(false);
+                return;
+              }
+              
+              if (value) {
+                chunks.push(value);
+                receivedLength += value.length;
+                
+                // 计算并更新真实进度
+                if (expectedSize > 0) {
+                  const progress = Math.round((receivedLength / expectedSize) * 100);
+                  setSampleVideoLoadProgress(progress);
+                }
+              }
+              
+              // 继续读取下一块数据
+              readData();
+            } catch (error) {
+              console.warn('Error reading stream:', error);
+              setIsLoadingSampleVideo(false);
+            }
+          };
+          
+          // 开始读取数据
+          readData();
+        })
+        .catch(error => {
+          // 如果不是因为取消而导致的错误，则继续使用流式URL
+          if (error.name !== 'AbortError') {
+            console.warn('Failed to load complete blob, continuing with streaming URL:', error);
+          }
+          setIsLoadingSampleVideo(false);
+        });
+      
+      // 在组件卸载时取消fetch请求
+      return () => {
+        controller.abort();
+      };
+      
+    } catch (error) {
+      console.error('Failed to load sample video:', error);
+      toast.error(t('videoSplitter.sampleVideoLoadFail'));
+      setIsLoadingSampleVideo(false);
+    }
+  };
+
   // 处理拖放事件
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -158,13 +271,15 @@ const VideoSplitter: React.FC = () => {
     setVideoInfo(info);
   };
 
+  // 添加视频引用
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   // 当视频元数据加载完成时获取视频信息
   const handleVideoMetadataLoaded = () => {
-    const video = document.createElement('video');
-    video.src = videoUrl;
-    video.onloadedmetadata = () => {
+    const video = videoRef.current;
+    if (video) {
       getVideoInfo(video);
-    };
+    }
   };
 
   // 开始分割视频
@@ -236,6 +351,12 @@ const VideoSplitter: React.FC = () => {
           className="bg-primary hover:bg-primary/90 text-white"
         >
           {t('videoSplitter.selectFile')}
+        </Button>
+        <Button
+          onClick={loadSampleVideo}
+          variant="secondary"
+        >
+          {t('videoSplitter.loadSampleVideo')}
         </Button>
         <input
           type="file"
@@ -343,6 +464,40 @@ const VideoSplitter: React.FC = () => {
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-center mb-3">{t('videoSplitter.title')}</h1>
         <p className="text-center text-gray-500 max-w-2xl mx-auto">{t('videoSplitter.description')}</p>
+        
+        {/* 全局显示FFmpeg加载进度 */}
+        {isLoadingFfmpeg && (
+          <div className="mt-4 mx-auto max-w-lg">
+            <Card>
+              <CardContent className="p-4">
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span>{t('videoSplitter.loadingFfmpeg')}</span>
+                    <span>{t('videoSplitter.progress')}:</span>
+                  </div>
+                  <Progress value={100} className="h-2" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+        
+        {/* 示例视频加载进度 */}
+        {isLoadingSampleVideo && (
+          <div className="mt-4 mx-auto max-w-lg">
+            <Card>
+              <CardContent className="p-4">
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span>{t('videoSplitter.loadingVideo')}</span>
+                    <span>{sampleVideoLoadProgress}%</span>
+                  </div>
+                  <Progress value={sampleVideoLoadProgress} className="h-2" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
 
       <div className="flex-1 flex justify-center items-center">
@@ -351,13 +506,14 @@ const VideoSplitter: React.FC = () => {
         {videoFile && (
           <div className="grid lg:grid-cols-5 gap-6">
             {/* 左侧：视频播放器 */}
-            <div className="lg:col-span-3 ">
+            <div className="lg:col-span-3">
               <VideoPlayer
                 videoUrl={videoUrl}
                 videoFile={videoFile}
                 videoInfo={videoInfo}
                 onMetadataLoaded={handleVideoMetadataLoaded}
                 t={t}
+                videoRef={videoRef}
               />
             </div>
 
@@ -378,17 +534,7 @@ const VideoSplitter: React.FC = () => {
                 t={t}
               />
 
-              {/* FFmpeg加载进度 */}
-              {isLoadingFfmpeg && (
-                <Card>
-                  <CardContent className="p-4">
-                    <div className="flex justify-between items-center">
-                      <span>{t('videoSplitter.loadingFfmpeg')}</span>
-                      <span>正在加载...</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+              {/* FFmpeg加载进度（已经在顶部全局显示，这里可以移除） */}
 
               {/* 分割进度 */}
               {isSplitting && (

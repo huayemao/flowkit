@@ -81,7 +81,9 @@
     "startTime": "Start Time",
     "endTime": "End Time",
     "ffmpegLoaded": "FFmpeg loaded successfully",
-    "waitFfmpegLoad": "Please wait for FFmpeg to load"
+    "waitFfmpegLoad": "Please wait for FFmpeg to load",
+    "loadSampleVideo": "Load Sample Video",
+    "sampleVideoLoadFail": "Failed to load sample video"
   },
   "common": {
     "processing": "Processing",

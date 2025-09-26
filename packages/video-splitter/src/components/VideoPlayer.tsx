@@ -9,6 +9,7 @@ interface VideoPlayerProps {
   videoInfo: VideoInfo | null;
   onMetadataLoaded: () => void;
   t: (key: string, options?: any) => string;
+  videoRef?: React.RefObject<HTMLVideoElement>;
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
@@ -16,14 +17,16 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   videoFile,
   videoInfo,
   onMetadataLoaded,
-  t
+  t,
+  videoRef: externalVideoRef
 }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = externalVideoRef || useRef<HTMLVideoElement>(null);
 
   return (
     <Card>
       <CardContent className="p-0 ">
         <video
+          autoPlay
           ref={videoRef}
           src={videoUrl}
           controls
