@@ -33,7 +33,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           onLoadedMetadata={onMetadataLoaded}
         />
         {videoInfo && (
-          <div className="p-4 bg-gray-50 border-t">
+          <div className="p-4 bg-card border-t border-border">
             <h4 className="font-medium mb-2">{t('videoSplitter.videoInfo')}</h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
               <div className="text-gray-500">{t('videoSplitter.duration')}</div>

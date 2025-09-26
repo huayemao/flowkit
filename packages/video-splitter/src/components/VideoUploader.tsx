@@ -234,7 +234,6 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
       <div className="flex justify-center gap-4">
         <Button
           onClick={() => fileInputRef.current?.click()}
-          className="bg-primary hover:bg-primary/90 text-white"
         >
           {t('videoSplitter.selectFile')}
         </Button>

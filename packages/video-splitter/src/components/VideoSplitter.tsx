@@ -270,7 +270,6 @@ const VideoSplitter: React.FC = () => {
                 <Button 
                   onClick={startSplitting}
                   disabled={isSplitting || !isFfmpegLoaded}
-                  className="bg-primary hover:bg-primary/90 text-white"
                 >
                   {isSplitting ? t('videoSplitter.processing') : t('videoSplitter.startSplitting')}
                 </Button>

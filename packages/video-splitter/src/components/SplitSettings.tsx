@@ -70,14 +70,12 @@ const SplitSettings: React.FC<SplitSettingsProps> = ({
               <Button
                 variant={useDurationMode ? "default" : "secondary"}
                 onClick={() => setUseDurationMode(true)}
-                className={useDurationMode ? "bg-primary text-white" : "bg-gray-200 text-gray-800"}
               >
                 {t('videoSplitter.byDuration')}
               </Button>
               <Button
                 variant={!useDurationMode ? "default" : "secondary"}
                 onClick={() => setUseDurationMode(false)}
-                className={!useDurationMode ? "bg-primary text-white" : "bg-gray-200 text-gray-800"}
               >
                 {t('videoSplitter.byParts')}
               </Button>

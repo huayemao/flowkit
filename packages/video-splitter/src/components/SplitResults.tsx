@@ -72,7 +72,7 @@ const SplitResults: React.FC<SplitResultsProps> = ({
 
           <div className="space-y-4">
             {videoClips.map((clip) => (
-              <div key={clip.id} className="flex flex-col md:flex-row md:items-center justify-between p-4 border rounded-md">
+              <div key={clip.id} className="flex flex-col md:flex-row md:items-center justify-between p-4 border border-border rounded-md bg-card">
                 <div className="flex-1">
                   <h4 className="font-medium mb-1">{clip.name}</h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-1 text-sm">
