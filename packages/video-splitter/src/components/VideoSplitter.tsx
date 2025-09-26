@@ -18,6 +18,7 @@ const VideoSplitter: React.FC = () => {
   const [videoInfo, setVideoInfo] = useState<VideoInfo | null>(null);
   const [splitMode, setSplitMode] = useState<SplitMode>('fast');
   const [splitDuration, setSplitDuration] = useState<number>(60); // 默认60秒
+  const [splitParts, setSplitParts] = useState<number>(5); // 默认5等分
   const [isSplitting, setIsSplitting] = useState<boolean>(false);
   const [splitProgress, setSplitProgress] = useState<number>(0);
   const [videoClips, setVideoClips] = useState<VideoClip[]>([]);
@@ -28,6 +29,7 @@ const VideoSplitter: React.FC = () => {
   const [outputFormat, setOutputFormat] = useState<string>('mp4');
   const [quality, setQuality] = useState<string>('medium');
   const [isFfmpegLoaded, setIsFfmpegLoaded] = useState<boolean>(false);
+  const [useDurationMode, setUseDurationMode] = useState<boolean>(true); // 默认使用时长模式
 
   // 预览相关状态
   const [previewClip, setPreviewClip] = useState<VideoClip | null>(null);
@@ -67,6 +69,13 @@ const VideoSplitter: React.FC = () => {
   // 更新视频信息
   const handleVideoInfoUpdate = (info: VideoInfo) => {
     setVideoInfo(info);
+    
+    // 当视频信息加载完成时，自动设置默认分割时长为视频长度的1/5
+    if (info.duration > 0) {
+      const defaultDuration = Math.round(info.duration / 5);
+      setSplitDuration(defaultDuration);
+      setSplitParts(5); // 默认5等分
+    }
   };
 
   // 预览相关函数
@@ -106,12 +115,21 @@ const VideoSplitter: React.FC = () => {
 
   // 开始分割视频
   const startSplitting = async () => {
-    if (!videoFile || splitDuration <= 0 || !isFfmpegLoaded) {
+    if (!videoFile || !videoInfo || !isFfmpegLoaded) {
       if (!isFfmpegLoaded) {
         toast.error(t('videoSplitter.waitFfmpegLoad'));
-      } else if (splitDuration <= 0) {
-        toast.error(t('videoSplitter.enterDuration'));
       }
+      return;
+    }
+
+    // 计算实际的分割时长
+    let actualSplitDuration = splitDuration;
+    if (!useDurationMode && splitParts > 0) {
+      actualSplitDuration = Math.ceil(videoInfo.duration / splitParts);
+    }
+
+    if (actualSplitDuration <= 0) {
+      toast.error(t('videoSplitter.enterValidDuration'));
       return;
     }
 
@@ -123,7 +141,7 @@ const VideoSplitter: React.FC = () => {
       // 调用视频分割服务
       const clips = await splitVideo(
         videoFile,
-        splitDuration,
+        actualSplitDuration,
         splitMode,
         outputFormat,
         quality,
@@ -231,6 +249,10 @@ const VideoSplitter: React.FC = () => {
                 setSplitMode={setSplitMode}
                 splitDuration={splitDuration}
                 setSplitDuration={setSplitDuration}
+                splitParts={splitParts}
+                setSplitParts={setSplitParts}
+                useDurationMode={useDurationMode}
+                setUseDurationMode={setUseDurationMode}
                 showAdvancedSettings={showAdvancedSettings}
                 setShowAdvancedSettings={setShowAdvancedSettings}
                 outputFormat={outputFormat}
@@ -240,13 +262,27 @@ const VideoSplitter: React.FC = () => {
                 t={t}
               />
 
+              {/* 操作按钮 */}
+              <div className="flex justify-between">
+                <Button variant="secondary" onClick={handleBackToUpload}>
+                  {t('videoSplitter.cancel')}
+                </Button>
+                <Button 
+                  onClick={startSplitting}
+                  disabled={isSplitting || !isFfmpegLoaded}
+                  className="bg-primary hover:bg-primary/90 text-white"
+                >
+                  {isSplitting ? t('videoSplitter.processing') : t('videoSplitter.startSplitting')}
+                </Button>
+              </div>
+
               {/* 分割进度 */}
               {isSplitting && (
                 <Card>
                   <CardContent className="p-4">
                     <div className="space-y-2">
                       <div className="flex justify-between items-center">
-                        <span>{t('videoSplitter.progress')}</span>
+                        <span>{t('videoSplitter.splitProgress')}:</span>
                         <span>{splitProgress}%</span>
                       </div>
                       <Progress value={splitProgress} className="h-2" />
@@ -254,28 +290,6 @@ const VideoSplitter: React.FC = () => {
                   </CardContent>
                 </Card>
               )}
-
-              {/* 操作按钮 */}
-              <div className="mt-auto">
-                <div className="flex gap-4">
-                  <Button
-                    onClick={startSplitting}
-                    disabled={isSplitting || isLoadingFfmpeg || !isFfmpegLoaded}
-                    className="flex-1 bg-primary hover:bg-primary/90 text-white py-2"
-                  >
-                    {isLoadingFfmpeg ? t('videoSplitter.loadingFfmpeg') :
-                      isSplitting ? t('videoSplitter.splittingVideo') :
-                        t('videoSplitter.startSplitting')}
-                  </Button>
-                  <Button
-                    onClick={handleBackToUpload}
-                    variant="ghost"
-                    disabled={isSplitting || isLoadingFfmpeg}
-                  >
-                    {t('videoSplitter.cancel')}
-                  </Button>
-                </div>
-              </div>
             </div>
           </div>
         )}

@@ -1,6 +1,10 @@
 {
   "videoSplitter": {
     "title": "VideoSplitter - Fast Video Splitting Tool",
+    "byDuration": "By Duration",
+    "byParts": "By Parts",
+    "splitParts": "Number of Parts",
+    "enterParts": "Please enter number of parts",
     "description": "Split your videos into clips of custom length quickly and easily. Supports drag and drop, multiple formats, and both fast and precise splitting modes.",
     "keywords": "Video splitter,Online video cutting,Video trimmer,Video clipper,Fast video splitting,Video processing tool,Free video splitter",
     "author": "FlowKit Team",
