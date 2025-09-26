@@ -54,7 +54,7 @@ import zhTranslations from "./locales/zh/translation.json";
 export { enTranslations, zhTranslations };
 
 
-export const init18n = async (language?: string) => {
+export const initI18n = async (language?: string) => {
     try {
         // 预加载常用语言翻译
         const translations = await preloadCommonTranslations();

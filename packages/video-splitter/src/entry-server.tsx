@@ -1,8 +1,9 @@
 import { StrictMode } from 'react'
 import { renderToString } from 'react-dom/server'
 import App from './App'
-import { init18n } from './i18n'
-
+import { initI18n } from './i18n'
+import { DOMAIN_NAME } from './constants'
+import { SITE_ID } from './constants'
 
 // 动态导入翻译文件
 const getTranslations = async (language: string) => {
@@ -34,7 +35,7 @@ const getSeoContent = async (url: string) => {
 
 
   const translations = await getTranslations(language)
-  const seo = translations.videoSplitter
+  const seo = translations[SITE_ID]
 
   return {
     language,
@@ -53,7 +54,7 @@ const getSeoContent = async (url: string) => {
 
 export async function render(url: string, languages: string[]) {
   const seoContent = await getSeoContent(url)
-  const i18nInstance = await init18n(seoContent.language)
+  const i18nInstance = await initI18n(seoContent.language)
   i18nInstance.changeLanguage(seoContent.language)
   const html = renderToString(
     <StrictMode>
@@ -92,7 +93,7 @@ export async function render(url: string, languages: string[]) {
       <meta property="og:type" content="website" />
       <meta name="twitter:title" content={seoContent.twitterTitle} />
       <meta name="twitter:description" content={seoContent.twitterDescription} />
-      <link rel="canonical" href={seoContent.canonicalUrl} />
+      <link rel="canonical" href={`https://${DOMAIN_NAME}${url}`} />
       {hreflangTags}
     </>
   )
