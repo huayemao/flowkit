@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import * as LucideIcons from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -60,7 +60,9 @@ export const renderIconComponent = (
         height: `${size}px`,
         transform:
           context == "export"
-            ? `translate(${iconX}px, ${iconY}px) scale(${size / containerWidth})`
+            ? `translate(${iconX}px, ${iconY}px) scale(${
+                size / containerWidth
+              })`
             : undefined,
       },
     });
@@ -101,7 +103,8 @@ export const renderIconToDOM = (
 
   // 渲染图标组件
   const iconElement = renderIconComponent(config);
-  ReactDOM.render(iconElement, iconWrapper);
+  const root = ReactDOM.createRoot(iconWrapper);
+  root.render(iconElement);
   // 将图标添加到容器
   container.appendChild(iconWrapper);
 };
@@ -123,7 +126,8 @@ export const getIconAsSVGString = (
       // 创建临时容器
       const tempContainer = document.createElement("div");
       // 渲染 Font Awesome 图标到临时容器
-      ReactDOM.render(
+      const root = ReactDOM.createRoot(tempContainer);
+      root.render(
         React.createElement(FontAwesomeIcon, {
           icon: faIconName,
           color: config.iconColor,
@@ -133,8 +137,7 @@ export const getIconAsSVGString = (
             height: `${size}px`,
             fontSize: `${size}px`,
           },
-        }),
-        tempContainer
+        })
       );
       // 获取渲染后的 SVG 内容
       const svgElement = tempContainer.querySelector("svg");
@@ -145,11 +148,11 @@ export const getIconAsSVGString = (
         // 获取 SVG 字符串
         const svgString = new XMLSerializer().serializeToString(svgElement);
         // 清理临时容器
-        ReactDOM.unmountComponentAtNode(tempContainer);
+        root.unmount();
         return svgString;
       }
       // 清理临时容器
-      ReactDOM.unmountComponentAtNode(tempContainer);
+      root.unmount();
       return "";
     } else {
       // 对于 Lucide 图标，创建临时容器
@@ -158,13 +161,13 @@ export const getIconAsSVGString = (
       const IconComponent =
         LucideIcons[config.icon as keyof typeof LucideIcons] ||
         LucideIcons["Download"];
-      ReactDOM.render(
+      const root = ReactDOM.createRoot(tempContainer);
+      root.render(
         React.createElement(IconComponent as any, {
           size: size,
           color: config.iconColor,
           strokeWidth: config.lineThickness,
-        }),
-        tempContainer
+        })
       );
       // 获取渲染后的 SVG 内容
       const svgElement = tempContainer.querySelector("svg");
@@ -175,11 +178,11 @@ export const getIconAsSVGString = (
         // 获取 SVG 字符串
         const svgString = new XMLSerializer().serializeToString(svgElement);
         // 清理临时容器
-        ReactDOM.unmountComponentAtNode(tempContainer);
+        root.unmount();
         return svgString;
       }
       // 清理临时容器
-      ReactDOM.unmountComponentAtNode(tempContainer);
+      root.unmount();
       return "";
     }
   } catch (error) {
