@@ -147,6 +147,7 @@ export const getIconAsSVGString = (
         svgElement.setAttribute("height", size.toString());
         // 获取 SVG 字符串
         const svgString = new XMLSerializer().serializeToString(svgElement);
+        console.log(svgString)
         // 清理临时容器
         root.unmount();
         return svgString;

@@ -47,7 +47,7 @@ const getSeoContent = async (url: string) => {
     ogDescription: seo.ogDescription,
     twitterTitle: seo.twitterTitle,
     twitterDescription: seo.twitterDescription,
-    canonicalUrl: seo.canonicalUrl || url,
+    canonicalUrl: url,
   }
 }
 
