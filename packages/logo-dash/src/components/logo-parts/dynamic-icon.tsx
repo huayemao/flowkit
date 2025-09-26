@@ -12,10 +12,12 @@ export interface DynamicIconProps {
   icon: string;
   size?: number;
   color?: string;
+  strokeWidth?: number;
+  style?: React.CSSProperties;
 }
 
 // 动态加载图标组件
-export const DynamicIconComponent: React.FC<DynamicIconProps> = ({ icon, size = 24, color = 'currentColor' }) => {
+export const DynamicIconComponent: React.FC<DynamicIconProps> = ({ icon, size = 24, color = 'currentColor',strokeWidth = 2,style = {} }) => {
   const ref = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -30,14 +32,14 @@ export const DynamicIconComponent: React.FC<DynamicIconProps> = ({ icon, size = 
             React.createElement(FontAwesomeIcon, {
               icon: iconName as IconProp,
               size: size <= 12 ? 'xs' : size <= 16 ? 'sm' : size <= 24 ? 'lg' : size <= 32 ? 'xl' : '2xl',
-              style: { color }
+              style: { color, strokeWidth, ...style }
             }),
             ref.current
           );
         } else {
         // Lucide图标
         const Icon = LucideIcons[icon as keyof typeof LucideIcons] || LucideIcons['Download'];
-        ReactDOM.render(React.createElement(Icon as any, { size, color }), ref.current);
+        ReactDOM.render(React.createElement(Icon as any, { size, color, strokeWidth, ...style }), ref.current);
       }
     }
   }, [icon, size, color]);
