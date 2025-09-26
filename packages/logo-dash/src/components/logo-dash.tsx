@@ -271,7 +271,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
         </div>
 
         {/* 右侧：设置区域 */}
-        <div className="space-y-6">
+        <div className="space-y-6 lg:h-[88vh]">
           <Card>
             <CardHeader>
               <CardTitle>{t('logoDash.icon')}</CardTitle>
