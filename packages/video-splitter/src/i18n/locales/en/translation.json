@@ -88,6 +88,7 @@
     "waitFfmpegLoad": "Please wait for FFmpeg to load",
     "loadSampleVideo": "Load Sample Video",
     "sampleVideoLoadFail": "Failed to load sample video",
+    "testingVideoLinks": "Testing video links...",
     "splitResults": "Split Results",
     "preview": "Preview"
   },

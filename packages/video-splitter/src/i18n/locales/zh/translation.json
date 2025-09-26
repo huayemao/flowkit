@@ -84,6 +84,7 @@
     "waitFfmpegLoad": "请等待FFmpeg加载完成",
     "loadSampleVideo": "加载示例视频",
     "sampleVideoLoadFail": "示例视频加载失败",
+    "testingVideoLinks": "正在测试视频链接...",
     "splitResults": "分割结果",
     "preview": "预览"
   },

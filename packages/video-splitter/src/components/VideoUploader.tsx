@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, toast } from '@flowkit/shared-ui';
 import { VideoInfo } from '../types';
+import { testVideoUrls } from '../utils/testVideoUrls';
 
 interface VideoUploaderProps {
   onFileSelect: (file: File) => void;
@@ -62,29 +63,48 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
     }
   };
 
+
   // 加载示例视频
   const loadSampleVideo = async () => {
     try {
       setIsLoadingSampleVideo(true);
       setSampleVideoLoadProgress(0);
-      
-      const sampleVideoUrl = 'https://vjs.zencdn.net/v/oceans.mp4';
-      
-      // 同时获取视频信息以填充videoInfo
+
+      // 要测试的视频链接列表
+      const videoUrls = [
+        'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+        'https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4',
+        'https://media.w3.org/2010/05/sintel/trailer.mp4',
+        'https://vjs.zencdn.net/v/oceans.mp4' // 保留原有的视频链接作为备选
+      ];
+
+      // 测试视频链接，选择最快的一个
+      toast.info(t('videoSplitter.testingVideoLinks'));
+      const sortedResults = await testVideoUrls(videoUrls);
+
+      if (sortedResults.length === 0) {
+        throw new Error('No accessible video links found');
+      }
+      // 选择最快的视频链接
+      const bestVideo = sortedResults[0];
+      const sampleVideoUrl = bestVideo.url;
+      const sampleVideoFilename = bestVideo.filename;
+
+      // 获取完整的视频信息
       const probeResponse = await fetch(sampleVideoUrl, { method: 'HEAD' });
-      const contentLength = probeResponse.headers.get('content-length');
-      
+      const contentLength = probeResponse.headers.get('content-length') || String(bestVideo.size);
+
       // 直接使用URL进行流式播放，让用户立即开始观看
       onVideoUrlUpdate(sampleVideoUrl);
-      
+
       // 创建一个虚拟文件对象，用于传递给handleFileSelect
-      const virtualFile = new File([new Blob()], 'oceans.mp4', { type: 'video/mp4' });
+      const virtualFile = new File([new Blob()], sampleVideoFilename, { type: 'video/mp4' });
       onFileSelect(virtualFile);
-      
+
       // 设置基本的视频信息
       const initialInfo: VideoInfo = {
         duration: 0, // 将在视频元数据加载后更新
-        size: contentLength ? parseInt(contentLength) : 0,
+        size: parseInt(contentLength),
         format: 'video/mp4',
         resolution: '未知', // 将在视频元数据加载后更新
         width: 0,
@@ -92,23 +112,23 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
       };
       setLocalVideoInfo(initialInfo);
       onVideoInfoUpdate(initialInfo);
-      
+
       // 在后台异步加载完整的blob，加载完成后更新为blob URL
       // 同时监控真实的加载进度
       const controller = new AbortController();
       const signal = controller.signal;
-      const expectedSize = contentLength ? parseInt(contentLength) : 0;
-      
+      const expectedSize = parseInt(contentLength);
+
       fetch(sampleVideoUrl, { signal })
         .then(response => {
           const reader = response.body?.getReader();
           if (!reader) {
             throw new Error('Response body is not readable');
           }
-          
+
           let receivedLength = 0;
           const chunks: Uint8Array[] = [];
-          
+
           const readData = async () => {
             try {
               const { done, value } = await reader.read();
@@ -116,36 +136,36 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
                 // 所有数据已读取完毕
                 const blob = new Blob(chunks);
                 const blobUrl = URL.createObjectURL(blob);
-                const actualFile = new File([blob], 'oceans.mp4', { type: 'video/mp4' });
-                
+                const actualFile = new File([blob], sampleVideoFilename, { type: 'video/mp4' });
+
                 // 更新为blob URL和实际文件对象
                 onVideoUrlUpdate(blobUrl);
                 onFileSelect(actualFile);
-                
+
                 // 更新视频信息
                 if (contentLength && localVideoInfo) {
                   const updatedInfo = { ...localVideoInfo, size: parseInt(contentLength) };
                   setLocalVideoInfo(updatedInfo);
                   onVideoInfoUpdate(updatedInfo);
                 }
-                
+
                 // 完成加载
                 setSampleVideoLoadProgress(100);
                 setIsLoadingSampleVideo(false);
                 return;
               }
-              
+
               if (value) {
                 chunks.push(value);
                 receivedLength += value.length;
-                
+
                 // 计算并更新真实进度
                 if (expectedSize > 0) {
                   const progress = Math.round((receivedLength / expectedSize) * 100);
                   setSampleVideoLoadProgress(progress);
                 }
               }
-              
+
               // 继续读取下一块数据
               readData();
             } catch (error) {
@@ -153,7 +173,7 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
               setIsLoadingSampleVideo(false);
             }
           };
-          
+
           // 开始读取数据
           readData();
         })
@@ -164,12 +184,12 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
           }
           setIsLoadingSampleVideo(false);
         });
-      
+
       // 在组件卸载时取消fetch请求
       return () => {
         controller.abort();
       };
-      
+
     } catch (error) {
       console.error('Failed to load sample video:', error);
       toast.error(t('videoSplitter.sampleVideoLoadFail'));

@@ -26,7 +26,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     <Card>
       <CardContent className="p-0 ">
         <video
-          autoPlay
           ref={videoRef}
           src={videoUrl}
           controls
