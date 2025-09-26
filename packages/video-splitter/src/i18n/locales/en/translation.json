@@ -83,7 +83,9 @@
     "ffmpegLoaded": "FFmpeg loaded successfully",
     "waitFfmpegLoad": "Please wait for FFmpeg to load",
     "loadSampleVideo": "Load Sample Video",
-    "sampleVideoLoadFail": "Failed to load sample video"
+    "sampleVideoLoadFail": "Failed to load sample video",
+    "splitResults": "Split Results",
+    "preview": "Preview"
   },
   "common": {
     "processing": "Processing",
