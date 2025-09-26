@@ -34,7 +34,7 @@ const getSeoContent = async (url: string) => {
 
 
   const translations = await getTranslations(language)
-  const seo = translations.logoDash
+  const seo = translations.videoSplitter
 
   return {
     language,
