@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from '../i18n';
-  import { Button, Card, CardContent, Progress, toast } from '@flowkit/shared-ui';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@flowkit/shared-ui';
+import { Button, Card, CardContent, Progress, toast } from '@flowkit/shared-ui';
 import { VideoClip, VideoInfo, SplitMode } from '../types';
 import { loadFFmpeg, splitVideo } from '../services/ffmpegService';
 import VideoPlayer from './VideoPlayer';
 import SplitSettings from './SplitSettings';
-import { formatFileSize, formatTime, downloadVideoClip } from '../utils/videoUtils';
+import VideoUploader from './VideoUploader';
+import ResultsDialog from './ResultsDialog';
+import PreviewDialog from './PreviewDialog';
 
 const VideoSplitter: React.FC = () => {
   const { t } = useTranslation();
@@ -32,8 +33,12 @@ const VideoSplitter: React.FC = () => {
   const [previewClip, setPreviewClip] = useState<VideoClip | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
-  // 引用
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  // 示例视频加载状态
+  const [isLoadingSampleVideo, setIsLoadingSampleVideo] = useState<boolean>(false);
+  const [sampleVideoLoadProgress, setSampleVideoLoadProgress] = useState<number>(0);
+
+  // 添加视频引用
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   // 初始化时加载FFmpeg
   useEffect(() => {
@@ -51,171 +56,17 @@ const VideoSplitter: React.FC = () => {
 
   // 处理文件选择
   const handleFileSelect = (file: File) => {
-    if (!file.type.startsWith('video/')) {
-      toast.error(t('videoSplitter.unsupportedFormat'));
-      return;
-    }
-
-    if (file.size > 500 * 1024 * 1024) { // 500MB
-      toast.error(t('videoSplitter.videoTooLarge'));
-      return;
-    }
-
     setVideoFile(file);
+  };
 
-    // 创建视频URL
-    const url = URL.createObjectURL(file);
+  // 更新视频URL
+  const handleVideoUrlUpdate = (url: string) => {
     setVideoUrl(url);
-
-    // 当组件卸载时释放URL
-    return () => {
-      URL.revokeObjectURL(url);
-    };
   };
 
-  // 处理文件输入变化
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      handleFileSelect(file);
-    }
-  };
-
-  // 加载示例视频
-  const [isLoadingSampleVideo, setIsLoadingSampleVideo] = useState<boolean>(false);
-  const [sampleVideoLoadProgress, setSampleVideoLoadProgress] = useState<number>(0);
-
-  const loadSampleVideo = async () => {
-    try {
-      setIsLoadingSampleVideo(true);
-      setSampleVideoLoadProgress(0);
-      
-      const sampleVideoUrl = 'https://vjs.zencdn.net/v/oceans.mp4';
-      
-      // 同时获取视频信息以填充videoInfo
-      const probeResponse = await fetch(sampleVideoUrl, {
-        method: 'HEAD'
-      });
-      const contentLength = probeResponse.headers.get('content-length');
-      
-      // 直接使用URL进行流式播放，让用户立即开始观看
-      setVideoUrl(sampleVideoUrl);
-      
-      // 创建一个虚拟文件对象，用于传递给handleFileSelect
-      const virtualFile = new File([new Blob()], 'oceans.mp4', { type: 'video/mp4' });
-      setVideoFile(virtualFile);
-      
-      // 设置基本的视频信息
-      setVideoInfo({
-        duration: 0, // 将在视频元数据加载后更新
-        size: contentLength ? parseInt(contentLength) : 0,
-        format: 'video/mp4',
-        resolution: '未知', // 将在视频元数据加载后更新
-        width: 0,
-        height: 0
-      });
-      
-      // 在后台异步加载完整的blob，加载完成后更新为blob URL
-      // 同时监控真实的加载进度
-      const controller = new AbortController();
-      const signal = controller.signal;
-      const expectedSize = contentLength ? parseInt(contentLength) : 0;
-      
-      fetch(sampleVideoUrl, { signal })
-        .then(response => {
-          const reader = response.body?.getReader();
-          if (!reader) {
-            throw new Error('Response body is not readable');
-          }
-          
-          let receivedLength = 0;
-          const chunks: Uint8Array[] = [];
-          
-          const readData = async () => {
-            try {
-              const { done, value } = await reader.read();
-              if (done) {
-                // 所有数据已读取完毕
-                const blob = new Blob(chunks);
-                const blobUrl = URL.createObjectURL(blob);
-                const actualFile = new File([blob], 'oceans.mp4', { type: 'video/mp4' });
-                
-                // 更新为blob URL和实际文件对象
-                setVideoUrl(blobUrl);
-                setVideoFile(actualFile);
-                
-                // 更新视频信息
-                if (contentLength) {
-                  setVideoInfo(prev => (prev ? { ...prev, size: parseInt(contentLength) } : prev));
-                }
-                
-                // 完成加载
-                setSampleVideoLoadProgress(100);
-                setIsLoadingSampleVideo(false);
-                return;
-              }
-              
-              if (value) {
-                chunks.push(value);
-                receivedLength += value.length;
-                
-                // 计算并更新真实进度
-                if (expectedSize > 0) {
-                  const progress = Math.round((receivedLength / expectedSize) * 100);
-                  setSampleVideoLoadProgress(progress);
-                }
-              }
-              
-              // 继续读取下一块数据
-              readData();
-            } catch (error) {
-              console.warn('Error reading stream:', error);
-              setIsLoadingSampleVideo(false);
-            }
-          };
-          
-          // 开始读取数据
-          readData();
-        })
-        .catch(error => {
-          // 如果不是因为取消而导致的错误，则继续使用流式URL
-          if (error.name !== 'AbortError') {
-            console.warn('Failed to load complete blob, continuing with streaming URL:', error);
-          }
-          setIsLoadingSampleVideo(false);
-        });
-      
-      // 在组件卸载时取消fetch请求
-      return () => {
-        controller.abort();
-      };
-      
-    } catch (error) {
-      console.error('Failed to load sample video:', error);
-      toast.error(t('videoSplitter.sampleVideoLoadFail'));
-      setIsLoadingSampleVideo(false);
-    }
-  };
-
-  // 处理拖放事件
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-
-    const file = e.dataTransfer.files?.[0];
-    if (file) {
-      handleFileSelect(file);
-    }
+  // 更新视频信息
+  const handleVideoInfoUpdate = (info: VideoInfo) => {
+    setVideoInfo(info);
   };
 
   // 预览相关函数
@@ -224,35 +75,9 @@ const VideoSplitter: React.FC = () => {
     setIsPreviewOpen(true);
   };
 
-  const handleDownload = (clip: VideoClip) => {
-    downloadVideoClip(clip.blob, clip.name, t);
-  };
-
+  // 删除视频片段
   const handleDelete = (clipId: string) => {
     setVideoClips(videoClips.filter(clip => clip.id !== clipId));
-  };
-
-  const handleDownloadAll = async () => {
-    try {
-      const { default: JSZip } = await import('jszip');
-      const zip = new JSZip();
-
-      videoClips.forEach(clip => {
-        zip.file(clip.name, clip.blob);
-      });
-
-      const content = await zip.generateAsync({ type: 'blob' });
-      const url = URL.createObjectURL(content);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'video-clips.zip';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Failed to download all clips:', error);
-    }
   };
 
   // 获取视频信息
@@ -270,9 +95,6 @@ const VideoSplitter: React.FC = () => {
 
     setVideoInfo(info);
   };
-
-  // 添加视频引用
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   // 当视频元数据加载完成时获取视频信息
   const handleVideoMetadataLoaded = () => {
@@ -332,133 +154,6 @@ const VideoSplitter: React.FC = () => {
     setIsResultsOpen(false);
   };
 
-  // 渲染上传区域
-  const renderUploadArea = () => (
-    <div
-      className={`border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200 
-        ${isDragging ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-primary hover:bg-primary/5'}
-        ${videoFile ? 'hidden' : 'block'}`}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-    >
-      <h3 className="text-xl font-semibold mb-4">{t('videoSplitter.uploadVideo')}</h3>
-      <p className="text-gray-500 mb-6">{t('videoSplitter.dragAndDrop')}</p>
-      <p className="text-gray-400 mb-6">{t('videoSplitter.or')}</p>
-      <div className="flex justify-center gap-4">
-        <Button
-          onClick={() => fileInputRef.current?.click()}
-          className="bg-primary hover:bg-primary/90 text-white"
-        >
-          {t('videoSplitter.selectFile')}
-        </Button>
-        <Button
-          onClick={loadSampleVideo}
-          variant="secondary"
-        >
-          {t('videoSplitter.loadSampleVideo')}
-        </Button>
-        <input
-          type="file"
-          ref={fileInputRef}
-          accept="video/*"
-          onChange={handleFileInputChange}
-          className="hidden"
-        />
-      </div>
-      <p className="text-xs text-gray-400 mt-6">
-        {t('videoSplitter.supportedFormats')} | {t('videoSplitter.maxFileSize')}
-      </p>
-    </div>
-  );
-
-  // 渲染视频分割结果对话框
-  const renderResultsDialog = () => (
-    <Dialog open={isResultsOpen} onOpenChange={setIsResultsOpen}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl">{t('videoSplitter.splitResults')}</DialogTitle>
-        </DialogHeader>
-        
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
-            <Button onClick={handleDownloadAll} className="bg-primary hover:bg-primary/90 text-white">
-              {t('videoSplitter.downloadAll')}
-            </Button>
-            <span className="text-gray-500">{t('videoSplitter.totalClips', { count: videoClips.length })}</span>
-          </div>
-
-          <div className="space-y-4 max-h-[60vh] overflow-auto">
-            {videoClips.map((clip) => (
-              <div key={clip.id} className="flex flex-col md:flex-row md:items-center justify-between p-4 border rounded-md bg-white">
-                <div className="flex-1 flex items-center">
-                  <h4 className="font-medium mb-1">{clip.name}</h4>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-1 text-sm">
-                    <div className="text-gray-500">{t('videoSplitter.duration')}</div>
-                    <div>{formatTime(clip.duration)}</div>
-                    <div className="text-gray-500">{t('videoSplitter.startTime')}</div>
-                    <div>{formatTime(clip.startTime)}</div>
-                    <div className="text-gray-500">{t('videoSplitter.endTime')}</div>
-                    <div>{formatTime(clip.endTime)}</div>
-                    <div className="text-gray-500">{t('videoSplitter.size')}</div>
-                    <div>{formatFileSize(clip.blob.size)}</div>
-                  </div>
-                </div>
-                <div className="flex gap-2 mt-4 md:mt-0">
-                  <Button variant="secondary" onClick={() => handlePreview(clip)}>
-                    {t('videoSplitter.preview')}
-                  </Button>
-                  <Button onClick={() => handleDownload(clip)}>
-                    {t('videoSplitter.download')}
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex justify-end gap-4">
-            <Button variant="ghost" onClick={handleBackToUpload}>
-              {t('videoSplitter.backToUpload')}
-            </Button>
-            <Button onClick={() => setIsResultsOpen(false)}>
-              {t('videoSplitter.close')}
-            </Button>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-
-  // 渲染预览对话框
-  const renderPreviewDialog = () => (
-    <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
-      <DialogContent className="max-w-3xl">
-        <DialogHeader>
-          <DialogTitle>{previewClip?.name}</DialogTitle>
-        </DialogHeader>
-        {previewClip && (
-          <div className="space-y-4">
-            <video
-              src={URL.createObjectURL(previewClip.blob)}
-              controls
-              className="w-full"
-            />
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="text-gray-500">{t('videoSplitter.duration')}</div>
-              <div>{formatTime(previewClip.duration)}</div>
-              <div className="text-gray-500">{t('videoSplitter.startTime')}</div>
-              <div>{formatTime(previewClip.startTime)}</div>
-              <div className="text-gray-500">{t('videoSplitter.endTime')}</div>
-              <div>{formatTime(previewClip.endTime)}</div>
-              <div className="text-gray-500">{t('videoSplitter.size')}</div>
-              <div>{formatFileSize(previewClip.blob.size)}</div>
-            </div>
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
-  );
-
   return (
     <div className="container mx-auto px-4 py-12 max-w-6xl lg:h-[90vh] flex flex-col">
       <div className="mb-6">
@@ -501,9 +196,20 @@ const VideoSplitter: React.FC = () => {
       </div>
 
       <div className="flex-1 flex justify-center items-center">
-        {renderUploadArea()}
-        
-        {videoFile && (
+        {!videoFile ? (
+          <VideoUploader
+            onFileSelect={handleFileSelect}
+            onVideoInfoUpdate={handleVideoInfoUpdate}
+            onVideoUrlUpdate={handleVideoUrlUpdate}
+            isDragging={isDragging}
+            setIsDragging={setIsDragging}
+            isLoadingSampleVideo={isLoadingSampleVideo}
+            setIsLoadingSampleVideo={setIsLoadingSampleVideo}
+            sampleVideoLoadProgress={sampleVideoLoadProgress}
+            setSampleVideoLoadProgress={setSampleVideoLoadProgress}
+            t={t}
+          />
+        ) : (
           <div className="grid lg:grid-cols-5 gap-6">
             {/* 左侧：视频播放器 */}
             <div className="lg:col-span-3">
@@ -533,8 +239,6 @@ const VideoSplitter: React.FC = () => {
                 setQuality={setQuality}
                 t={t}
               />
-
-              {/* FFmpeg加载进度（已经在顶部全局显示，这里可以移除） */}
 
               {/* 分割进度 */}
               {isSplitting && (
@@ -578,10 +282,23 @@ const VideoSplitter: React.FC = () => {
       </div>
 
       {/* 结果对话框 */}
-      {renderResultsDialog()}
+      <ResultsDialog
+        open={isResultsOpen}
+        onOpenChange={setIsResultsOpen}
+        videoClips={videoClips}
+        onPreview={handlePreview}
+        onDelete={handleDelete}
+        onBackToUpload={handleBackToUpload}
+        t={t}
+      />
       
       {/* 预览对话框 */}
-      {renderPreviewDialog()}
+      <PreviewDialog
+        open={isPreviewOpen}
+        onOpenChange={setIsPreviewOpen}
+        previewClip={previewClip}
+        t={t}
+      />
     </div>
   );
 };
