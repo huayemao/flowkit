@@ -30,15 +30,16 @@
     "generate": "pnpm run build && pnpm run build:server && node prerender"
   },
   "dependencies": {
+    "@ffmpeg/core": "^0.12.1",
+    "@ffmpeg/ffmpeg": "^0.12.6",
     "@flowkit/shared-ui": "workspace:^1.0.0",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
     "@uidotdev/usehooks": "^2.4.1",
-    "@ffmpeg/ffmpeg": "^0.12.6",
-    "@ffmpeg/core": "^0.12.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "i18next": "^25.5.2",
+    "jszip": "^3.10.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^15.7.3",
