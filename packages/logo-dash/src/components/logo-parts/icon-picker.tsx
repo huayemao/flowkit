@@ -3,7 +3,6 @@ import { useDebounce } from '@uidotdev/usehooks';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@flowkit/shared-ui';
 import { Button } from '@flowkit/shared-ui';
 import { Input } from '@flowkit/shared-ui';
-import * as LucideIcons from 'lucide-react';
 import { DynamicIconComponent } from './dynamic-icon';
 import { IconCategories } from './types';
 
@@ -126,32 +125,32 @@ export const IconPicker: React.FC<IconPickerProps> = ({
               </div>
             ) : (
               filteredIcons.map((iconName: string) => {
-              const IconComponent = LucideIcons[iconName as keyof typeof LucideIcons];
-              
-              // 如果在搜索模式下，显示图标所属分类
-              const categoryName = debouncedSearchTerm.trim() ? getIconCategory(iconName) : selectedCategory;
-              
-              return IconComponent ? (
-                <button
-                  key={iconName}
-                  onClick={() => {
-                    onSelectIcon(iconName);
-                    onOpenChange(false);
-                  }}
-                  className={`p-2 rounded-lg flex flex-col items-center justify-center hover:bg-gray-100 transition-all transform hover:scale-105
-                    ${selectedIcon === iconName ? 'bg-indigo-100 text-indigo-600 ring-2 ring-indigo-300' : ''}`}
-                  title={iconName}
-                  aria-label={iconName}
-                >
-                  <DynamicIconComponent icon={iconName} size={20} />
-                  <span className="text-xs mt-1 truncate text-center w-full line-clamp-1">{iconName}</span>
-                  {searchTerm.trim().length >= 2 && (
-                    <span className="text-xs text-gray-500 truncate text-center w-full line-clamp-1">
-                      {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
+                // 如果在搜索模式下，显示图标所属分类
+                const categoryName = debouncedSearchTerm.trim() ? getIconCategory(iconName) : selectedCategory;
+                
+                return (
+                  <button
+                    key={iconName}
+                    onClick={() => {
+                      onSelectIcon(iconName);
+                      onOpenChange(false);
+                    }}
+                    className={`p-2 rounded-lg flex flex-col items-center justify-center hover:bg-gray-100 transition-all transform hover:scale-105
+                      ${selectedIcon === iconName ? 'bg-indigo-100 text-indigo-600 ring-2 ring-indigo-300' : ''}`}
+                    title={iconName}
+                    aria-label={iconName}
+                  >
+                    <DynamicIconComponent icon={iconName} size={20} />
+                    <span className="text-xs mt-1 truncate text-center w-full line-clamp-1">
+                      {iconName.startsWith('fa-') ? iconName.substring(3) : iconName}
                     </span>
-                  )}
-                </button>
-              ) : null;
+                    {searchTerm.trim().length >= 2 && (
+                      <span className="text-xs text-gray-500 truncate text-center w-full line-clamp-1">
+                        {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
+                      </span>
+                    )}
+                  </button>
+                )
               })
             )}
           </div>

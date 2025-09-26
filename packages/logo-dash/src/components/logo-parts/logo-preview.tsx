@@ -1,8 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import * as LucideIcons from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { library, IconProp } from '@fortawesome/fontawesome-svg-core';
 import { LogoConfig } from './types';
 import { getSizeByPreset, gradientStyles } from './utils';
+
+// 初始化 Font Awesome 图标库
+library.add(fas);
 
 interface LogoPreviewProps {
   config: LogoConfig;
@@ -38,19 +44,39 @@ export const LogoPreview: React.FC<LogoPreviewProps> = ({ config, isGridVisible 
     previewElement.innerHTML = '';
 
     // 创建图标
-    const IconComponent = LucideIcons[config.icon as keyof typeof LucideIcons] || LucideIcons['Download'];
     // 使用iconMarginRatio来计算图标大小，实现边距效果
     const iconSize = Math.min(size.width, size.height) * (1 - 2 * config.iconMarginRatio);
-    const iconElement = React.createElement(IconComponent as any, {
-      className: 'text-white',
-      size: iconSize,
-      color: config.iconColor,
-      strokeWidth: config.lineThickness,
-    });
     
     // 将 React 元素渲染到预览中
     const iconWrapper = document.createElement('div');
-    ReactDOM.render(iconElement, iconWrapper);
+    
+    // 检查是否为Font Awesome图标（以fa-开头）
+    if (config.icon && config.icon.startsWith('fa-')) {
+      // 提取图标名称（去掉fa-前缀）
+      const faIconName = config.icon.substring(3) as IconProp;
+      const faIconElement = React.createElement(FontAwesomeIcon, {
+        icon: faIconName,
+        size: 'lg',
+        style: {
+          color: config.iconColor,
+          fontSize: `${iconSize}px`,
+          width: `${iconSize}px`,
+          height: `${iconSize}px`
+        }
+      });
+      ReactDOM.render(faIconElement, iconWrapper);
+    } else {
+      // 渲染Lucide图标
+      const IconComponent = LucideIcons[config.icon as keyof typeof LucideIcons] || LucideIcons['Download'];
+      const iconElement = React.createElement(IconComponent as any, {
+        className: 'text-white',
+        size: iconSize,
+        color: config.iconColor,
+        strokeWidth: config.lineThickness,
+      });
+      ReactDOM.render(iconElement, iconWrapper);
+    }
+    
     previewElement.appendChild(iconWrapper);
 
     // 添加文字（如果有）
