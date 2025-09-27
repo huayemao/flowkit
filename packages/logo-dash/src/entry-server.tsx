@@ -94,6 +94,12 @@ export async function render(url: string, languages: string[]) {
       <meta name="twitter:title" content={seoContent.twitterTitle} />
       <meta name="twitter:description" content={seoContent.twitterDescription} />
       <link rel="canonical" href={`https://${DOMAIN_NAME}${url}`} />
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+      <link rel="icon" href="/favicon.ico" sizes="48x48"/>
+      <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml"/>
+      <link rel="manifest" href="/site.webmanifest"/>
+      <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)"/>
+      <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
       {hreflangTags}
     </>
   )
