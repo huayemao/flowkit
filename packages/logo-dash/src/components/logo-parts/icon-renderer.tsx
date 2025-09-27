@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { LogoConfig, LogoSize } from "./types";
 import { getSizeByPreset } from "./utils";
+import { flushSync } from "react-dom";
 
 /**
  * 检查图标是否为 Font Awesome 图标
@@ -104,7 +105,9 @@ export const renderIconToDOM = (
   // 渲染图标组件
   const iconElement = renderIconComponent(config);
   const root = ReactDOM.createRoot(iconWrapper);
-  root.render(iconElement);
+  flushSync(() => {
+    root.render(iconElement);
+  });
   // 将图标添加到容器
   container.appendChild(iconWrapper);
 };
@@ -127,18 +130,21 @@ export const getIconAsSVGString = (
       const tempContainer = document.createElement("div");
       // 渲染 Font Awesome 图标到临时容器
       const root = ReactDOM.createRoot(tempContainer);
-      root.render(
-        React.createElement(FontAwesomeIcon, {
-          icon: faIconName,
-          color: config.iconColor,
-          size: "lg",
-          style: {
-            width: `${size}px`,
-            height: `${size}px`,
-            fontSize: `${size}px`,
-          },
-        })
-      );
+      flushSync(() => {
+        root.render(
+          React.createElement(FontAwesomeIcon, {
+            icon: faIconName,
+            color: config.iconColor,
+            size: "lg",
+            style: {
+              width: `${size}px`,
+              height: `${size}px`,
+              fontSize: `${size}px`,
+            },
+          })
+        );
+      });
+
       // 获取渲染后的 SVG 内容
       const svgElement = tempContainer.querySelector("svg");
       if (svgElement) {
@@ -147,9 +153,6 @@ export const getIconAsSVGString = (
         svgElement.setAttribute("height", size.toString());
         // 获取 SVG 字符串
         const svgString = new XMLSerializer().serializeToString(svgElement);
-        console.log(svgString)
-        // 清理临时容器
-        root.unmount();
         return svgString;
       }
       // 清理临时容器
@@ -163,13 +166,15 @@ export const getIconAsSVGString = (
         LucideIcons[config.icon as keyof typeof LucideIcons] ||
         LucideIcons["Download"];
       const root = ReactDOM.createRoot(tempContainer);
-      root.render(
-        React.createElement(IconComponent as any, {
-          size: size,
-          color: config.iconColor,
-          strokeWidth: config.lineThickness,
-        })
-      );
+      flushSync(() => {
+        root.render(
+          React.createElement(IconComponent as any, {
+            size: size,
+            color: config.iconColor,
+            strokeWidth: config.lineThickness,
+          })
+        );
+      });
       // 获取渲染后的 SVG 内容
       const svgElement = tempContainer.querySelector("svg");
       if (svgElement) {
@@ -179,7 +184,6 @@ export const getIconAsSVGString = (
         // 获取 SVG 字符串
         const svgString = new XMLSerializer().serializeToString(svgElement);
         // 清理临时容器
-        root.unmount();
         return svgString;
       }
       // 清理临时容器
