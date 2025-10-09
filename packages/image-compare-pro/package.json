@@ -25,7 +25,6 @@
     "tauri:dev": "pnpm run build:shared-ui && tauri dev",
     "tauri:build": "pnpm run build:shared-ui && tauri build",
     "build:shared-ui": "cd ../../ && pnpm run build:shared-ui",
-    "build:multilingual": "pnpm run build:demo && node scripts/build-multilingual.js",
     "build:server": "vite build --config vite.config.server.ts",
     "generate": "pnpm run build && pnpm run build:server && node prerender"
   },
