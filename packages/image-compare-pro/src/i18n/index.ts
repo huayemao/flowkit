@@ -15,16 +15,21 @@ export const importTranslations = async (language: string) => {
     try {
         // 动态导入指定语言的翻译文件
         const translationsModule = await import(`./locales/${language}/translation.json`);
-        return translationsModule.default;
+        return translationsModule.default || {};
     } catch (error) {
         console.error(`Failed to load translations for language: ${language}`, error);
-        // 如果指定语言的翻译文件不存在，加载默认的英文翻译
-        const defaultTranslationsModule = await import('./locales/en/translation.json');
-        return defaultTranslationsModule.default;
+        try {
+            // 如果指定语言的翻译文件不存在，加载默认的英文翻译
+            const defaultTranslationsModule = await import('./locales/en/translation.json');
+            return defaultTranslationsModule.default || {};
+        } catch (defaultError) {
+            console.error('Failed to load default English translations', defaultError);
+            // 作为最后的后备，返回一个空对象
+            return {};
+        }
     }
 };
 
-// 预加载常用语言的翻译文件
 export const preloadCommonTranslations = async () => {
     try {
         // 可以根据实际使用情况调整预加载的语言列表
@@ -58,6 +63,7 @@ export const initI18n = async (language?: string) => {
     try {
         // 预加载常用语言翻译
         const translations = await preloadCommonTranslations();
+        console.log(translations)
         // 初始化i18n
        return await sharedInitI18n(translations, language);
     } catch (error) {
