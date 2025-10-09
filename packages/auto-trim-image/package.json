@@ -19,14 +19,14 @@
   "scripts": {
     "dev": "pnpm run build:shared-ui && vite",
     "build": "pnpm run build:shared-ui && tsc && vite build",
-    "build:lib": "pnpm run build:shared-ui && tsc && vite build",
-    "build:demo": "pnpm run build:shared-ui && vite build --config vite.config.app.ts",
-    "preview": "pnpm run build:shared-ui && vite preview",
+    "build:lib": "pnpm run build:shared-ui && tsc && vite build --config vite.config.lib.ts",
+    "preview": "vite preview",
     "tauri": "tauri",
     "tauri:dev": "pnpm run build:shared-ui && tauri dev",
     "tauri:build": "pnpm run build:shared-ui && tauri build",
     "build:shared-ui": "cd ../../ && pnpm run build:shared-ui",
-    "update-version": "node update-version.cjs"
+    "build:server": "vite build --config vite.config.server.ts",
+    "generate": "pnpm run build && pnpm run build:server && node prerender"
   },
   "dependencies": {
     "@flowkit/shared-ui": "workspace:^1.0.0",
