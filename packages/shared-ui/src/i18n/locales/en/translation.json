@@ -27,6 +27,12 @@
     "fileTooLarge": "File is too large",
     "invalidFormat": "Invalid file format"
   },
+  "windowControls": {
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "restore": "Restore",
+    "close": "Close"
+  },
   "imageDiff": {
     "sideBySide": "Side by Side",
     "overlay": "Overlay",

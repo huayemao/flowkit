@@ -28,6 +28,12 @@
     "fileTooLarge": "文件过大",
     "invalidFormat": "文件格式不支持"
   },
+  "windowControls": {
+    "minimize": "最小化",
+    "maximize": "最大化",
+    "restore": "还原",
+    "close": "关闭"
+  },
   "imageDiff": {
     "sideBySide": "并排显示",
     "overlay": "叠加显示",
