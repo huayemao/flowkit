@@ -1,0 +1,25 @@
+{
+  "imageDiff": {
+    "title": "Billedsammenligning Pro",
+    "description": "Sammenlign billeder side om side, over hinanden eller skift imellem dem – forskelle bliver tydelige med ét blik",
+    "original": "Original",
+    "processed": "Behandlet",
+    "originalImage": "Originalbillede",
+    "processedImage": "Behandlet billede",
+    "sideBySide": "Side om side",
+    "overlay": "Over hinanden",
+    "switch": "Skifte",
+    "maximize": "Maximere",
+    "minimize": "Minimere",
+    "moveLeft": "Flyt venstre",
+    "moveRight": "Flyt højre",
+    "verticalLayoutTip": "Billeder vises vertikalt på grund af pladsbegrænsninger",
+    "exitTip": "Klik uden for vinduet for at afslutte",
+    "uploadFirstImage": "Upload venligst billede 1",
+    "uploadSecondImage": "Upload venligst billede 2",
+    "quickCompareTip": "Tip: Du kan vælge to billeder ad gangen for at starte sammenligningen hurtigt",
+    "uploadedFirstImage": "Uploadet billede 1",
+    "stepTwo": "Trin 2: Vælg billede 2",
+    "supportedFormats": "Understøtter almindelige billedformater som JPG, PNG, WebP, filstørrelse ikke over 20 MB"
+  }
+}

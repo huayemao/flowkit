@@ -1,0 +1,25 @@
+{
+  "imageDiff": {
+    "title": "Profesionální srovnávač obrázků",
+    "description": "Srovnávej obrázky vedle sebe, překryj je nebo přepínaj mezi nimi – podrobnosti rozdílů se ti otevřou na první pohled",
+    "original": "Původní",
+    "processed": "Zpracovaný",
+    "originalImage": "Původní obrázek",
+    "processedImage": "Zpracovaný obrázek",
+    "sideBySide": "Vedle sebe",
+    "overlay": "Překrytí",
+    "switch": "Přepínání",
+    "maximize": "Maximalizovat",
+    "minimize": "Minimalizovat",
+    "moveLeft": "Přesunout vlevo",
+    "moveRight": "Přesunout vpravo",
+    "verticalLayoutTip": "Obrázky se zobrazují vertikálně kvůli omezenému místu",
+    "exitTip": "Pro ukončení klikni mimo okno",
+    "uploadFirstImage": "Nahrajte prosím první obrázek",
+    "uploadSecondImage": "Nahrajte prosím druhý obrázek",
+    "quickCompareTip": "Tip: Můžete vybrat dva obrázky najednou a rychle začít srovnávat",
+    "uploadedFirstImage": "Nahraný první obrázek",
+    "stepTwo": "Krok 2: Vyberte druhý obrázek",
+    "supportedFormats": "Podporuje běžné formáty obrázků jako JPG, PNG, WebP, velikost souboru nepřekračuje 20 MB"
+  }
+}

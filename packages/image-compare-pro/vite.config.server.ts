@@ -1,18 +1,16 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 
-// 应用模式配置
 export default defineConfig({
-  plugins: [
-    react(),
-  ],
+  plugins: [react()],
   build: {
-    ssrManifest: ".vite/ssr-manifest.json",
-    outDir: "dist/static",
+    outDir: 'dist/server',
     rollupOptions: {
       input: resolve(__dirname, 'index.html'),
     },
+    ssrManifest: true,
+    ssr: "src/entry-server.tsx",
   },
   base: './',
 })

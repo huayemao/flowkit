@@ -1,0 +1,25 @@
+{
+  "imageDiff": {
+    "title": "Bilde sammenligning Pro",
+    "description": "Sammenlign bilder side om side, overlappende eller bytt mellom dem – forskjeller blir tydelige med en gang",
+    "original": "Original",
+    "processed": "Behandlet",
+    "originalImage": "Originalbilde",
+    "processedImage": "Behandlet bilde",
+    "sideBySide": "Side om side",
+    "overlay": "Overlapp",
+    "switch": "Bytt",
+    "maximize": "Maksimer",
+    "minimize": "Minimer",
+    "moveLeft": "Flytt venstre",
+    "moveRight": "Flytt høyre",
+    "verticalLayoutTip": "Bildene vises vertikalt på grunn av plassbegrensninger",
+    "exitTip": "Klikk utenfor vinduet for å avslutte",
+    "uploadFirstImage": "Last opp bilde 1",
+    "uploadSecondImage": "Last opp bilde 2",
+    "quickCompareTip": "Tips: Du kan velge to bilder samtidig for å starte sammenligning raskt",
+    "uploadedFirstImage": "Lastet opp bilde 1",
+    "stepTwo": "Steg 2: Velg bilde 2",
+    "supportedFormats": "Støtter vanlige bildeformater som JPG, PNG, WebP, filstørrelse ikke over 20 MB"
+  }
+}

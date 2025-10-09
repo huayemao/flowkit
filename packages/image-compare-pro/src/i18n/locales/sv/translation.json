@@ -1,0 +1,25 @@
+{
+  "imageDiff": {
+    "title": "Bildjämförelse Pro",
+    "description": "Jämför bilder sida vid sida, i överlagring eller växla mellan dem – skillnader blir tydliga direkt",
+    "original": "Original",
+    "processed": "Bearbetad",
+    "originalImage": "Originalbild",
+    "processedImage": "Bearbetad bild",
+    "sideBySide": "Sida vid sida",
+    "overlay": "Överlagring",
+    "switch": "Växla",
+    "maximize": "Maximera",
+    "minimize": "Minimera",
+    "moveLeft": "Flytta till vänster",
+    "moveRight": "Flytta till höger",
+    "verticalLayoutTip": "Bilderna visas vertikalt på grund av platsbegränsningar",
+    "exitTip": "Klicka utanför fönstret för att avsluta",
+    "uploadFirstImage": "Ladda upp Bild 1",
+    "uploadSecondImage": "Ladda upp Bild 2",
+    "quickCompareTip": "Tips: Du kan välja två bilder samtidigt för att börja jämföra snabbt",
+    "uploadedFirstImage": "Laddad upp Bild 1",
+    "stepTwo": "Steg 2: Välj Bild 2",
+    "supportedFormats": "Stödjer vanliga bildformat som JPG, PNG, WebP, filstorlek inte över 20 MB"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "imageDiff": {
+    "title": "Comparateur d'Images Pro",
+    "description": "Comparez des images côte à côte, en superposition ou en alternance – les différences sont visibles en un clin d'œil",
+    "original": "Original",
+    "processed": "Traité",
+    "originalImage": "Image originale",
+    "processedImage": "Image traitée",
+    "sideBySide": "Côte à côte",
+    "overlay": "Superposition",
+    "switch": "Alternance",
+    "maximize": "Agrandir",
+    "minimize": "Réduire",
+    "moveLeft": "Déplacer vers la gauche",
+    "moveRight": "Déplacer vers la droite",
+    "verticalLayoutTip": "Les images sont affichées verticalement en raison de la contrainte d'espace",
+    "exitTip": "Cliquez en dehors de la fenêtre pour quitter",
+    "uploadFirstImage": "Veuillez télécharger l'image 1",
+    "uploadSecondImage": "Veuillez télécharger l'image 2",
+    "quickCompareTip": "Astuce: Sélectionnez deux images d'un coup pour démarrer la comparaison rapidement",
+    "uploadedFirstImage": "Image 1 téléchargée",
+    "stepTwo": "Étape 2: Sélectionnez l'image 2",
+    "supportedFormats": "Prend en charge les formats d'image courants comme JPG, PNG, WebP, taille du fichier ne dépassant pas 20 MB"
+  }
+}

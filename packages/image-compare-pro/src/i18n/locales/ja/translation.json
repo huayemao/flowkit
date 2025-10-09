@@ -1,0 +1,25 @@
+{
+  "imageDiff": {
+    "title": "画像比較プロ",
+    "description": "画像を横並び、重ね合わせまたは切り替えて比較 – 違いを一瞬で把握",
+    "original": "元画像",
+    "processed": "加工後",
+    "originalImage": "元の画像",
+    "processedImage": "加工後の画像",
+    "sideBySide": "横並び比較",
+    "overlay": "重ね合わせ比較",
+    "switch": "切り替え比較",
+    "maximize": "最大化",
+    "minimize": "最小化",
+    "moveLeft": "左に移動",
+    "moveRight": "右に移動",
+    "verticalLayoutTip": "スペースの制約により、画像は縦表示となります",
+    "exitTip": "ウィンドウ外をクリックすると終了",
+    "uploadFirstImage": "画像1をアップロードしてください",
+    "uploadSecondImage": "画像2をアップロードしてください",
+    "quickCompareTip": "ヒント：一度に2枚の画像を選択すると、すぐに比較を開始できます",
+    "uploadedFirstImage": "アップロード済みの画像1",
+    "stepTwo": "ステップ2：画像2を選択",
+    "supportedFormats": "JPG、PNG、WebPなど一般的な画像形式をサポート、ファイルサイズは20MB以内"
+  }
+}

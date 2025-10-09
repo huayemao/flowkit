@@ -1,0 +1,25 @@
+{
+  "imageDiff": {
+    "title": "Bildvergleich Profi",
+    "description": "Vergleiche Bilder nebeneinander, übereinander oder wechsel zwischen ihnen – Unterschiede werden sofort sichtbar",
+    "original": "Original",
+    "processed": "Verarbeitet",
+    "originalImage": "Originalbild",
+    "processedImage": "Verarbeitetes Bild",
+    "sideBySide": "Nebeneinander",
+    "overlay": "Übereinander",
+    "switch": "Wechseln",
+    "maximize": "Maximieren",
+    "minimize": "Minimieren",
+    "moveLeft": "Nach links bewegen",
+    "moveRight": "Nach rechts bewegen",
+    "verticalLayoutTip": "Bilder werden wegen Platzmangel vertikal angezeigt",
+    "exitTip": "Klicken Sie außerhalb des Fensters, um zu beenden",
+    "uploadFirstImage": "Bitte lade Bild 1 hoch",
+    "uploadSecondImage": "Bitte lade Bild 2 hoch",
+    "quickCompareTip": "Tipp: Wählen Sie zwei Bilder auf einmal aus, um den Vergleich schnell zu starten",
+    "uploadedFirstImage": "Hochgeladenes Bild 1",
+    "stepTwo": "Schritt 2: Wählen Sie Bild 2 aus",
+    "supportedFormats": "Unterstützt gängige Bildformate wie JPG, PNG, WebP, Dateigröße nicht über 20 MB"
+  }
+}

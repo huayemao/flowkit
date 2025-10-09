@@ -1,0 +1,25 @@
+{
+  "imageDiff": {
+    "title": "Képösszehasonlító Profi",
+    "description": "Hasonlíts össze képeket egymás mellett, átfedésben vagy váltasz közöttük – a különbségek egyből láthatóak",
+    "original": "Eredeti",
+    "processed": "Feldolgozott",
+    "originalImage": "Eredeti kép",
+    "processedImage": "Feldolgozott kép",
+    "sideBySide": "Együtt mellett",
+    "overlay": "Átfedés",
+    "switch": "Váltás",
+    "maximize": "Maximalizálás",
+    "minimize": "Minimalizálás",
+    "moveLeft": "Balra mozgatás",
+    "moveRight": "Jobbra mozgatás",
+    "verticalLayoutTip": "A képek függőlegesen jelennek meg térhiány miatt",
+    "exitTip": "Kattints a ablakon kívül a kilépéshez",
+    "uploadFirstImage": "Töltse fel az első képet",
+    "uploadSecondImage": "Töltse fel a második képet",
+    "quickCompareTip": "Tipp: Kiválaszthat két képet egyszerre a gyors összehasonlításhoz",
+    "uploadedFirstImage": "Feltöltött első kép",
+    "stepTwo": "2. lépés: Válassza a második képet",
+    "supportedFormats": "Támogatja a gyakori képformátumokat (JPG, PNG, WebP), fájlméret max 20 MB"
+  }
+}

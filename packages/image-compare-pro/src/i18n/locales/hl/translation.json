@@ -1,0 +1,25 @@
+{
+  "imageDiff": {
+    "title": "Afbeeldingsvergelijking Pro",
+    "description": "Vergelijk afbeeldingen naast elkaar, over elkaar heen of wissel ertussen – verschillen zijn direct zichtbaar",
+    "original": "Origineel",
+    "processed": "Verwerkt",
+    "originalImage": "Originele afbeelding",
+    "processedImage": "Verwerkte afbeelding",
+    "sideBySide": "Naast elkaar",
+    "overlay": "Over elkaar heen",
+    "switch": "Wisselen",
+    "maximize": "Maximaliseren",
+    "minimize": "Minimaliseren",
+    "moveLeft": "Naar links verplaatsen",
+    "moveRight": "Naar rechts verplaatsen",
+    "verticalLayoutTip": "Afbeeldingen worden verticaal weergegeven vanwege ruimtebeperkingen",
+    "exitTip": "Klik buiten het venster om te sluiten",
+    "uploadFirstImage": "Upload afbeelding 1",
+    "uploadSecondImage": "Upload afbeelding 2",
+    "quickCompareTip": "Tip: Selecteer twee afbeeldingen tegelijk om snel te beginnen met vergelijken",
+    "uploadedFirstImage": "Geüploade afbeelding 1",
+    "stepTwo": "Stap 2: Selecteer afbeelding 2",
+    "supportedFormats": "Ondersteunt veelgebruikte afbeeldingsformaten zoals JPG, PNG, WebP, bestandsgrootte niet boven 20 MB"
+  }
+}

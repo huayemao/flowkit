@@ -1,0 +1,25 @@
+{
+  "imageDiff": {
+    "title": "Kuvanvertailu Pro",
+    "description": "Vertaile kuvia vierekkäin, päällekkäin tai vaihda niiden välillä – erot näkyvät selvästi heti",
+    "original": "Alkuperäinen",
+    "processed": "Käsitelty",
+    "originalImage": "Alkuperäinen kuva",
+    "processedImage": "Käsitelty kuva",
+    "sideBySide": "Vierekkäin",
+    "overlay": "Päällekkäin",
+    "switch": "Vaihda",
+    "maximize": "Suurennus",
+    "minimize": "Pienennys",
+    "moveLeft": "Liikuta vasemmalle",
+    "moveRight": "Liikuta oikealle",
+    "verticalLayoutTip": "Kuvia näytetään pystysuunnassa tilan rajallisuuden vuoksi",
+    "exitTip": "Klikkaa ikkunan ulkopuolelle poistuaksesi",
+    "uploadFirstImage": "Lataa ensin kuva 1",
+    "uploadSecondImage": "Lataa sitten kuva 2",
+    "quickCompareTip": "Vinkki: Voit valita kaksi kuvaa kerralla aloittaaksesi vertailun nopeasti",
+    "uploadedFirstImage": "Ladattu kuva 1",
+    "stepTwo": "Vaihe 2: Valitse kuva 2",
+    "supportedFormats": "Tuen yleisiä kuvaformaatteja kuten JPG, PNG, WebP, tiedostokoko ei ylitä 20 MB"
+  }
+}

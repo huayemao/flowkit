@@ -1,0 +1,25 @@
+{
+  "imageDiff": {
+    "title": "Porównywarka Obrazów Pro",
+    "description": "Porównuj obrazy obok siebie, nakładaj je lub przełączaj się między nimi – różnice są widoczne natychmiast",
+    "original": "Oryginał",
+    "processed": "Przetworzony",
+    "originalImage": "Obraz oryginalny",
+    "processedImage": "Obraz przetworzony",
+    "sideBySide": "Obok siebie",
+    "overlay": "Nakładanie",
+    "switch": "Przełączanie",
+    "maximize": "Maksymalizuj",
+    "minimize": "Minimalizuj",
+    "moveLeft": "Przesuń w lewo",
+    "moveRight": "Przesuń w prawo",
+    "verticalLayoutTip": "Obrazy są wyświetlane pionowo ze względu na ograniczenia przestrzenne",
+    "exitTip": "Kliknij poza oknem, aby zamknąć",
+    "uploadFirstImage": "Prześlij obraz 1",
+    "uploadSecondImage": "Prześlij obraz 2",
+    "quickCompareTip": "Wskazówka: Możesz wybrać dwa obrazy jednocześnie, aby szybko rozpocząć porównanie",
+    "uploadedFirstImage": "Przesłany obraz 1",
+    "stepTwo": "Krok 2: Wybierz obraz 2",
+    "supportedFormats": "Obsługuje powszechnie używane formaty obrazów (JPG, PNG, WebP), rozmiar pliku nie przekracza 20 MB"
+  }
+}
