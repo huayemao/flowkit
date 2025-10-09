@@ -12,6 +12,8 @@ import { Button } from "@flowkit/shared-ui";
 import { ImageDiffViewer } from "@flowkit/shared-ui";
 import { DialogLite, DialogLiteContent, DialogLiteContentWithClose, DialogLiteHeader, DialogLiteTitle, DialogLiteClose } from "@flowkit/shared-ui";
 import { useEffect } from "react";
+import "@flowkit/shared-ui/dist/index.css";
+
 
 interface ProcessedImage {
   name: string;
