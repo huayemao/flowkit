@@ -21,9 +21,9 @@ const CurrentLocationPanel: React.FC<CurrentLocationPanelProps> = ({
   onGetLocation
 }) => {
   return (
-    <Card className="bg-white/90 backdrop-blur-sm shadow-lg border-none">
+    <Card className="backdrop-blur-sm shadow-lg border-none">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl text-cyan-700">实时海拔信息</CardTitle>
+        <CardTitle className="text-2xl">实时海拔信息</CardTitle>
         <CardDescription>
           获取您当前位置的精确海拔高度和地理坐标
         </CardDescription>
@@ -32,9 +32,9 @@ const CurrentLocationPanel: React.FC<CurrentLocationPanelProps> = ({
         <div className="flex flex-col items-center space-y-6">
           {userLocation ? (
             <>
-              <div className="bg-gradient-to-br from-cyan-500 to-blue-600 text-white p-8 rounded-full shadow-lg">
+              <div className="bg-gradient-to-br from-cyan-500 to-blue-600 text-white p-8 rounded-full shadow-lg text-center">
                 <div className="text-5xl font-bold">{userLocation.altitude}</div>
-                <div className="text-xl font-light">米</div>
+                <span className="text-xl font-light">米</span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-md">
                 <div className="bg-gray-50 p-4 rounded-lg">
@@ -76,7 +76,7 @@ const CurrentLocationPanel: React.FC<CurrentLocationPanelProps> = ({
         <Button
           onClick={onGetLocation}
           disabled={isLocating}
-          className="bg-cyan-600 hover:bg-cyan-700 text-white"
+         
         >
           {isLocating ? (
             <>

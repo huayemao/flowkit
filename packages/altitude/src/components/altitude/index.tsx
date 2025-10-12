@@ -191,13 +191,13 @@ const Altitude: React.FC = () => {
   }, [isOfflineMode]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-50">
+    <div className="">
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* 页面标题 */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">全球海拔查询与对比分析工具</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">实时海拔查询</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            专业的Web应用程序，提供实时海拔查询和全球主要城市海拔数据查询功能，支持数据可视化对比分析
+            提供实时海拔查询和全球主要城市海拔数据查询功能，支持数据可视化对比分析
           </p>
           <div className="mt-4 flex items-center justify-center space-x-2">
             <Switch
@@ -214,16 +214,16 @@ const Altitude: React.FC = () => {
         {/* 主要内容区 */}
         <Tabs defaultValue="current-location" className="w-full">
           <div className="flex justify-center mb-8">
-            <TabsList className="bg-white/80 backdrop-blur-sm p-1">
-              <TabsTrigger value="current-location" className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white">
+            <TabsList>
+              <TabsTrigger value="current-location">
                 <FontAwesomeIcon icon={faLocationDot} className="mr-2" />
                 实时海拔查询
               </TabsTrigger>
-              <TabsTrigger value="city-database" className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white">
+              <TabsTrigger value="city-database">
                 <FontAwesomeIcon icon={faGlobe} className="mr-2" />
                 全球城市数据库
               </TabsTrigger>
-              <TabsTrigger value="altitude-comparison" className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white">
+              <TabsTrigger value="altitude-comparison">
                 <FontAwesomeIcon icon={faArrowsUpDown} className="mr-2" />
                 海拔对比分析
               </TabsTrigger>

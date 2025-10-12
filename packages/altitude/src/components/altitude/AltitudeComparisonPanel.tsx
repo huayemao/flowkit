@@ -94,7 +94,7 @@ const AltitudeComparisonPanel: React.FC<AltitudeComparisonPanelProps> = ({
         {userLocation && !selectedCities.has('user-location') && (
           <Button
             onClick={onAddUserLocation}
-            className="bg-cyan-600 hover:bg-cyan-700 text-white"
+           
           >
             <FontAwesomeIcon icon={faLocationDot} className="mr-2" />
             添加我的位置到对比
