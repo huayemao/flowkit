@@ -3,6 +3,7 @@ import { WindowControls } from './window-controls';
 import { ScrollArea } from './scroll-area';
 import { LanguageSwitcher } from './language-switcher';
 import { ThemeToggle } from './theme-toggle';
+import { isTauri } from '../lib/utils';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -46,6 +47,19 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             <div className="flex justify-between items-center h-12">
               {/* 左侧区域 */}
               <div className="flex items-center gap-2">
+                {!isTauri && (
+                  <a
+                    href="https://www.utities.online"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200"
+                  >
+                    <span className="w-5 h-5 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center">
+                      <span className="text-xs text-indigo-600 dark:text-indigo-400">U</span>
+                    </span>
+                    <span>utities.online</span>
+                  </a>
+                )}
                 <LanguageSwitcher />
                 <ThemeToggle />
               </div>

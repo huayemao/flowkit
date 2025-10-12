@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { Minimize, Maximize, X, Minus } from "lucide-react";
 import { useTranslation } from "../i18n";
-
-// 检查是否在 Tauri 环境中
-const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
+import { isTauri } from "../lib/utils";
 
 export function WindowControls() {
   const [isMaximized, setIsMaximized] = useState(false);
