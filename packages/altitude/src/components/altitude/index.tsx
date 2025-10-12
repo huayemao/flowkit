@@ -44,6 +44,7 @@ const Altitude: React.FC = () => {
   const getUserLocation = async () => {
     setIsLocating(true);
     setLocationError(null);
+    setUserLocation(null); // 重置用户位置状态
 
     if (!navigator.geolocation) {
       setLocationError('您的浏览器不支持地理定位功能');
@@ -53,27 +54,69 @@ const Altitude: React.FC = () => {
 
     navigator.geolocation.getCurrentPosition(
       async (position) => {
-        try {
-          // 使用API获取真实海拔高度
-          const altitude = await getElevationByCoordinates(position.coords.latitude, position.coords.longitude);
-          
-          // 使用API获取位置详情（城市、地区、国家）
-          const locationInfo = await getLocationInfoByCoordinates(position.coords.latitude, position.coords.longitude);
-          
-          setUserLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            altitude: altitude,
-            city: locationInfo.city || '当前位置',
-            region: locationInfo.region || '未知地区',
-            country: locationInfo.country || '未知国家'
+        // 创建初始用户位置对象，包含经纬度信息
+        const initialUserLocation = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          altitude: 0, // 默认值，稍后会更新
+          city: '获取中...',
+          region: '获取中...',
+          country: '获取中...'
+        };
+
+        // 设置初始用户位置状态
+        setUserLocation(initialUserLocation);
+
+        // 跟踪API调用是否全部完成
+        let apiCallsCompleted = 0;
+        const totalApiCalls = 2;
+
+        // 定义完成处理函数
+        const handleApiCallComplete = () => {
+          apiCallsCompleted++;
+          if (apiCallsCompleted === totalApiCalls) {
+            setIsLocating(false);
+          }
+        };
+
+        // 并行执行两个API调用
+        // 1. 获取海拔高度
+        getElevationByCoordinates(position.coords.latitude, position.coords.longitude)
+          .then(altitude => {
+            // 更新用户位置状态的海拔信息
+            setUserLocation(prev => prev ? {
+              ...prev,
+              altitude: altitude
+            } : initialUserLocation);
+          })
+          .catch(error => {
+            console.error('获取海拔数据失败:', error);
+            setLocationError('获取海拔数据失败，使用默认值');
+            // 即使出错，也继续使用当前状态
+          })
+          .finally(() => {
+            handleApiCallComplete();
           });
-        } catch (error) {
-          console.error('获取海拔或位置信息失败:', error);
-          setLocationError('获取海拔数据失败，请稍后重试');
-        } finally {
-          setIsLocating(false);
-        }
+
+        // 2. 获取位置详情
+        getLocationInfoByCoordinates(position.coords.latitude, position.coords.longitude)
+          .then(locationInfo => {
+            // 更新用户位置状态的位置信息
+            setUserLocation(prev => prev ? {
+              ...prev,
+              city: locationInfo.city || '当前位置',
+              region: locationInfo.region || '未知地区',
+              country: locationInfo.country || '未知国家'
+            } : initialUserLocation);
+          })
+          .catch(error => {
+            console.error('获取位置信息失败:', error);
+            setLocationError(prev => prev || '获取位置详情失败');
+            // 即使出错，也继续使用当前状态
+          })
+          .finally(() => {
+            handleApiCallComplete();
+          });
       },
       (error) => {
         let errorMessage = '获取位置失败';
