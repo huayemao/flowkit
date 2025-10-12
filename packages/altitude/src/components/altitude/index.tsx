@@ -1,0 +1,281 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardFooter, 
+  CardHeader, 
+  CardTitle 
+} from '@flowkit/shared-ui';
+import { Button } from '@flowkit/shared-ui';
+import { Input } from '@flowkit/shared-ui';
+import { Label } from '@flowkit/shared-ui';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@flowkit/shared-ui';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@flowkit/shared-ui';
+import { Switch } from '@flowkit/shared-ui';
+import { Progress } from '@flowkit/shared-ui';
+import { Alert, AlertDescription } from '@flowkit/shared-ui';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapPin, faSearch, faArrowsUpDown, faGlobe, faChevronDown, faChevronUp, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { UserLocation, CityData, AltitudeComparisonItem } from './types';
+import { mockCitiesData } from './mockData';
+import { getElevationByCoordinates, getLocationInfoByCoordinates } from './apiService';
+import AltitudeChart from './AltitudeChart';
+import CityList from './CityList';
+import CurrentLocationPanel from './CurrentLocationPanel';
+import CityDatabasePanel from './CityDatabasePanel';
+import AltitudeComparisonPanel from './AltitudeComparisonPanel';
+
+// 主组件
+const Altitude: React.FC = () => {
+  // 状态管理
+  const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
+  const [isLocating, setIsLocating] = useState(false);
+  const [locationError, setLocationError] = useState<string | null>(null);
+  const [cities, setCities] = useState<CityData[]>(mockCitiesData);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [continentFilter, setContinentFilter] = useState('all');
+  const [selectedCities, setSelectedCities] = useState<Set<string>>(new Set());
+  const [comparisonData, setComparisonData] = useState<AltitudeComparisonItem[]>([]);
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  const [isOfflineMode, setIsOfflineMode] = useState(false);
+
+  // 获取用户位置
+  const getUserLocation = async () => {
+    setIsLocating(true);
+    setLocationError(null);
+
+    if (!navigator.geolocation) {
+      setLocationError('您的浏览器不支持地理定位功能');
+      setIsLocating(false);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          // 使用API获取真实海拔高度
+          const altitude = await getElevationByCoordinates(position.coords.latitude, position.coords.longitude);
+          
+          // 使用API获取位置详情（城市、地区、国家）
+          const locationInfo = await getLocationInfoByCoordinates(position.coords.latitude, position.coords.longitude);
+          
+          setUserLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            altitude: altitude,
+            city: locationInfo.city || '当前位置',
+            region: locationInfo.region || '未知地区',
+            country: locationInfo.country || '未知国家'
+          });
+        } catch (error) {
+          console.error('获取海拔或位置信息失败:', error);
+          setLocationError('获取海拔数据失败，请稍后重试');
+        } finally {
+          setIsLocating(false);
+        }
+      },
+      (error) => {
+        let errorMessage = '获取位置失败';
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage = '用户拒绝了地理定位请求';
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = '位置信息不可用';
+            break;
+          case error.TIMEOUT:
+            errorMessage = '获取位置超时';
+            break;
+        }
+        setLocationError(errorMessage);
+        setIsLocating(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000
+      }
+    );
+  };
+
+  // 搜索和筛选城市
+  useEffect(() => {
+    let filtered = mockCitiesData;
+    
+    // 应用搜索筛选
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(city => 
+        city.name.toLowerCase().includes(term) || 
+        city.country.toLowerCase().includes(term)
+      );
+    }
+    
+    // 应用大洲筛选
+    if (continentFilter !== 'all') {
+      filtered = filtered.filter(city => city.continent === continentFilter);
+    }
+    
+    setCities(filtered);
+  }, [searchTerm, continentFilter]);
+
+  // 更新对比数据
+  useEffect(() => {
+    let newComparisonData: AltitudeComparisonItem[] = [];
+    
+    // 添加用户位置（如果有）
+    if (userLocation) {
+      newComparisonData.push({
+        id: 'user-location',
+        name: userLocation.city || '当前位置',
+        altitude: userLocation.altitude,
+        isUserLocation: true
+      });
+    }
+    
+    // 添加选中的城市
+    selectedCities.forEach(cityId => {
+      const city = mockCitiesData.find(c => c.id === cityId);
+      if (city) {
+        newComparisonData.push({
+          id: city.id,
+          name: city.name,
+          altitude: city.altitude,
+          isUserLocation: false
+        });
+      }
+    });
+    
+    // 排序
+    newComparisonData.sort((a, b) => {
+      return sortDirection === 'asc' ? a.altitude - b.altitude : b.altitude - a.altitude;
+    });
+    
+    setComparisonData(newComparisonData);
+  }, [selectedCities, userLocation, sortDirection]);
+
+  // 处理城市选择
+  const handleCitySelect = (cityId: string) => {
+    const newSelected = new Set(selectedCities);
+    newSelected.add(cityId);
+    setSelectedCities(newSelected);
+  };
+
+  // 处理城市取消选择
+  const handleCityDeselect = (cityId: string) => {
+    const newSelected = new Set(selectedCities);
+    newSelected.delete(cityId);
+    setSelectedCities(newSelected);
+  };
+
+  // 切换排序方向
+  const toggleSortDirection = () => {
+    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+  };
+
+  // 添加用户位置到对比
+  const handleAddUserLocation = () => {
+    console.log('添加用户位置到对比列表');
+  };
+
+  // 清除选择
+  const handleClearSelection = () => {
+    setSelectedCities(new Set());
+  };
+
+  // 切换离线模式
+  useEffect(() => {
+    // 在实际应用中，这里应该处理离线数据缓存
+    console.log('离线模式:', isOfflineMode);
+  }, [isOfflineMode]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-50">
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        {/* 页面标题 */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">全球海拔查询与对比分析工具</h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            专业的Web应用程序，提供实时海拔查询和全球主要城市海拔数据查询功能，支持数据可视化对比分析
+          </p>
+          <div className="mt-4 flex items-center justify-center space-x-2">
+            <Switch
+              id="offline-mode"
+              checked={isOfflineMode}
+              onCheckedChange={setIsOfflineMode}
+            />
+            <Label htmlFor="offline-mode" className="text-sm text-gray-600">
+              离线模式
+            </Label>
+          </div>
+        </div>
+
+        {/* 主要内容区 */}
+        <Tabs defaultValue="current-location" className="w-full">
+          <div className="flex justify-center mb-8">
+            <TabsList className="bg-white/80 backdrop-blur-sm p-1">
+              <TabsTrigger value="current-location" className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white">
+                <FontAwesomeIcon icon={faLocationDot} className="mr-2" />
+                实时海拔查询
+              </TabsTrigger>
+              <TabsTrigger value="city-database" className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white">
+                <FontAwesomeIcon icon={faGlobe} className="mr-2" />
+                全球城市数据库
+              </TabsTrigger>
+              <TabsTrigger value="altitude-comparison" className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white">
+                <FontAwesomeIcon icon={faArrowsUpDown} className="mr-2" />
+                海拔对比分析
+              </TabsTrigger>
+            </TabsList>
+          </div>
+
+          {/* 实时海拔查询面板 */}
+          <TabsContent value="current-location" className="space-y-8">
+            <CurrentLocationPanel
+              userLocation={userLocation}
+              isLocating={isLocating}
+              locationError={locationError}
+              onGetLocation={getUserLocation}
+            />
+          </TabsContent>
+
+          {/* 全球城市数据库面板 */}
+          <TabsContent value="city-database" className="space-y-8">
+            <CityDatabasePanel
+              cities={cities}
+              searchTerm={searchTerm}
+              continentFilter={continentFilter}
+              selectedCities={selectedCities}
+              onSearchChange={setSearchTerm}
+              onContinentFilterChange={setContinentFilter}
+              onCitySelect={handleCitySelect}
+              onCityDeselect={handleCityDeselect}
+              onClearSelection={handleClearSelection}
+            />
+          </TabsContent>
+
+          {/* 海拔对比分析面板 */}
+          <TabsContent value="altitude-comparison" className="space-y-8">
+            <AltitudeComparisonPanel
+              comparisonData={comparisonData}
+              selectedCities={selectedCities}
+              userLocation={userLocation}
+              sortDirection={sortDirection}
+              onToggleSortDirection={toggleSortDirection}
+              onCityDeselect={handleCityDeselect}
+              onAddUserLocation={handleAddUserLocation}
+            />
+          </TabsContent>
+        </Tabs>
+
+        {/* 页脚信息 */}
+        <div className="mt-16 text-center text-gray-500 text-sm">
+          <p>全球海拔查询与对比分析工具 - 为地理爱好者、旅行者和研究人员提供专业可靠的服务</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Altitude;
