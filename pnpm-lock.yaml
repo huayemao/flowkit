@@ -125,7 +125,7 @@ importers:
         version: 18.3.7(@types/react@18.3.24)
       '@vitejs/plugin-react':
         specifier: ^4.3.4
-        version: 4.7.0(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+        version: 4.7.0(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1))
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.6)
@@ -143,7 +143,7 @@ importers:
         version: 5.6.3
       vite:
         specifier: ^6.0.3
-        version: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)
+        version: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1)
 
   packages/altitude:
     dependencies:
@@ -204,7 +204,7 @@ importers:
         version: 18.3.7(@types/react@18.3.24)
       '@vitejs/plugin-react':
         specifier: ^4.0.3
-        version: 4.7.0(vite@4.5.14(@types/node@24.5.2))
+        version: 4.7.0(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0))
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.21(postcss@8.5.6)
@@ -219,13 +219,13 @@ importers:
         version: 5.6.3
       vite:
         specifier: ^4.4.5
-        version: 4.5.14(@types/node@24.5.2)
+        version: 4.5.14(@types/node@24.5.2)(terser@5.44.0)
       vite-plugin-dts:
         specifier: ^3.6.0
-        version: 3.9.1(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@4.5.14(@types/node@24.5.2))
+        version: 3.9.1(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0))
       vite-plugin-static-copy:
         specifier: ^3.1.2
-        version: 3.1.2(vite@4.5.14(@types/node@24.5.2))
+        version: 3.1.2(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0))
 
   packages/auto-trim-image:
     dependencies:
@@ -274,7 +274,7 @@ importers:
         version: 18.3.7(@types/react@18.3.24)
       '@vitejs/plugin-react':
         specifier: ^4.0.3
-        version: 4.7.0(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+        version: 4.7.0(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1))
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.21(postcss@8.5.6)
@@ -289,13 +289,13 @@ importers:
         version: 5.6.3
       vite:
         specifier: ^6.0.3
-        version: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)
+        version: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1)
       vite-plugin-dts:
         specifier: ^4.5.0
-        version: 4.5.4(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+        version: 4.5.4(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1))
       vite-plugin-static-copy:
         specifier: ^3.1.2
-        version: 3.1.2(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+        version: 3.1.2(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1))
 
   packages/image-compare-pro:
     dependencies:
@@ -344,7 +344,7 @@ importers:
         version: 18.3.7(@types/react@18.3.24)
       '@vitejs/plugin-react':
         specifier: ^4.0.3
-        version: 4.7.0(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+        version: 4.7.0(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1))
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.21(postcss@8.5.6)
@@ -359,13 +359,13 @@ importers:
         version: 5.6.3
       vite:
         specifier: ^6.0.3
-        version: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)
+        version: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1)
       vite-plugin-dts:
         specifier: ^4.5.0
-        version: 4.5.4(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+        version: 4.5.4(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1))
       vite-plugin-static-copy:
         specifier: ^3.1.2
-        version: 3.1.2(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+        version: 3.1.2(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1))
 
   packages/logo-dash:
     dependencies:
@@ -423,7 +423,7 @@ importers:
         version: 18.3.7(@types/react@18.3.24)
       '@vitejs/plugin-react':
         specifier: ^4.0.3
-        version: 4.7.0(vite@4.5.14(@types/node@24.5.2))
+        version: 4.7.0(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0))
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.21(postcss@8.5.6)
@@ -438,13 +438,13 @@ importers:
         version: 5.6.3
       vite:
         specifier: ^4.4.5
-        version: 4.5.14(@types/node@24.5.2)
+        version: 4.5.14(@types/node@24.5.2)(terser@5.44.0)
       vite-plugin-dts:
         specifier: ^3.6.0
-        version: 3.9.1(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@4.5.14(@types/node@24.5.2))
+        version: 3.9.1(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0))
       vite-plugin-static-copy:
         specifier: ^3.1.2
-        version: 3.1.2(vite@4.5.14(@types/node@24.5.2))
+        version: 3.1.2(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0))
 
   packages/shared-ui:
     dependencies:
@@ -520,7 +520,7 @@ importers:
         version: 18.3.7(@types/react@18.3.24)
       '@vitejs/plugin-react':
         specifier: ^4.3.4
-        version: 4.7.0(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+        version: 4.7.0(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1))
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.21(postcss@8.5.6)
@@ -535,10 +535,10 @@ importers:
         version: 5.6.3
       vite:
         specifier: ^6.0.3
-        version: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)
+        version: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1)
       vite-plugin-dts:
         specifier: ^4.5.0
-        version: 4.5.4(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+        version: 4.5.4(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1))
 
   packages/video-splitter:
     dependencies:
@@ -596,10 +596,13 @@ importers:
         version: 18.3.7(@types/react@18.3.24)
       '@vitejs/plugin-react':
         specifier: ^4.0.3
-        version: 4.7.0(vite@4.5.14(@types/node@24.5.2))
+        version: 4.7.0(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0))
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.21(postcss@8.5.6)
+      html-minifier-terser:
+        specifier: ^7.2.0
+        version: 7.2.0
       postcss:
         specifier: ^8.4.24
         version: 8.5.6
@@ -611,13 +614,13 @@ importers:
         version: 5.6.3
       vite:
         specifier: ^4.4.5
-        version: 4.5.14(@types/node@24.5.2)
+        version: 4.5.14(@types/node@24.5.2)(terser@5.44.0)
       vite-plugin-dts:
         specifier: ^3.6.0
-        version: 3.9.1(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@4.5.14(@types/node@24.5.2))
+        version: 3.9.1(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0))
       vite-plugin-static-copy:
         specifier: ^3.1.2
-        version: 3.1.2(vite@4.5.14(@types/node@24.5.2))
+        version: 3.1.2(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0))
 
 packages:
 
@@ -1076,6 +1079,9 @@ packages:
   '@jridgewell/resolve-uri@3.1.2':
     resolution: {integrity: sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==}
     engines: {node: '>=6.0.0'}
+
+  '@jridgewell/source-map@0.3.11':
+    resolution: {integrity: sha512-ZMp1V8ZFcPG5dIWnQLr3NSI1MiCU7UETdS/A0G8V/XWHvJv3ZsFqutJn1Y5RPmAPX6F3BiE397OqveU/9NCuIA==}
 
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
@@ -2141,6 +2147,12 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
+  buffer-from@1.1.2:
+    resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
+
+  camel-case@4.1.2:
+    resolution: {integrity: sha512-gxGWBrTT1JuMx6R+o5PTXMmUnhnVzLQ9SNutD4YqKtI6ap897t3tKECYla6gCWEkplXnlNybEkZg9GEGxKFCgw==}
+
   camelcase-css@2.0.1:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
     engines: {node: '>= 6'}
@@ -2155,6 +2167,10 @@ packages:
   class-variance-authority@0.7.1:
     resolution: {integrity: sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg==}
 
+  clean-css@5.3.3:
+    resolution: {integrity: sha512-D5J+kHaVb/wKSFcyyV75uCn8fiY4sV38XJoe4CUyGQ+mOU/fMVYUdH1hJC+CJQ5uY3EnW27SbJYS4X8BiLrAFg==}
+    engines: {node: '>= 10.0'}
+
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
@@ -2165,6 +2181,13 @@ packages:
 
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
+
+  commander@10.0.1:
+    resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
+    engines: {node: '>=14'}
+
+  commander@2.20.3:
+    resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
 
   commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
@@ -2288,6 +2311,9 @@ packages:
 
   dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
+
+  dot-case@3.0.4:
+    resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
 
   duck@0.1.12:
     resolution: {integrity: sha512-wkctla1O6VfP89gQ+J/yDesM0S7B7XLXjKGzXxMDVFg7uEn706niAtyYovKbyq1oT9YwDcly721/iUWoc8MVRg==}
@@ -2432,6 +2458,11 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
+  html-minifier-terser@7.2.0:
+    resolution: {integrity: sha512-tXgn3QfqPIpGl9o+K5tpcj3/MN4SfLtsx2GWwBC3SSd0tXQGyF3gsSqad8loJgKZGM3ZxbYDd5yhiBIdWpmvLA==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    hasBin: true
+
   html-parse-stringify@3.0.1:
     resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
 
@@ -2572,6 +2603,9 @@ packages:
   lop@0.4.2:
     resolution: {integrity: sha512-RefILVDQ4DKoRZsJ4Pj22TxE3omDO47yFpkIBoDKzkqPRISs5U1cnAdg/5583YPkWPaLIYHOKRMQSvjFsO26cw==}
 
+  lower-case@2.0.2:
+    resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
+
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
@@ -2655,6 +2689,9 @@ packages:
       react: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
       react-dom: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
 
+  no-case@3.0.4:
+    resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
+
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
@@ -2695,6 +2732,12 @@ packages:
 
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
+
+  param-case@3.0.4:
+    resolution: {integrity: sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A==}
+
+  pascal-case@3.1.2:
+    resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
 
   path-browserify@1.0.1:
     resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
@@ -2918,6 +2961,10 @@ packages:
   redux@5.0.1:
     resolution: {integrity: sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w==}
 
+  relateurl@0.2.7:
+    resolution: {integrity: sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==}
+    engines: {node: '>= 0.10'}
+
   require-from-string@2.0.2:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
@@ -2990,6 +3037,9 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
+  source-map-support@0.5.21:
+    resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==}
+
   source-map@0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
@@ -3051,6 +3101,11 @@ packages:
   tailwindcss@3.4.17:
     resolution: {integrity: sha512-w33E2aCvSDP0tW9RZuNXadXlkHXqFzSkQew/aIa2i/Sj8fThxwovwlXHSPXTbAHwEIhBFXAedUhP2tueAKP8Og==}
     engines: {node: '>=14.0.0'}
+    hasBin: true
+
+  terser@5.44.0:
+    resolution: {integrity: sha512-nIVck8DK+GM/0Frwd+nIhZ84pR/BX7rmXMfYwyg+Sri5oGVE99/E3KvXqpC2xHFxyqXyGHTKBSioxxplrO4I4w==}
+    engines: {node: '>=10'}
     hasBin: true
 
   thenify-all@1.6.0:
@@ -3665,6 +3720,11 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.31
 
   '@jridgewell/resolve-uri@3.1.2': {}
+
+  '@jridgewell/source-map@0.3.11':
+    dependencies:
+      '@jridgewell/gen-mapping': 0.3.13
+      '@jridgewell/trace-mapping': 0.3.31
 
   '@jridgewell/sourcemap-codec@1.5.5': {}
 
@@ -4570,7 +4630,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@vitejs/plugin-react@4.7.0(vite@4.5.14(@types/node@24.5.2))':
+  '@vitejs/plugin-react@4.7.0(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0))':
     dependencies:
       '@babel/core': 7.28.4
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.4)
@@ -4578,11 +4638,11 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 4.5.14(@types/node@24.5.2)
+      vite: 4.5.14(@types/node@24.5.2)(terser@5.44.0)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-react@4.7.0(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))':
+  '@vitejs/plugin-react@4.7.0(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1))':
     dependencies:
       '@babel/core': 7.28.4
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.4)
@@ -4590,7 +4650,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)
+      vite: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -4769,6 +4829,13 @@ snapshots:
       node-releases: 2.0.21
       update-browserslist-db: 1.1.3(browserslist@4.26.2)
 
+  buffer-from@1.1.2: {}
+
+  camel-case@4.1.2:
+    dependencies:
+      pascal-case: 3.1.2
+      tslib: 2.8.1
+
   camelcase-css@2.0.1: {}
 
   caniuse-lite@1.0.30001743: {}
@@ -4789,6 +4856,10 @@ snapshots:
     dependencies:
       clsx: 2.1.1
 
+  clean-css@5.3.3:
+    dependencies:
+      source-map: 0.6.1
+
   clsx@2.1.1: {}
 
   color-convert@2.0.1:
@@ -4796,6 +4867,10 @@ snapshots:
       color-name: 1.1.4
 
   color-name@1.1.4: {}
+
+  commander@10.0.1: {}
+
+  commander@2.20.3: {}
 
   commander@4.1.1: {}
 
@@ -4894,6 +4969,11 @@ snapshots:
   dingbat-to-unicode@1.0.1: {}
 
   dlv@1.1.3: {}
+
+  dot-case@3.0.4:
+    dependencies:
+      no-case: 3.0.4
+      tslib: 2.8.1
 
   duck@0.1.12:
     dependencies:
@@ -5061,6 +5141,16 @@ snapshots:
 
   he@1.2.0: {}
 
+  html-minifier-terser@7.2.0:
+    dependencies:
+      camel-case: 4.1.2
+      clean-css: 5.3.3
+      commander: 10.0.1
+      entities: 4.5.0
+      param-case: 3.0.4
+      relateurl: 0.2.7
+      terser: 5.44.0
+
   html-parse-stringify@3.0.1:
     dependencies:
       void-elements: 3.1.0
@@ -5184,6 +5274,10 @@ snapshots:
       option: 0.2.4
       underscore: 1.13.7
 
+  lower-case@2.0.2:
+    dependencies:
+      tslib: 2.8.1
+
   lru-cache@10.4.3: {}
 
   lru-cache@5.1.1:
@@ -5272,6 +5366,11 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  no-case@3.0.4:
+    dependencies:
+      lower-case: 2.0.2
+      tslib: 2.8.1
+
   node-fetch@2.7.0:
     dependencies:
       whatwg-url: 5.0.0
@@ -5293,6 +5392,16 @@ snapshots:
   package-json-from-dist@1.0.1: {}
 
   pako@1.0.11: {}
+
+  param-case@3.0.4:
+    dependencies:
+      dot-case: 3.0.4
+      tslib: 2.8.1
+
+  pascal-case@3.1.2:
+    dependencies:
+      no-case: 3.0.4
+      tslib: 2.8.1
 
   path-browserify@1.0.1: {}
 
@@ -5499,6 +5608,8 @@ snapshots:
 
   redux@5.0.1: {}
 
+  relateurl@0.2.7: {}
+
   require-from-string@2.0.2: {}
 
   reselect@5.1.1: {}
@@ -5579,6 +5690,11 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
 
   source-map-js@1.2.1: {}
+
+  source-map-support@0.5.21:
+    dependencies:
+      buffer-from: 1.1.2
+      source-map: 0.6.1
 
   source-map@0.6.1: {}
 
@@ -5662,6 +5778,13 @@ snapshots:
       sucrase: 3.35.0
     transitivePeerDependencies:
       - ts-node
+
+  terser@5.44.0:
+    dependencies:
+      '@jridgewell/source-map': 0.3.11
+      acorn: 8.15.0
+      commander: 2.20.3
+      source-map-support: 0.5.21
 
   thenify-all@1.6.0:
     dependencies:
@@ -5756,7 +5879,7 @@ snapshots:
       d3-time: 3.1.0
       d3-timer: 3.0.1
 
-  vite-plugin-dts@3.9.1(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@4.5.14(@types/node@24.5.2)):
+  vite-plugin-dts@3.9.1(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0)):
     dependencies:
       '@microsoft/api-extractor': 7.43.0(@types/node@24.5.2)
       '@rollup/pluginutils': 5.3.0(rollup@4.50.2)
@@ -5767,13 +5890,13 @@ snapshots:
       typescript: 5.6.3
       vue-tsc: 1.8.27(typescript@5.6.3)
     optionalDependencies:
-      vite: 4.5.14(@types/node@24.5.2)
+      vite: 4.5.14(@types/node@24.5.2)(terser@5.44.0)
     transitivePeerDependencies:
       - '@types/node'
       - rollup
       - supports-color
 
-  vite-plugin-dts@4.5.4(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)):
+  vite-plugin-dts@4.5.4(@types/node@24.5.2)(rollup@4.50.2)(typescript@5.6.3)(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1)):
     dependencies:
       '@microsoft/api-extractor': 7.52.13(@types/node@24.5.2)
       '@rollup/pluginutils': 5.3.0(rollup@4.50.2)
@@ -5786,31 +5909,31 @@ snapshots:
       magic-string: 0.30.19
       typescript: 5.6.3
     optionalDependencies:
-      vite: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)
+      vite: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1)
     transitivePeerDependencies:
       - '@types/node'
       - rollup
       - supports-color
 
-  vite-plugin-static-copy@3.1.2(vite@4.5.14(@types/node@24.5.2)):
+  vite-plugin-static-copy@3.1.2(vite@4.5.14(@types/node@24.5.2)(terser@5.44.0)):
     dependencies:
       chokidar: 3.6.0
       fs-extra: 11.3.2
       p-map: 7.0.3
       picocolors: 1.1.1
       tinyglobby: 0.2.15
-      vite: 4.5.14(@types/node@24.5.2)
+      vite: 4.5.14(@types/node@24.5.2)(terser@5.44.0)
 
-  vite-plugin-static-copy@3.1.2(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)):
+  vite-plugin-static-copy@3.1.2(vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1)):
     dependencies:
       chokidar: 3.6.0
       fs-extra: 11.3.2
       p-map: 7.0.3
       picocolors: 1.1.1
       tinyglobby: 0.2.15
-      vite: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)
+      vite: 6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1)
 
-  vite@4.5.14(@types/node@24.5.2):
+  vite@4.5.14(@types/node@24.5.2)(terser@5.44.0):
     dependencies:
       esbuild: 0.18.20
       postcss: 8.5.6
@@ -5818,8 +5941,9 @@ snapshots:
     optionalDependencies:
       '@types/node': 24.5.2
       fsevents: 2.3.3
+      terser: 5.44.0
 
-  vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1):
+  vite@6.3.6(@types/node@24.5.2)(jiti@1.21.7)(terser@5.44.0)(yaml@2.8.1):
     dependencies:
       esbuild: 0.25.10
       fdir: 6.5.0(picomatch@4.0.3)
@@ -5831,6 +5955,7 @@ snapshots:
       '@types/node': 24.5.2
       fsevents: 2.3.3
       jiti: 1.21.7
+      terser: 5.44.0
       yaml: 2.8.1
 
   void-elements@3.1.0: {}
