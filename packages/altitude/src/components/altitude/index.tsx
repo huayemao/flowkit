@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from '../../i18n';
 import { 
   Card, 
   CardContent, 
@@ -28,6 +29,9 @@ import AltitudeComparisonPanel from './AltitudeComparisonPanel';
 
 // 主组件
 const Altitude: React.FC = () => {
+  // 初始化翻译
+  const { t } = useTranslation();
+  
   // 状态管理
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [isLocating, setIsLocating] = useState(false);
@@ -39,6 +43,7 @@ const Altitude: React.FC = () => {
   const [comparisonData, setComparisonData] = useState<AltitudeComparisonItem[]>([]);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [isOfflineMode, setIsOfflineMode] = useState(false);
+  const [showFeet, setShowFeet] = useState(false);
 
   // 获取用户位置
   const getUserLocation = async () => {
@@ -47,7 +52,7 @@ const Altitude: React.FC = () => {
     setUserLocation(null); // 重置用户位置状态
 
     if (!navigator.geolocation) {
-      setLocationError('您的浏览器不支持地理定位功能');
+      setLocationError(t('altitude.locationNotSupported'));
       setIsLocating(false);
       return;
     }
@@ -91,7 +96,7 @@ const Altitude: React.FC = () => {
           })
           .catch(error => {
             console.error('获取海拔数据失败:', error);
-            setLocationError('获取海拔数据失败，使用默认值');
+            setLocationError(t('altitude.elevationDataError'));
             // 即使出错，也继续使用当前状态
           })
           .finally(() => {
@@ -111,7 +116,7 @@ const Altitude: React.FC = () => {
           })
           .catch(error => {
             console.error('获取位置信息失败:', error);
-            setLocationError(prev => prev || '获取位置详情失败');
+            setLocationError(prev => prev || t('altitude.locationError'));
             // 即使出错，也继续使用当前状态
           })
           .finally(() => {
@@ -119,19 +124,19 @@ const Altitude: React.FC = () => {
           });
       },
       (error) => {
-        let errorMessage = '获取位置失败';
-        switch (error.code) {
-          case error.PERMISSION_DENIED:
-            errorMessage = '用户拒绝了地理定位请求';
-            break;
-          case error.POSITION_UNAVAILABLE:
-            errorMessage = '位置信息不可用';
-            break;
-          case error.TIMEOUT:
-            errorMessage = '获取位置超时';
-            break;
-        }
-        setLocationError(errorMessage);
+        let errorMessage = t('altitude.locationError');
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage = t('altitude.locationPermissionDenied');
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage = t('altitude.locationError');
+              break;
+            case error.TIMEOUT:
+              errorMessage = t('altitude.locationError');
+              break;
+          }
+          setLocationError(errorMessage);
         setIsLocating(false);
       },
       {
@@ -238,9 +243,9 @@ const Altitude: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* 页面标题 */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">实时海拔查询</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('altitude.title')}</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            提供实时海拔查询和全球主要城市海拔数据查询功能，支持数据可视化对比分析
+            {t('altitude.subtitle')}
           </p>
           <div className="mt-4 flex items-center justify-center space-x-2">
             <Switch
@@ -249,7 +254,7 @@ const Altitude: React.FC = () => {
               onCheckedChange={setIsOfflineMode}
             />
             <Label htmlFor="offline-mode" className="text-sm text-gray-600">
-              离线模式
+              {t('altitude.offlineMode')}
             </Label>
           </div>
         </div>
@@ -260,15 +265,15 @@ const Altitude: React.FC = () => {
             <TabsList>
               <TabsTrigger value="current-location">
                 <FontAwesomeIcon icon={faLocationDot} className="mr-2" />
-                实时海拔查询
+                {t('altitude.currentLocation')}
               </TabsTrigger>
               <TabsTrigger value="city-database">
                 <FontAwesomeIcon icon={faGlobe} className="mr-2" />
-                全球城市数据库
+                {t('altitude.citiesDatabase')}
               </TabsTrigger>
               <TabsTrigger value="altitude-comparison">
                 <FontAwesomeIcon icon={faArrowsUpDown} className="mr-2" />
-                海拔对比分析
+                {t('altitude.altitudeComparison')}
               </TabsTrigger>
             </TabsList>
           </div>
@@ -314,7 +319,7 @@ const Altitude: React.FC = () => {
 
         {/* 页脚信息 */}
         <div className="mt-16 text-center text-gray-500 text-sm">
-          <p>全球海拔查询与对比分析工具 - 为地理爱好者、旅行者和研究人员提供专业可靠的服务</p>
+          <p>{t('altitude.copyright')}</p>
         </div>
       </div>
     </div>
