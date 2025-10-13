@@ -23,6 +23,7 @@ export const IconSelector: React.FC<IconSelectorProps> = ({
   onIconColorChange,
   t
 }) => {
+  console.log(icon)
   return (
     <div className="flex items-center gap-3">
       <div className={`w-12 h-12 rounded-lg flex items-center justify-center shadow-md

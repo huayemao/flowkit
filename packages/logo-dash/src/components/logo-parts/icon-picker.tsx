@@ -127,7 +127,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
               filteredIcons.map((iconName: string) => {
                 // 如果在搜索模式下，显示图标所属分类
                 const categoryName = debouncedSearchTerm.trim() ? getIconCategory(iconName) : selectedCategory;
-                
+                console.log(iconName)
                 return (
                   <button
                     key={iconName}
@@ -142,7 +142,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                   >
                     <DynamicIconComponent icon={iconName} size={20} />
                     <span className="text-xs mt-1 truncate text-center w-full line-clamp-1">
-                      {iconName.startsWith('fa-') ? iconName.substring(3) : iconName}
+                      {iconName}
                     </span>
                     {searchTerm.trim().length >= 2 && (
                       <span className="text-xs text-gray-500 truncate text-center w-full line-clamp-1">

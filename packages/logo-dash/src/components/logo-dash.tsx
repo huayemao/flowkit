@@ -40,7 +40,7 @@ const lucideValidIcons = lucideIconKeys.filter(
 );
 
 // 从 Font Awesome 中获取所有图标组件
-const faValidIcons = Object.keys(fas).map(key => `fa-${key.replace(/^fa/, '').toLowerCase()}`);
+const faValidIcons = Object.keys(fas).map(key => `${key.replace(/^fa-/, '').replace(/([A-Z])/g, '-$1').toLowerCase()}`);
 
 // 合并所有有效的图标
 const validIcons = [...lucideValidIcons, ...faValidIcons];

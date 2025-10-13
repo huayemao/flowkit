@@ -50,7 +50,7 @@ export const renderIconComponent = (
   // 检查是否为 Font Awesome 图标（以 fa- 开头）
   if (config.icon && config.icon.startsWith("fa-")) {
     // 提取图标名称（去掉 fa- 前缀）
-    const faIconName = config.icon.substring(3) as IconProp;
+    const faIconName = config.icon as IconProp;
     const faIconElement = React.createElement(FontAwesomeIcon, {
       icon: faIconName,
       size: "lg",
@@ -125,7 +125,7 @@ export const getIconAsSVGString = (
   try {
     if (config.icon && config.icon.startsWith("fa-")) {
       // 对于 Font Awesome 图标，使用 FontAwesomeIcon 组件渲染
-      const faIconName = config.icon.substring(3) as IconProp;
+      const faIconName = config.icon as IconProp;
       // 创建临时容器
       const tempContainer = document.createElement("div");
       // 渲染 Font Awesome 图标到临时容器
