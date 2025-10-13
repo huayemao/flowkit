@@ -2,6 +2,6 @@
   "buildCommand": "pnpm generate",
   "outputDirectory": "dist/static",
   "installCommand": "pnpm install",
-  "framework": "vite",
-  "ignoreBuildStep": "git diff --quiet HEAD^ HEAD -- ."
+  "framework": "vite"
+  
 }
