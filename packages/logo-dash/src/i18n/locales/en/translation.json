@@ -47,7 +47,12 @@
     "noIconsFound": "No icons found",
     "searching": "Searching...",
     "iconMarginRatio": "Icon Margin Ratio",
-    "lineThickness": "Line Thickness"
+    "lineThickness": "Line Thickness",
+    "previousPage": "Previous Page",
+    "nextPage": "Next Page",
+    "totalIconsFound": "Found {{count}} icons",
+    "currentlyShowing": "showing {{start}} to {{end}}",
+    "tryDifferentSearch": "Try a different search term"
   },
   "common": {
     "processing": "Processing",

@@ -47,7 +47,12 @@
     "noIconsFound": "未找到图标",
     "searching": "搜索中...",
     "iconMarginRatio": "图标边距比例",
-    "lineThickness": "线宽"
+    "lineThickness": "线宽",
+    "previousPage": "上一页",
+    "nextPage": "下一页",
+    "totalIconsFound": "共找到 {{count}} 个图标",
+    "currentlyShowing": "显示 {{start}} 至 {{end}}",
+    "tryDifferentSearch": "尝试其他关键词搜索"
   },
   "common": {
     "processing": "处理中",

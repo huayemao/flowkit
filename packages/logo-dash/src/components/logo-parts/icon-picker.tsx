@@ -5,6 +5,7 @@ import { Button } from '@flowkit/shared-ui';
 import { Input } from '@flowkit/shared-ui';
 import { DynamicIconComponent } from './dynamic-icon';
 import { IconCategories } from './types';
+import { TFunction } from 'i18next';
 
 interface IconPickerProps {
   open: boolean;
@@ -14,7 +15,7 @@ interface IconPickerProps {
   iconCategories: IconCategories;
   selectedCategory: string;
   onSelectCategory: (category: string) => void;
-  t: (key: string) => string;
+  t: TFunction;
 }
 
 export const IconPicker: React.FC<IconPickerProps> = ({ 
@@ -183,7 +184,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
               >
-                上一页
+                {t('logoDash.previousPage')}
               </Button>
               <span className="text-sm text-gray-500">
                 {currentPage} / {totalPages}
@@ -194,7 +195,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
               >
-                下一页
+                {t('logoDash.nextPage')}
               </Button>
             </div>
           )}
@@ -202,8 +203,8 @@ export const IconPicker: React.FC<IconPickerProps> = ({
           {/* 搜索结果计数 */}
           {debouncedSearchTerm.trim() && (
             <div className="mt-2 text-center text-xs text-gray-500">
-              共找到 {filteredIcons.length} 个图标
-              {totalPages > 1 && `，当前显示第 ${(currentPage - 1) * itemsPerPage + 1} 至第 ${Math.min(currentPage * itemsPerPage, filteredIcons.length)} 个`}
+              {t('logoDash.totalIconsFound', { count: filteredIcons?.length || 0 })}
+              {totalPages > 1 && `，${t('logoDash.currentlyShowing', { start: (currentPage - 1) * itemsPerPage + 1, end: Math.min(currentPage * itemsPerPage, filteredIcons?.length || 0) })}`}
             </div>
           )}
           
@@ -213,7 +214,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
               <div className="text-center">
                 <div className="text-xl mb-2">🔍</div>
                 <p>{t('logoDash.noIconsFound')}</p>
-                <p className="text-sm mt-1">{t('logoDash.tryDifferentSearch') || '尝试其他关键词搜索'}</p>
+                <p className="text-sm mt-1">{t('logoDash.tryDifferentSearch')}</p>
               </div>
             </div>
           )}
