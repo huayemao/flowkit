@@ -1,6 +1,6 @@
 {
-  "name": "logodash",
-  "short_name": "logodash",
+  "name": "Elevation Finder | realtime altitude query & City Comparison Tool",
+  "short_name": "Elevation Finder",
   "icons": [
     {
       "src": "/pwa-192x192.png",
@@ -29,7 +29,7 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#a756db",
+  "background_color": "#FFFFFF",
   "theme_color": "#FFFFFF",
-  "description": "Fast Free Logo Maker | create beautiful logos in a dash"
+  "description": "Find the elevation of any location instantly with Altitude. Check your current position's altitude, compare elevations of major cities worldwide."
 }

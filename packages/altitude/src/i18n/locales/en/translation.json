@@ -1,14 +1,14 @@
 {
   "altitude": {
-    "title": "Altitude - Elevation Finder & City Comparison Tool",
+    "title": "Elevation Finder | realtime altitude query & City Comparison Tool",
     "subtitle": "Find the elevation of any location instantly with Altitude. Check your current position's altitude, compare elevations of major cities worldwide.",
     "description": "Find the elevation of any location instantly with Altitude. Check your current position's altitude, compare elevations of major cities worldwide, and visualize altitude data with interactive charts. Perfect for travelers, hikers, researchers, and anyone interested in geographic elevation information.",
     "keywords": "Altitude finder, Elevation tool, City altitude comparison, Geographical elevation, Current location altitude, Elevation chart, Mountain height, Sea level elevation, Elevation data, World cities altitude",
     "author": "FlowKit Team",
     "copyright": "© 2024 FlowKit",
-    "ogTitle": "Altitude - Elevation Finder & City Comparison Tool",
+    "ogTitle": "Elevation Finder | realtime altitude query & City Comparison Tool",
     "ogDescription": "Find the elevation of any location instantly with Altitude. Check your current position's altitude, compare elevations of major cities worldwide, and visualize altitude data with interactive charts.",
-    "twitterTitle": "Altitude - Elevation Finder & City Comparison Tool",
+    "twitterTitle": "Elevation Finder | realtime altitude query & City Comparison Tool",
     "twitterDescription": "Find the elevation of any location instantly with Altitude. Check your current position's altitude, compare elevations of major cities worldwide.",
     "currentLocation": "Current Location",
     "findMyAltitude": "Find My Altitude",
