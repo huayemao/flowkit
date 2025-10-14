@@ -206,7 +206,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
         </div>
 
         {/* 右侧：设置区域 */}
-        <div className="space-y-6 lg:h-[88vh]">
+        <div className="space-y-6 lg:h-[80vh]">
           <Card>
             <CardHeader>
               <CardTitle>{t('logoDash.icon')}</CardTitle>
@@ -232,6 +232,13 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
                 onIconMarginRatioChange={handleIconMarginRatioChange}
                 t={t}
               />
+              <TextSettings
+                customText={config.customText}
+                textColor={config.textColor}
+                onTextChange={handleTextChange}
+                onTextColorChange={handleTextColorChange}
+                t={t}
+              />
 
             </CardContent>
             {/* <SizeSettings
@@ -254,22 +261,6 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
             }
             t={t}
           />
-
-
-          <Card>
-            <CardHeader>
-              <CardTitle>{t('logoDash.text')}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <TextSettings
-                customText={config.customText}
-                textColor={config.textColor}
-                onTextChange={handleTextChange}
-                onTextColorChange={handleTextColorChange}
-                t={t}
-              />
-            </CardContent>
-          </Card>
         </div>
       </div>
 

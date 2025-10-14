@@ -16,6 +16,21 @@ function App() {
     <AppLayout>
       <div className="max-w-7xl self-stretch lg:min-w-[960px]  mx-auto w-full">
         <LogoDash />
+        <div className="flex justify-center">
+          <a
+            href="https://www.producthunt.com/products/logodash?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-logodash"
+            target="_blank"
+          >
+            <img
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1025998&theme=light&t=1760406787922"
+              alt="LogoDash - Fast free logo maker | create beautiful logos in a dash | Product Hunt"
+              style={{ width: 250, height: 54 }}
+              width={250}
+              height={54}
+            />
+          </a>
+        </div>
+
       </div>
     </AppLayout>
   );
