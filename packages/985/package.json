@@ -1,0 +1,70 @@
+{
+  "name": "@flowkit/altitude",
+  "version": "0.2.9",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "./dist/i18n/locales/zh/translation.json": "./dist/i18n/locales/zh/translation.json",
+    "./dist/i18n/locales/en/translation.json": "./dist/i18n/locales/en/translation.json",
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "pnpm run build:shared-ui && vite",
+    "build": "pnpm run build:shared-ui && tsc && vite build",
+    "build:lib": "pnpm run build:shared-ui && tsc && vite build --config vite.config.lib.ts",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "tauri:dev": "pnpm run build:shared-ui && tauri dev",
+    "tauri:build": "pnpm run build:shared-ui && tauri build",
+    "build:shared-ui": "cd ../../ && pnpm run build:shared-ui",
+    "build:multilingual": "pnpm run build:demo && node scripts/build-multilingual.js",
+    "build:server": "vite build --config vite.config.server.ts",
+    "generate": "pnpm run build && pnpm run build:server && node prerender"
+  },
+  "dependencies": {
+    "@flowkit/shared-ui": "workspace:^1.0.0",
+    "@fortawesome/fontawesome-svg-core": "^7.0.1",
+    "@fortawesome/free-solid-svg-icons": "^7.0.1",
+    "@fortawesome/react-fontawesome": "^3.0.2",
+    "@uidotdev/usehooks": "^2.4.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "d3": "^7.9.0",
+    "i18next": "^25.5.2",
+    "leaflet": "^1.9.4",
+    "mapbox-gl": "^3.15.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-i18next": "^15.7.3",
+    "react-leaflet": "^4.2.1",
+    "react-map-gl": "^8.1.0",
+    "recharts": "^3.2.1",
+    "tailwind-merge": "^1.14.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "@types/leaflet": "^1.9.21",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-plugin-dts": "^3.6.0",
+    "vite-plugin-static-copy": "^3.1.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  }
+}

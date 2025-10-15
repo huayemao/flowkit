@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>985高校详情 - 中国985高校地图</title>
+    
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --accent-orange: #f97316;
+            --light-orange: #fb923c;
+            --dark-gray: #374151;
+            --medium-gray: #6b7280;
+            --light-gray: #f8fafc;
+            --pearl-white: #f9fafb;
+            --success-green: #10b981;
+            --text-dark: #1f2937;
+            --text-light: #f9fafb;
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: var(--dark-gray);
+            --bg-secondary: #4A5568;
+            --text-primary: var(--text-light);
+            --text-secondary: #A0AEC0;
+            --border-color: #4A5568;
+        }
+        
+        [data-theme="light"] {
+            --bg-primary: var(--light-gray);
+            --bg-secondary: #EDF2F7;
+            --text-primary: var(--text-dark);
+            --text-secondary: #4A5568;
+            --border-color: #E2E8F0;
+        }
+        
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-orange), var(--light-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .university-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .university-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--accent-gold);
+        }
+        
+        .university-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-orange));
+        }
+        
+        .search-input {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 12px;
+            padding: 16px 20px;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+            box-shadow: 0 2px 10px rgba(249, 115, 22, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--light-orange);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+        }
+        
+        .filter-chip {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .filter-chip.active {
+            background: var(--accent-orange);
+            color: white;
+            border-color: var(--accent-orange);
+        }
+        
+        .filter-chip:hover {
+            border-color: var(--accent-orange);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stats-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        }
+        
+        .specialty-tag {
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--accent-orange);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            margin: 2px;
+        }
+        
+        .region-section {
+            margin-bottom: 60px;
+        }
+        
+        .region-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .region-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .university-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="dark"] .theme-toggle::after {
+            transform: translateX(30px);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-up {
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .loading-spinner {
+            border: 3px solid var(--bg-secondary);
+            border-top: 3px solid var(--accent-orange);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-orange);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-effect">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold gradient-text">中国985高校地图</h1>
+                    <span class="text-sm text-gray-500">University Details</span>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <a href="index.html" class="nav-link text-primary hover:text-accent-gold transition-colors">地图</a>
+                    <a href="universities.html" class="nav-link text-accent-gold">高校详情</a>
+                    <a href="index.html#about" class="nav-link text-secondary hover:text-accent-gold transition-colors">关于</a>
+                    
+                    <div class="theme-toggle" id="themeToggle"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section pt-24 pb-12 relative">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-8">
+                <h2 class="text-5xl font-bold text-white mb-4 fade-in">
+                    985高校详细信息
+                </h2>
+                <p class="text-xl text-gray-200 max-w-3xl mx-auto fade-in">
+                    全面了解中国39所985工程高校的详细信息，包括学校特色、优势学科、地理位置等
+                </p>
+            </div>
+            
+            <!-- Search and Filter -->
+            <div class="max-w-4xl mx-auto fade-in">
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <div class="flex-1">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            class="search-input"
+                            placeholder="搜索高校名称、城市或特色学科..."
+                            autocomplete="off"
+                        >
+                    </div>
+                    <button id="searchBtn" class="btn-primary px-8">
+                        搜索
+                    </button>
+                </div>
+                
+                <!-- Filter Chips -->
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <div class="filter-chip active" data-filter="all">全部</div>
+                    <div class="filter-chip" data-filter="华北">华北地区</div>
+                    <div class="filter-chip" data-filter="华东">华东地区</div>
+                    <div class="filter-chip" data-filter="华南">华南地区</div>
+                    <div class="filter-chip" data-filter="华中">华中地区</div>
+                    <div class="filter-chip" data-filter="西南">西南地区</div>
+                    <div class="filter-chip" data-filter="西北">西北地区</div>
+                    <div class="filter-chip" data-filter="东北">东北地区</div>
+                </div>
+                
+                <!-- Type Filter -->
+                <div class="flex flex-wrap gap-3 justify-center mt-4">
+                    <div class="filter-chip" data-type="综合类">综合类</div>
+                    <div class="filter-chip" data-type="工科类">工科类</div>
+                    <div class="filter-chip" data-type="理科类">理科类</div>
+                    <div class="filter-chip" data-type="师范类">师范类</div>
+                    <div class="filter-chip" data-type="农林类">农林类</div>
+                    <div class="filter-chip" data-type="海洋类">海洋类</div>
+                    <div class="filter-chip" data-type="民族类">民族类</div>
+                    <div class="filter-chip" data-type="军事类">军事类</div>
+                    <div class="filter-chip" data-type="科研类">科研类</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <!-- Statistics -->
+        <div class="stats-grid fade-in">
+            <div class="stats-card">
+                <div class="text-3xl font-bold gradient-text mb-2" id="totalCount">39</div>
+                <div class="text-gray-600 dark:text-gray-400">985高校总数</div>
+            </div>
+            <div class="stats-card">
+                <div class="text-3xl font-bold gradient-text mb-2" id="regionCount">7</div>
+                <div class="text-gray-600 dark:text-gray-400">覆盖地区</div>
+            </div>
+            <div class="stats-card">
+                <div class="text-3xl font-bold gradient-text mb-2" id="displayCount">39</div>
+                <div class="text-gray-600 dark:text-gray-400">当前显示</div>
+            </div>
+            <div class="stats-card">
+                <div class="text-3xl font-bold gradient-text mb-2" id="provinceCount">18</div>
+                <div class="text-gray-600 dark:text-gray-400">覆盖省份</div>
+            </div>
+        </div>
+        
+        <!-- Loading -->
+        <div id="loadingSection" class="text-center py-12">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p class="text-gray-600 dark:text-gray-400">正在加载高校数据...</p>
+        </div>
+        
+        <!-- University Sections -->
+        <div id="universitySections" style="display: none;">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 dark:bg-gray-900 py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-600 dark:text-gray-400">
+                © 2025 中国985高校地图. 数据来源于各高校官方网站，仅供教育用途使用.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    
+    <script>
+        // University Details Page Class
+        class UniversityDetails {
+            constructor() {
+                this.universities = [];
+                this.filteredUniversities = [];
+                this.currentTheme = 'light';
+                this.currentFilter = 'all';
+                this.currentType = '';
+                
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    await this.loadUniversityData();
+                    this.setupEventListeners();
+                    this.renderUniversitySections();
+                    this.initializeAnimations();
+                    this.hideLoading();
+                } catch (error) {
+                    console.error('初始化失败:', error);
+                    this.showError('数据加载失败，请刷新页面重试。');
+                }
+            }
+            
+            async loadUniversityData() {
+                try {
+                    const response = await fetch('./resources/university-data.json');
+                    if (!response.ok) {
+                        throw new Error('无法加载高校数据');
+                    }
+                    const data = await response.json();
+                    this.universities = data.universities;
+                    this.regions = data.regions;
+                    this.filteredUniversities = [...this.universities];
+                } catch (error) {
+                    console.error('加载数据失败:', error);
+                    this.universities = this.getBackupData();
+                    this.filteredUniversities = [...this.universities];
+                }
+            }
+            
+            getBackupData() {
+                // 简化的备用数据
+                return [
+                    {
+                        id: 1,
+                        name: "北京大学",
+                        city: "北京",
+                        province: "北京市",
+                        coordinates: [39.9911, 116.3059],
+                        website: "http://www.pku.edu.cn",
+                        type: "综合类",
+                        specialties: ["经济学类", "法学", "生物科学"],
+                        description: "中国顶尖综合性大学",
+                        region: "华北",
+                        established: 1898
+                    },
+                    {
+                        id: 2,
+                        name: "清华大学",
+                        city: "北京",
+                        province: "北京市",
+                        coordinates: [40.0020, 116.3266],
+                        website: "http://www.tsinghua.edu.cn",
+                        type: "工科类",
+                        specialties: ["经济与金融", "土木工程", "建筑学"],
+                        description: "中国顶尖工科大学",
+                        region: "华北",
+                        established: 1911
+                    }
+                ];
+            }
+            
+            setupEventListeners() {
+                // 主题切换
+                const themeToggle = document.getElementById('themeToggle');
+                themeToggle.addEventListener('click', () => {
+                    this.toggleTheme();
+                });
+                
+                // 搜索功能
+                const searchInput = document.getElementById('searchInput');
+                const searchBtn = document.getElementById('searchBtn');
+                
+                searchInput.addEventListener('input', (e) => {
+                    this.searchUniversities(e.target.value);
+                });
+                
+                searchBtn.addEventListener('click', () => {
+                    const query = searchInput.value;
+                    this.searchUniversities(query);
+                });
+                
+                // 筛选器
+                const filterChips = document.querySelectorAll('.filter-chip');
+                filterChips.forEach(chip => {
+                    chip.addEventListener('click', (e) => {
+                        const filter = e.target.dataset.filter;
+                        const type = e.target.dataset.type;
+                        
+                        if (filter) {
+                            this.setRegionFilter(filter, e.target);
+                        } else if (type) {
+                            this.setTypeFilter(type, e.target);
+                        }
+                    });
+                });
+                
+                // 键盘快捷键
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.clearFilters();
+                    }
+                    if (e.key === 'f' && e.ctrlKey) {
+                        e.preventDefault();
+                        searchInput.focus();
+                    }
+                });
+            }
+            
+            toggleTheme() {
+                const currentTheme = document.body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                document.body.setAttribute('data-theme', newTheme);
+                this.currentTheme = newTheme;
+                
+                localStorage.setItem('theme', newTheme);
+                
+                anime({
+                    targets: 'body',
+                    duration: 300,
+                    easing: 'easeInOutQuad'
+                });
+            }
+            
+            searchUniversities(query) {
+                if (!query.trim()) {
+                    this.filteredUniversities = [...this.universities];
+                } else {
+                    this.filteredUniversities = this.universities.filter(uni => 
+                        uni.name.toLowerCase().includes(query.toLowerCase()) ||
+                        uni.city.toLowerCase().includes(query.toLowerCase()) ||
+                        uni.province.toLowerCase().includes(query.toLowerCase()) ||
+                        (uni.specialties && uni.specialties.some(spec => 
+                            spec.toLowerCase().includes(query.toLowerCase())
+                        ))
+                    );
+                }
+                
+                this.applyFilters();
+                this.renderUniversitySections();
+                this.updateStatistics();
+            }
+            
+            setRegionFilter(filter, element) {
+                // 更新筛选器状态
+                document.querySelectorAll('.filter-chip[data-filter]').forEach(chip => {
+                    chip.classList.remove('active');
+                });
+                
+                if (filter === 'all') {
+                    this.currentFilter = 'all';
+                    element.classList.add('active');
+                } else {
+                    this.currentFilter = filter;
+                    element.classList.add('active');
+                }
+                
+                this.applyFilters();
+                this.renderUniversitySections();
+                this.updateStatistics();
+            }
+            
+            setTypeFilter(type, element) {
+                // 切换类型筛选器状态
+                if (this.currentType === type) {
+                    this.currentType = '';
+                    element.classList.remove('active');
+                } else {
+                    // 清除其他类型筛选器
+                    document.querySelectorAll('.filter-chip[data-type]').forEach(chip => {
+                        chip.classList.remove('active');
+                    });
+                    
+                    this.currentType = type;
+                    element.classList.add('active');
+                }
+                
+                this.applyFilters();
+                this.renderUniversitySections();
+                this.updateStatistics();
+            }
+            
+            applyFilters() {
+                this.filteredUniversities = this.universities.filter(uni => {
+                    const matchesRegion = this.currentFilter === 'all' || uni.region === this.currentFilter;
+                    const matchesType = !this.currentType || uni.type === this.currentType;
+                    
+                    return matchesRegion && matchesType;
+                });
+            }
+            
+            renderUniversitySections() {
+                const sectionsContainer = document.getElementById('universitySections');
+                
+                if (this.filteredUniversities.length === 0) {
+                    sectionsContainer.innerHTML = `
+                        <div class="text-center py-12">
+                            <svg class="w-24 h-24 mx-auto mb-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.467-.881-6.08-2.33m0 0L3.34 9.092M6.646 4.646L12 10l5.354-5.354M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <h3 class="text-2xl font-semibold text-gray-600 dark:text-gray-400 mb-2">未找到匹配的高校</h3>
+                            <p class="text-gray-500">请尝试调整搜索条件或筛选器</p>
+                            <button onclick="universityDetails.clearFilters()" class="btn-primary mt-4">
+                                清除筛选条件
+                            </button>
+                        </div>
+                    `;
+                    sectionsContainer.style.display = 'block';
+                    return;
+                }
+                
+                // 按地区分组
+                const universitiesByRegion = {};
+                this.filteredUniversities.forEach(uni => {
+                    if (!universitiesByRegion[uni.region]) {
+                        universitiesByRegion[uni.region] = [];
+                    }
+                    universitiesByRegion[uni.region].push(uni);
+                });
+                
+                // 渲染每个地区
+                sectionsContainer.innerHTML = Object.keys(universitiesByRegion)
+                    .sort()
+                    .map(region => this.renderRegionSection(region, universitiesByRegion[region]))
+                    .join('');
+                
+                sectionsContainer.style.display = 'block';
+                
+                // 添加动画
+                anime({
+                    targets: '.region-section',
+                    opacity: [0, 1],
+                    translateY: [40, 0],
+                    delay: anime.stagger(200),
+                    duration: 600,
+                    easing: 'easeOutQuad'
+                });
+            }
+            
+            renderRegionSection(region, universities) {
+                const regionIcons = {
+                    '华北': '🏛️',
+                    '华东': '🌊',
+                    '华南': '🌴',
+                    '华中': '🏙️',
+                    '西南': '🏔️',
+                    '西北': '🏜️',
+                    '东北': '❄️'
+                };
+                
+                return `
+                    <div class="region-section">
+                        <div class="region-header">
+                            <div class="region-icon">${regionIcons[region] || '🎓'}</div>
+                            <h3 class="text-2xl font-bold text-primary-green">${region}地区</h3>
+                            <span class="ml-4 text-sm text-gray-500">共 ${universities.length} 所高校</span>
+                        </div>
+                        
+                        <div class="university-grid">
+                            ${universities.map(uni => this.renderUniversityCard(uni)).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            renderUniversityCard(university) {
+                return `
+                    <div class="university-card slide-up">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <h4 class="text-xl font-bold text-primary-green mb-2">${university.name}</h4>
+                                <p class="text-gray-600 dark:text-gray-400 mb-2">
+                                    ${university.city}, ${university.province}
+                                </p>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                        </svg>
+                                        ${university.type}
+                                    </span>
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        ${university.established || '未知'}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="bg-accent-gold text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    ${university.region}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        ${university.description ? `
+                        <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+                            ${university.description}
+                        </p>
+                        ` : ''}
+                        
+                        ${university.specialties && university.specialties.length > 0 ? `
+                        <div class="mb-4">
+                            <h5 class="font-semibold text-sm text-gray-600 dark:text-gray-400 mb-2">特色学科</h5>
+                            <div class="flex flex-wrap gap-1">
+                                ${university.specialties.slice(0, 6).map(spec => `
+                                    <span class="specialty-tag">${spec}</span>
+                                `).join('')}
+                                ${university.specialties.length > 6 ? `
+                                    <span class="specialty-tag">+${university.specialties.length - 6}</span>
+                                ` : ''}
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <a href="${university.website}" target="_blank" 
+                               class="btn-secondary text-sm flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                                </svg>
+                                访问官网
+                            </a>
+                            <button onclick="universityDetails.showOnMap(${university.id})" 
+                                    class="text-accent-gold hover:underline text-sm flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                地图定位
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            updateStatistics() {
+                const totalCount = document.getElementById('totalCount');
+                const displayCount = document.getElementById('displayCount');
+                const regionCount = document.getElementById('regionCount');
+                const provinceCount = document.getElementById('provinceCount');
+                
+                totalCount.textContent = this.universities.length;
+                displayCount.textContent = this.filteredUniversities.length;
+                
+                const regions = new Set(this.filteredUniversities.map(uni => uni.region));
+                regionCount.textContent = regions.size;
+                
+                const provinces = new Set(this.filteredUniversities.map(uni => uni.province));
+                provinceCount.textContent = provinces.size;
+            }
+            
+            clearFilters() {
+                // 清除所有筛选器
+                this.currentFilter = 'all';
+                this.currentType = '';
+                
+                // 重置UI
+                document.querySelectorAll('.filter-chip').forEach(chip => {
+                    chip.classList.remove('active');
+                });
+                document.querySelector('.filter-chip[data-filter="all"]').classList.add('active');
+                
+                // 清除搜索框
+                document.getElementById('searchInput').value = '';
+                
+                // 重新应用筛选
+                this.filteredUniversities = [...this.universities];
+                this.renderUniversitySections();
+                this.updateStatistics();
+            }
+            
+            showOnMap(universityId) {
+                // 跳转到地图页面并定位到指定高校
+                localStorage.setItem('focusUniversity', universityId);
+                window.location.href = 'index.html';
+            }
+            
+            initializeAnimations() {
+                Splitting();
+                
+                anime.timeline({
+                    easing: 'easeOutExpo',
+                    duration: 800
+                })
+                .add({
+                    targets: '.fade-in',
+                    opacity: [0, 1],
+                    translateY: [30, 0],
+                    delay: anime.stagger(200)
+                })
+                .add({
+                    targets: '.stats-card',
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    delay: anime.stagger(100)
+                }, '-=400');
+            }
+            
+            hideLoading() {
+                const loadingSection = document.getElementById('loadingSection');
+                
+                anime({
+                    targets: loadingSection,
+                    opacity: [1, 0],
+                    duration: 500,
+                    easing: 'easeOutQuad',
+                    complete: () => {
+                        loadingSection.style.display = 'none';
+                    }
+                });
+            }
+            
+            showError(message) {
+                const loadingSection = document.getElementById('loadingSection');
+                loadingSection.innerHTML = `
+                    <div class="text-center">
+                        <svg class="w-16 h-16 mx-auto mb-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-red-600 text-lg font-semibold mb-2">加载失败</p>
+                        <p class="text-gray-600">${message}</p>
+                        <button onclick="location.reload()" class="btn-primary mt-4">
+                            重新加载
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // 初始化应用
+        let universityDetails;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            universityDetails = new UniversityDetails();
+            
+            // 加载保存的主题设置
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+                universityDetails.currentTheme = savedTheme;
+            }
+        });
+    </script>
+</body>
+</h

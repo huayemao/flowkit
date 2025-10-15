@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 850">
+  <rect width="1000" height="850" fill="#f0f0f0"/>
+  
+  <!-- 简化的中国省份轮廓 -->
+  <g fill="#2D5A3D" stroke="#1B4332" stroke-width="2">
+    <!-- 北京 -->
+    <path d="M420 280 L450 280 L450 310 L420 310 Z" data-province="北京市"/>
+    
+    <!-- 天津 -->
+    <path d="M450 290 L480 290 L480 320 L450 320 Z" data-province="天津市"/>
+    
+    <!-- 河北 -->
+    <path d="M380 260 L520 260 L520 380 L380 380 Z" data-province="河北省"/>
+    
+    <!-- 山西 -->
+    <path d="M360 300 L420 300 L420 400 L360 400 Z" data-province="山西省"/>
+    
+    <!-- 内蒙古 -->
+    <path d="M280 200 L500 200 L500 320 L280 320 Z" data-province="内蒙古自治区"/>
+    
+    <!-- 辽宁 -->
+    <path d="M480 240 L540 240 L540 340 L480 340 Z" data-province="辽宁省"/>
+    
+    <!-- 吉林 -->
+    <path d="M500 220 L560 220 L560 300 L500 300 Z" data-province="吉林省"/>
+    
+    <!-- 黑龙江 -->
+    <path d="M520 180 L600 180 L600 280 L520 280 Z" data-province="黑龙江省"/>
+    
+    <!-- 上海 -->
+    <path d="M520 420 L550 420 L550 450 L520 450 Z" data-province="上海市"/>
+    
+    <!-- 江苏 -->
+    <path d="M480 380 L560 380 L560 460 L480 460 Z" data-province="江苏省"/>
+    
+    <!-- 浙江 -->
+    <path d="M500 440 L580 440 L580 520 L500 520 Z" data-province="浙江省"/>
+    
+    <!-- 安徽 -->
+    <path d="M440 400 L520 400 L520 480 L440 480 Z" data-province="安徽省"/>
+    
+    <!-- 福建 -->
+    <path d="M520 480 L600 480 L600 560 L520 560 Z" data-province="福建省"/>
+    
+    <!-- 江西 -->
+    <path d="M460 440 L540 440 L540 520 L460 520 Z" data-province="江西省"/>
+    
+    <!-- 山东 -->
+    <path d="M440 320 L540 320 L540 420 L440 420 Z" data-province="山东省"/>
+    
+    <!-- 河南 -->
+    <path d="M400 380 L480 380 L480 460 L400 460 Z" data-province="河南省"/>
+    
+    <!-- 湖北 -->
+    <path d="M400 440 L480 440 L480 520 L400 520 Z" data-province="湖北省"/>
+    
+    <!-- 湖南 -->
+    <path d="M420 480 L500 480 L500 560 L420 560 Z" data-province="湖南省"/>
+    
+    <!-- 广东 -->
+    <path d="M480 520 L580 520 L580 620 L480 620 Z" data-province="广东省"/>
+    
+    <!-- 广西 -->
+    <path d="M380 520 L460 520 L460 600 L380 600 Z" data-province="广西壮族自治区"/>
+    
+    <!-- 海南 -->
+    <path d="M460 600 L520 600 L520 660 L460 660 Z" data-province="海南省"/>
+    
+    <!-- 重庆 -->
+    <path d="M360 460 L400 460 L400 500 L360 500 Z" data-province="重庆市"/>
+    
+    <!-- 四川 -->
+    <path d="M280 420 L400 420 L400 540 L280 540 Z" data-province="四川省"/>
+    
+    <!-- 贵州 -->
+    <path d="M340 500 L420 500 L420 580 L340 580 Z" data-province="贵州省"/>
+    
+    <!-- 云南 -->
+    <path d="M280 540 L400 540 L400 660 L280 660 Z" data-province="云南省"/>
+    
+    <!-- 西藏 -->
+    <path d="M180 480 L280 480 L280 600 L180 600 Z" data-province="西藏自治区"/>
+    
+    <!-- 陕西 -->
+    <path d="M320 380 L400 380 L400 460 L320 460 Z" data-province="陕西省"/>
+    
+    <!-- 甘肃 -->
+    <path d="M240 360 L360 360 L360 480 L240 480 Z" data-province="甘肃省"/>
+    
+    <!-- 青海 -->
+    <path d="M200 400 L300 400 L300 500 L200 500 Z" data-province="青海省"/>
+    
+    <!-- 宁夏 -->
+    <path d="M320 340 L380 340 L380 400 L320 400 Z" data-province="宁夏回族自治区"/>
+    
+    <!-- 新疆 -->
+    <path d="M100 280 L260 280 L260 480 L100 480 Z" data-province="新疆维吾尔自治区"/>
+    
+    <!-- 台湾 -->
+    <path d="M620 480 L680 480 L680 560 L620 560 Z" data-province="台湾省"/>
+    
+    <!-- 香港 -->
+    <path d="M540 580 L580 580 L580 620 L540 620 Z" data-province="香港特别行政区"/>
+    
+    <!-- 澳门 -->
+    <path d="M520 600 L560 600 L560 640 L520 640 Z" data-province="澳门特别行政区"/>
+  </g>
+  
+  <!-- 高校位置标记点 -->
+  <g id="university-markers">
+    <!-- 标记点将通过JavaScript动态添加 -->
+  </g>
+  
+  <!-- 标签 -->
+  <text x="500" y="50" text-anchor="middle" font-family="Arial" font-size="24" fill="#1B4332" font-weight="bold">
+    中国985高校分布图
+  </text>
+</svg>
