@@ -127,7 +127,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
           <main className="relative h-[calc(100vh-6rem)]  flex flex-col overflow-hidden px-6">
             {children}
           </main>
-          <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
+          <div className="bg-muted/50 min-h-[100dvh] flex-1 rounded-xl md:min-h-min" />
         </div>
       </SidebarInset>
     </SidebarProvider>

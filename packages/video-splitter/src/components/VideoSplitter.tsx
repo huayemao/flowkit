@@ -173,7 +173,7 @@ const VideoSplitter: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-6xl lg:h-[90vh] flex flex-col">
+    <div className="container mx-auto px-4 py-12 max-w-6xl lg:h-[90dvh] flex flex-col">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-center mb-3">{t('videoSplitter.title')}</h1>
         <p className="text-center text-gray-500 max-w-2xl mx-auto">{t('videoSplitter.description')}</p>

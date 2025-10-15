@@ -105,7 +105,7 @@ const DialogLiteContent: React.FC<{
       <div
         className={cn(
           "w-full max-w-md mx-auto bg-background rounded-lg border shadow-lg z-10 animate-in zoom-in-95 duration-200",
-          "h-fit max-h-[80vh] overflow-y-auto", // 默认高度为 fit-content，最大高度限制
+          "h-fit max-h-[80dvh] overflow-y-auto", // 默认高度为 fit-content，最大高度限制
           className
         )}
         onClick={handleClick}

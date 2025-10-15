@@ -110,7 +110,7 @@ export default function WorkflowsPage() {
 
   const WorkflowEditor = ({ workflow, onClose }: { workflow: typeof workflows[0], onClose: () => void }) => (
     <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
-      <div className="bg-background border rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
+      <div className="bg-background border rounded-lg shadow-xl w-full max-w-4xl max-h-[90dvh] overflow-hidden">
         <div className="border-b px-6 py-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold">
             {t('workflows.edit')}: {workflow.name}

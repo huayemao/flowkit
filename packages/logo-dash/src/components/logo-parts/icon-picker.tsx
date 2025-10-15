@@ -101,7 +101,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] min-w-[300px]  h-[90vh] overflow-hidden flex flex-col">
+      <DialogContent className="sm:max-w-[600px] min-w-[300px]  h-[90dvh] overflow-hidden flex flex-col">
         <DialogHeader className="pb-2 border-b">
           <DialogTitle className="text-lg font-semibold">{t('logoDash.selectIcon')}</DialogTitle>
         </DialogHeader>

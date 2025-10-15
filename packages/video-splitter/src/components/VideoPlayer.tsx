@@ -29,7 +29,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           ref={videoRef}
           src={videoUrl}
           controls
-          className="w-full rounded-t-lg max-h-[62vh] object-contain"
+          className="w-full rounded-t-lg max-h-[62dvh] object-contain"
           onLoadedMetadata={onMetadataLoaded}
         />
         {videoInfo && (

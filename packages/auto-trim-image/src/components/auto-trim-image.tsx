@@ -251,7 +251,7 @@ export function AutoTrimImage() {
       {showPreview && results.length > 0 && (
         <DialogLite open={true} onOpenChange={(open) => !open && setShowPreview(false)}>
           <DialogLiteContent
-            className="absolute left-0 right-0 top-0 bottom-0 m-auto max-w-6xl max-h-[90vh] w-[90%] bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50"
+            className="absolute left-0 right-0 top-0 bottom-0 m-auto max-w-6xl max-h-[90dvh] w-[90%] bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50"
           >
             <DialogLiteHeader className="border-b border-gray-200/50 dark:border-gray-700/50 pb-3 relative">
               <div>
@@ -357,7 +357,7 @@ export function AutoTrimImage() {
       {showDiffViewer && selectedImage && (
         <DialogLite open={true} onOpenChange={(open) => !open && handleCloseDiffViewer()}>
           <DialogLiteContentWithClose onClose={() => setShowDiffViewer(false)}
-            className="absolute left-0 right-0 top-0 bottom-0 m-auto max-w-6xl max-h-[90vh] w-[95%] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
+            className="absolute left-0 right-0 top-0 bottom-0 m-auto max-w-6xl max-h-[90dvh] w-[95%] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
           >
             <div className="h-full flex flex-col">
               {/* 顶部控制栏 - 仅显示标题 */}

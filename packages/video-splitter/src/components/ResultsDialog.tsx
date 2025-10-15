@@ -51,7 +51,7 @@ const ResultsDialog: React.FC<ResultsDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto">
+      <DialogContent className="max-w-4xl max-h-[90dvh] overflow-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl">{t('videoSplitter.splitResults')}</DialogTitle>
         </DialogHeader>
@@ -64,7 +64,7 @@ const ResultsDialog: React.FC<ResultsDialogProps> = ({
             <span className="text-gray-500">{t('videoSplitter.totalClips', { count: videoClips.length })}</span>
           </div>
 
-          <div className="space-y-4 max-h-[60vh] overflow-auto">
+          <div className="space-y-4 max-h-[60dvh] overflow-auto">
             {videoClips.map((clip) => (
               <div key={clip.id} className="flex flex-col md:flex-row md:items-center justify-between p-4 border border-border rounded-md bg-card">
                 <div className="flex-1 flex items-center">
