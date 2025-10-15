@@ -14,7 +14,7 @@ function App() {
 
   return (
     <AppLayout>
-      <div className="max-w-7xl self-stretch lg:min-w-[960px]  mx-auto w-full">
+      <div className="max-w-7xl self-stretch lg:min-w-[960px]  mx-auto w-full space-y-6">
         <LogoDash />
         <div className="flex justify-center">
           <a

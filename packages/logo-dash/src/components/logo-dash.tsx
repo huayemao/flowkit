@@ -173,7 +173,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
   };
 
   return (
-    <div className={`flex flex-col min-h-full p-4 sm:p-6 ${className || ""}`}>
+    <div className={`flex flex-col min-h-full px-4 sm:px-6 ${className || ""}`}>
       <Toaster />
 
       {/* 主内容区域 - 两列布局 */}

@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react';
-import { WindowControls } from './window-controls';
-import { ScrollArea } from './scroll-area';
-import { LanguageSwitcher } from './language-switcher';
-import { ThemeToggle } from './theme-toggle';
-import { isTauri } from '../lib/utils';
+import React, { ReactNode } from "react";
+import { WindowControls } from "./window-controls";
+import { ScrollArea } from "./scroll-area";
+import { LanguageSwitcher } from "./language-switcher";
+import { ThemeToggle } from "./theme-toggle";
+import { isTauri } from "../lib/utils";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -37,12 +37,15 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         <div className="h-12 w-full"></div>
 
         {/* 主内容区域 */}
-        <ScrollArea className="w-full flex-1 flex flex-col items-center overflow-hidden overflow-y-auto">
-          {children}
+        <ScrollArea className="w-full flex-1">
+          <div className="py-10 xs:pb-16">{children}</div>
         </ScrollArea>
 
         {/* 顶部控制栏 */}
-        <div data-tauri-drag-region className="w-full fixed top-0 left-0 right-0">
+        <div
+          data-tauri-drag-region
+          className="w-full fixed top-0 left-0 right-0"
+        >
           <div className="mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-12">
               {/* 左侧区域 */}
@@ -55,7 +58,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200"
                   >
                     <span className="w-5 h-5 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center">
-                      <span className="text-xs text-indigo-600 dark:text-indigo-400">U</span>
+                      <span className="text-xs text-indigo-600 dark:text-indigo-400">
+                        U
+                      </span>
                     </span>
                     <span>utities.online</span>
                   </a>
@@ -65,12 +70,12 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
               </div>
 
               {/* 右侧控制区域 - 不响应拖拽 */}
-                <div
-                  className="flex items-center gap-2"
-                  data-tauri-drag-region="false"
-                >
-                  <WindowControls/>
-                </div>
+              <div
+                className="flex items-center gap-2"
+                data-tauri-drag-region="false"
+              >
+                <WindowControls />
+              </div>
             </div>
           </div>
         </div>
