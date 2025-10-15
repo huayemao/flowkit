@@ -20,7 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapPin, faSearch, faArrowsUpDown, faGlobe, faChevronDown, faChevronUp, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { UserLocation, CityData, AltitudeComparisonItem } from './types';
 import { mockCitiesData } from './mockData';
-import { getElevationByCoordinates, getLocationInfoByCoordinates } from './apiService';
+import { getElevationByCoordinates, getLocationInfoByCoordinates } from '../../utils/apiService';
 import AltitudeChart from './AltitudeChart';
 import CityList from './CityList';
 import CurrentLocationPanel from './CurrentLocationPanel';
