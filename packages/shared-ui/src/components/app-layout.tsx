@@ -3,6 +3,7 @@ import { WindowControls } from "./window-controls";
 import { ScrollArea } from "./scroll-area";
 import { LanguageSwitcher } from "./language-switcher";
 import { ThemeToggle } from "./theme-toggle";
+import { Analytics } from "@vercel/analytics/react";
 import { isTauri } from "../lib/utils";
 
 interface AppLayoutProps {
@@ -33,6 +34,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
       {/* 内容层 */}
       <div className="fixed inset-0 h-screen z-10 flex flex-col items-center justify-around ">
+        {/* 只在非 Tauri 环境中渲染 Vercel Analytics */}
+        {!isTauri && <Analytics />}
+        
         {/* 顶部栏 - 标题栏区域 */}
         <div className="h-12 w-full"></div>
 
