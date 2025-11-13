@@ -39,10 +39,6 @@
     "search": "Search",
     "loading": "Loading...",
     "error": "Error",
-    "offlineMode": "Offline Mode",
-    "onlineMode": "Online Mode",
-    "enableOfflineMode": "Enable Offline Mode",
-    "disableOfflineMode": "Disable Offline Mode",
     "locationNotSupported": "Your browser does not support geolocation",
     "locationPermissionDenied": "Location permission denied",
     "locationError": "Failed to get your location",
@@ -70,6 +66,47 @@
     },
     "footer": {
       "description": "Altitude - Elevation Finder & City Comparison Tool"
+    }
+  },
+  "latlon": {
+    "title": "Elevation by Coordinates | Latitude Longitude Elevation Finder",
+    "subtitle": "Find the elevation of any location on Earth using latitude and longitude coordinates. Get precise altitude measurements instantly.",
+    "description": "Find the elevation of any location on Earth using latitude and longitude coordinates. Get precise altitude measurements instantly with our accurate elevation data API. Perfect for hikers, researchers, and anyone needing elevation information.",
+    "keywords": "elevation by coordinates, latitude longitude elevation, altitude finder, elevation API, geolocation elevation, coordinates altitude",
+    "author": "FlowKit Team",
+    "ogTitle": "Elevation by Coordinates | Latitude Longitude Elevation Finder",
+    "ogDescription": "Find the elevation of any location on Earth using latitude and longitude coordinates. Get precise altitude measurements instantly.",
+    "twitterTitle": "Elevation by Coordinates | Latitude Longitude Elevation Finder",
+    "twitterDescription": "Find the elevation of any location on Earth using latitude and longitude coordinates.",
+    "form": {
+      "title": "Coordinates Input",
+      "description": "Enter latitude and longitude to find elevation",
+      "latitude": "Latitude",
+      "latitudePlaceholder": "e.g. 39.9042",
+      "latitudeRangeText": "Valid range: -90 to 90",
+      "longitude": "Longitude",
+      "longitudePlaceholder": "e.g. 116.4074",
+      "longitudeRangeText": "Valid range: -180 to 180",
+      "search": "Find Elevation",
+      "searching": "Searching..."
+    },
+    "result": {
+      "title": "Elevation Result",
+      "elevation": "Elevation",
+      "meters": "meters",
+      "locationInfo": "Location Information",
+      "city": "City",
+      "region": "Region",
+      "country": "Country"
+    },
+    "error": {
+      "invalidNumbers": "Please enter valid numbers for latitude and longitude",
+      "latitudeRange": "Latitude must be between -90 and 90",
+      "longitudeRange": "Longitude must be between -180 and 180",
+      "queryFailed": "Failed to get elevation data. Please try again."
+    },
+    "footer": {
+      "copyright": "© 2024 FlowKit | Elevation Finder"
     }
   },
   "common": {

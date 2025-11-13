@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '../../i18n';
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
 } from '@flowkit/shared-ui';
 import { Button } from '@flowkit/shared-ui';
 import { Input } from '@flowkit/shared-ui';
@@ -31,7 +31,7 @@ import AltitudeComparisonPanel from './AltitudeComparisonPanel';
 const Altitude: React.FC = () => {
   // 初始化翻译
   const { t } = useTranslation();
-  
+
   // 状态管理
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [isLocating, setIsLocating] = useState(false);
@@ -125,18 +125,18 @@ const Altitude: React.FC = () => {
       },
       (error) => {
         let errorMessage = t('altitude.locationError');
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              errorMessage = t('altitude.locationPermissionDenied');
-              break;
-            case error.POSITION_UNAVAILABLE:
-              errorMessage = t('altitude.locationError');
-              break;
-            case error.TIMEOUT:
-              errorMessage = t('altitude.locationError');
-              break;
-          }
-          setLocationError(errorMessage);
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage = t('altitude.locationPermissionDenied');
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = t('altitude.locationError');
+            break;
+          case error.TIMEOUT:
+            errorMessage = t('altitude.locationError');
+            break;
+        }
+        setLocationError(errorMessage);
         setIsLocating(false);
       },
       {
@@ -150,28 +150,28 @@ const Altitude: React.FC = () => {
   // 搜索和筛选城市
   useEffect(() => {
     let filtered = mockCitiesData;
-    
+
     // 应用搜索筛选
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(city => 
-        city.name.toLowerCase().includes(term) || 
+      filtered = filtered.filter(city =>
+        city.name.toLowerCase().includes(term) ||
         city.country.toLowerCase().includes(term)
       );
     }
-    
+
     // 应用大洲筛选
     if (continentFilter !== 'all') {
       filtered = filtered.filter(city => city.continent === continentFilter);
     }
-    
+
     setCities(filtered);
   }, [searchTerm, continentFilter]);
 
   // 更新对比数据
   useEffect(() => {
     let newComparisonData: AltitudeComparisonItem[] = [];
-    
+
     // 添加用户位置（如果有）
     if (userLocation) {
       newComparisonData.push({
@@ -181,7 +181,7 @@ const Altitude: React.FC = () => {
         isUserLocation: true
       });
     }
-    
+
     // 添加选中的城市
     selectedCities.forEach(cityId => {
       const city = mockCitiesData.find(c => c.id === cityId);
@@ -194,12 +194,12 @@ const Altitude: React.FC = () => {
         });
       }
     });
-    
+
     // 排序
     newComparisonData.sort((a, b) => {
       return sortDirection === 'asc' ? a.altitude - b.altitude : b.altitude - a.altitude;
     });
-    
+
     setComparisonData(newComparisonData);
   }, [selectedCities, userLocation, sortDirection]);
 
@@ -232,11 +232,6 @@ const Altitude: React.FC = () => {
     setSelectedCities(new Set());
   };
 
-  // 切换离线模式
-  useEffect(() => {
-    // 在实际应用中，这里应该处理离线数据缓存
-    console.log('离线模式:', isOfflineMode);
-  }, [isOfflineMode]);
 
   return (
     <div className="">
@@ -247,16 +242,6 @@ const Altitude: React.FC = () => {
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             {t('altitude.subtitle')}
           </p>
-          <div className="mt-4 flex items-center justify-center space-x-2">
-            <Switch
-              id="offline-mode"
-              checked={isOfflineMode}
-              onCheckedChange={setIsOfflineMode}
-            />
-            <Label htmlFor="offline-mode" className="text-sm text-gray-600">
-              {t('altitude.offlineMode')}
-            </Label>
-          </div>
         </div>
 
         {/* 主要内容区 */}

@@ -17,7 +17,7 @@ export const importTranslations = async (language: string) => {
         const translationsModule = await import(`./locales/${language}/translation.json`);
         return translationsModule.default;
     } catch (error) {
-        console.error(`Failed to load translations for language: ${language}`, error);
+        console.error(`Failed to load translations for language: ${language}`);
         // 如果指定语言的翻译文件不存在，加载默认的英文翻译
         const defaultTranslationsModule = await import('./locales/en/translation.json');
         return defaultTranslationsModule.default;

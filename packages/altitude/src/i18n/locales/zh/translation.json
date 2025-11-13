@@ -39,10 +39,7 @@
     "search": "搜索",
     "loading": "加载中...",
     "error": "错误",
-    "offlineMode": "离线模式",
     "onlineMode": "在线模式",
-    "enableOfflineMode": "启用离线模式",
-    "disableOfflineMode": "禁用离线模式",
     "locationNotSupported": "您的浏览器不支持地理定位",
     "locationPermissionDenied": "位置权限被拒绝",
     "locationError": "获取位置失败",
@@ -54,6 +51,47 @@
     "showInFeet": "显示为英尺",
     "showInMeters": "显示为米",
     "totalCities": "总城市数：{{count}}"
+  },
+  "latlon": {
+    "title": "经纬度海拔查询 - 通过坐标获取精确海拔高度",
+    "subtitle": "使用经纬度坐标查询地球上任何位置的海拔高度。即时获取精确的高度测量数据。",
+    "description": "使用经纬度坐标查询地球上任何位置的海拔高度。通过我们精确的海拔数据API即时获取高度测量结果。适合登山爱好者、研究人员以及任何需要海拔信息的用户。",
+    "keywords": "经纬度海拔,坐标海拔查询,海拔高度,海拔API,地理位置高度,坐标高度",
+    "author": "FlowKit Team",
+    "ogTitle": "经纬度海拔查询 - 通过坐标获取精确海拔高度",
+    "ogDescription": "使用经纬度坐标查询地球上任何位置的海拔高度。即时获取精确的高度测量数据。",
+    "twitterTitle": "经纬度海拔查询 - 通过坐标获取精确海拔高度",
+    "twitterDescription": "使用经纬度坐标查询地球上任何位置的海拔高度。",
+    "form": {
+      "title": "坐标输入",
+      "description": "输入纬度和经度以查询海拔",
+      "latitude": "纬度",
+      "latitudePlaceholder": "例如：39.9042",
+      "latitudeRangeText": "有效范围：-90 到 90",
+      "longitude": "经度",
+      "longitudePlaceholder": "例如：116.4074",
+      "longitudeRangeText": "有效范围：-180 到 180",
+      "search": "查询海拔",
+      "searching": "查询中..."
+    },
+    "result": {
+      "title": "海拔查询结果",
+      "elevation": "海拔",
+      "meters": "米",
+      "locationInfo": "位置信息",
+      "city": "城市",
+      "region": "地区",
+      "country": "国家"
+    },
+    "error": {
+      "invalidNumbers": "请输入有效的纬度和经度数字",
+      "latitudeRange": "纬度必须在 -90 到 90 之间",
+      "longitudeRange": "经度必须在 -180 到 180 之间",
+      "queryFailed": "获取海拔数据失败，请重试"
+    },
+    "footer": {
+      "copyright": "© 2024 FlowKit | 海拔查询工具"
+    }
   },
   "common": {
     "processing": "处理中",

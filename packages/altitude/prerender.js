@@ -22,8 +22,30 @@ try {
         return fs.statSync(fullPath).isDirectory()
     })
 
-    // 为每种语言生成路由
-    const routes = ['/'].concat(languages.filter(lang => lang !== 'en').map(lang => `/${lang}`))
+    // 获取pages目录下的所有页面文件
+    const pagesDir = path.resolve(__dirname, 'src/pages')
+    const pageFiles = fs.existsSync(pagesDir) ? fs.readdirSync(pagesDir) : []
+    const pageRoutes = pageFiles
+        .filter(file => file.endsWith('.tsx') && !file.startsWith('_'))
+        .map(file => `/${file.replace('.tsx', '')}`)
+    
+    // 生成所有需要预渲染的路由
+    let routes = ['/'] // 默认英文首页
+    
+    // 添加非英文语言的首页路由
+    languages.filter(lang => lang !== 'en').forEach(lang => {
+        routes.push(`/${lang}`)
+    })
+    
+    // 添加所有页面的英文路由
+    routes = routes.concat(pageRoutes)
+    
+    // 添加所有页面的非英文语言路由
+    languages.filter(lang => lang !== 'en').forEach(lang => {
+        pageRoutes.forEach(pageRoute => {
+            routes.push(`/${lang}${pageRoute}`)
+        })
+    })
 
     /** @type {string} */
     let template = templateHtml
@@ -31,8 +53,14 @@ try {
     let render = (await import('./dist/server/entry-server.js')).render
 
     for (const route of routes) {
-                // 确定当前路由的语言
-        const lang = route === '/' ? 'en' : route.split('/')[1]
+        // 确定当前路由的语言
+        let lang = 'en' // 默认英文
+        let pathSegments = route.split('/').filter(segment => segment)
+        
+        // 检查路由是否包含语言代码前缀
+        if (pathSegments.length > 0 && languages.includes(pathSegments[0])) {
+            lang = pathSegments[0]
+        }
 
         const rendered = await render(route, languages)
 

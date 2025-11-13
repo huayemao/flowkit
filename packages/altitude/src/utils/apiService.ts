@@ -193,7 +193,7 @@ export const getLocationInfoByCoordinates = async (latitude: number, longitude: 
     
     // 如果主要API都失败或超时，尝试备用API
     try {
-      const url = `https://photon.komoot.io/reverse?lat=${latitude}&lon=${longitude}&lang=zh`;
+      const url = `https://photon.komoot.io/reverse?lat=${latitude}&lon=${longitude}&lang=en`;
       const response = await fetch(url);
       
       if (!response.ok) {
