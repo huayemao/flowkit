@@ -8,12 +8,9 @@ import {
   CardHeader,
   CardTitle
 } from '@flowkit/shared-ui';
-import { Button } from '@flowkit/shared-ui';
-import { Input } from '@flowkit/shared-ui';
-import { Label } from '@flowkit/shared-ui';
+import { Button,Input,Label, Spinner } from '@flowkit/shared-ui';
 import { Alert, AlertDescription } from '@flowkit/shared-ui';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faMapPin, faMountain, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { Search, MapPin, Mountain, Info } from 'lucide-react';
 import "../index.css";
 import "@flowkit/shared-ui/dist/index.css";
 // 定义页面组件
@@ -29,7 +26,8 @@ export const ElevationByLatLon: React.FC = () => {
   const [locationInfo, setLocationInfo] = useState<{ city?: string; region?: string; country?: string } | null>(null);
   
   // UI状态
-  const [isLoading, setIsLoading] = useState(false);
+  const [isElevationLoading, setIsElevationLoading] = useState(false);
+  const [isLocationLoading, setIsLocationLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
@@ -72,24 +70,39 @@ export const ElevationByLatLon: React.FC = () => {
     const latNum = parseFloat(latitude);
     const lonNum = parseFloat(longitude);
     
-    setIsLoading(true);
+    setSuccess(true); // 先设置为成功，以便显示结果卡片
     
-    try {
-      // 并行请求海拔和位置信息
-      const [elevationData, locationData] = await Promise.all([
-        getElevationByCoordinates(latNum, lonNum),
-        getLocationInfoByCoordinates(latNum, lonNum)
-      ]);
-      
-      setElevation(elevationData);
-      setLocationInfo(locationData);
-      setSuccess(true);
-    } catch (err) {
-      console.error('查询失败:', err);
-      setError(t('latlon.error.queryFailed'));
-    } finally {
-      setIsLoading(false);
-    }
+    // 独立请求海拔信息
+    const fetchElevation = async () => {
+      setIsElevationLoading(true);
+      try {
+        const elevationData = await getElevationByCoordinates(latNum, lonNum);
+        setElevation(elevationData);
+      } catch (err) {
+        console.error('海拔查询失败:', err);
+        setError(t('latlon.error.queryFailed'));
+      } finally {
+        setIsElevationLoading(false);
+      }
+    };
+    
+    // 独立请求位置信息
+    const fetchLocationInfo = async () => {
+      setIsLocationLoading(true);
+      try {
+        const locationData = await getLocationInfoByCoordinates(latNum, lonNum);
+        setLocationInfo(locationData);
+      } catch (err) {
+        console.error('位置信息查询失败:', err);
+        // 位置信息失败不影响整体流程，不设置error
+      } finally {
+        setIsLocationLoading(false);
+      }
+    };
+    
+    // 并行执行两个异步函数
+    fetchElevation();
+    fetchLocationInfo();
   };
 
   // 处理输入变化
@@ -117,7 +130,7 @@ export const ElevationByLatLon: React.FC = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faSearch} />
+              <Search size={20} />
               {t('latlon.form.title')}
             </CardTitle>
             <CardDescription>
@@ -131,7 +144,7 @@ export const ElevationByLatLon: React.FC = () => {
               {/* 纬度输入 */}
               <div className="space-y-2">
                 <Label htmlFor="latitude" className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faMapPin} size="sm" />
+                  <MapPin size={16} />
                   {t('latlon.form.latitude')}
                 </Label>
                 <Input
@@ -140,7 +153,7 @@ export const ElevationByLatLon: React.FC = () => {
                   placeholder={t('latlon.form.latitudePlaceholder')}
                   value={latitude}
                   onChange={handleInputChange(setLatitude)}
-                  disabled={isLoading}
+                  disabled={isElevationLoading || isLocationLoading}
                   className="font-mono"
                 />
                 <p className="text-xs text-gray-500">
@@ -151,7 +164,7 @@ export const ElevationByLatLon: React.FC = () => {
               {/* 经度输入 */}
               <div className="space-y-2">
                 <Label htmlFor="longitude" className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faMapPin} size="sm" />
+                  <MapPin size={16} />
                   {t('latlon.form.longitude')}
                 </Label>
                 <Input
@@ -160,7 +173,7 @@ export const ElevationByLatLon: React.FC = () => {
                   placeholder={t('latlon.form.longitudePlaceholder')}
                   value={longitude}
                   onChange={handleInputChange(setLongitude)}
-                  disabled={isLoading}
+                  disabled={isElevationLoading || isLocationLoading}
                   className="font-mono"
                 />
                 <p className="text-xs text-gray-500">
@@ -173,7 +186,7 @@ export const ElevationByLatLon: React.FC = () => {
             {error && (
               <Alert variant="destructive">
                 <AlertDescription className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faInfoCircle} size="sm" />
+                  <Info size={16} />
                   {error}
                 </AlertDescription>
               </Alert>
@@ -182,17 +195,17 @@ export const ElevationByLatLon: React.FC = () => {
             {/* 查询按钮 */}
             <Button 
               onClick={handleSearch}
-              disabled={isLoading || !latitude || !longitude}
+              disabled={(isElevationLoading || isLocationLoading) || !latitude || !longitude}
               className="w-full md:w-auto"
             >
-              {isLoading ? (
+              {isElevationLoading || isLocationLoading ? (
                 <>
-                  <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent"></div>
+                  <Spinner className="mr-2 h-4 w-4" />
                   {t('latlon.form.searching')}
                 </>
               ) : (
                 <>
-                  <FontAwesomeIcon icon={faSearch} className="mr-2" />
+                  <Search className="mr-2" size={16} />
                   {t('latlon.form.search')}
                 </>
               )}
@@ -201,11 +214,11 @@ export const ElevationByLatLon: React.FC = () => {
         </Card>
         
         {/* 结果显示卡片 */}
-        {success && elevation !== null && (
+        {success && (
           <Card className="border-green-200 bg-green-50">
             <CardHeader className="bg-green-100/50">
               <CardTitle className="flex items-center gap-2 text-green-800">
-                <FontAwesomeIcon icon={faMountain} />
+                <Mountain size={20} />
                 {t('latlon.result.title')}
               </CardTitle>
             </CardHeader>
@@ -214,9 +227,15 @@ export const ElevationByLatLon: React.FC = () => {
               {/* 海拔结果 */}
               <div className="text-center py-4">
                 <p className="text-sm text-gray-500 mb-1">{t('latlon.result.elevation')}</p>
-                <p className="text-4xl font-bold text-green-700">
-                  {elevation} {t('latlon.result.meters')}
-                </p>
+                {isElevationLoading ? (
+                  <div className="flex justify-center items-center py-4">
+                    <Spinner className="h-8 w-8 text-green-700" />
+                  </div>
+                ) : elevation !== null ? (
+                  <p className="text-4xl font-bold text-green-700">
+                    {elevation} {t('latlon.result.meters')}
+                  </p>
+                ) : null}
               </div>
               
               {/* 坐标信息 */}
@@ -232,29 +251,35 @@ export const ElevationByLatLon: React.FC = () => {
               </div>
               
               {/* 位置信息 */}
-              {locationInfo && (locationInfo.city || locationInfo.region || locationInfo.country) && (
+              {(isLocationLoading || (locationInfo && (locationInfo.city || locationInfo.region || locationInfo.country))) && (
                 <div className="border-t border-green-200 pt-4 space-y-2">
                   <h3 className="font-medium text-gray-700">{t('latlon.result.locationInfo')}</h3>
-                  <div className="grid grid-cols-1 gap-2">
-                    {locationInfo.city && (
-                      <p className="flex gap-2 items-center">
-                        <span className="text-sm text-gray-500 w-16">{t('latlon.result.city')}:</span>
-                        <span className="font-medium text-green-700">{locationInfo.city}</span>
-                      </p>
-                    )}
-                    {locationInfo.region && (
-                      <p className="flex gap-2 items-center">
-                        <span className="text-sm text-gray-500 w-16">{t('latlon.result.region')}:</span>
-                        <span className="font-medium text-green-700">{locationInfo.region}</span>
-                      </p>
-                    )}
-                    {locationInfo.country && (
-                      <p className="flex gap-2 items-center">
-                        <span className="text-sm text-gray-500 w-16">{t('latlon.result.country')}:</span>
-                        <span className="font-medium text-green-700">{locationInfo.country}</span>
-                      </p>
-                    )}
-                  </div>
+                  {isLocationLoading ? (
+                    <div className="flex justify-center items-center py-4">
+                      <Spinner className="h-5 w-5 text-green-700" />
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 gap-2">
+                      {locationInfo?.city && (
+                        <p className="flex gap-2 items-center">
+                          <span className="text-sm text-gray-500 w-16">{t('latlon.result.city')}:</span>
+                          <span className="font-medium text-green-700">{locationInfo.city}</span>
+                        </p>
+                      )}
+                      {locationInfo?.region && (
+                        <p className="flex gap-2 items-center">
+                          <span className="text-sm text-gray-500 w-16">{t('latlon.result.region')}:</span>
+                          <span className="font-medium text-green-700">{locationInfo.region}</span>
+                        </p>
+                      )}
+                      {locationInfo?.country && (
+                        <p className="flex gap-2 items-center">
+                          <span className="text-sm text-gray-500 w-16">{t('latlon.result.country')}:</span>
+                          <span className="font-medium text-green-700">{locationInfo.country}</span>
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
             </CardContent>

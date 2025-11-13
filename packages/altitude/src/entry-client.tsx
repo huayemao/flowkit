@@ -12,15 +12,12 @@ const LoadingFallback = () => (
     <div className="text-gray-600 font-medium">Loading...</div>
   </div>
 )
-let PageComponent: React.FC = App
-
-
-
+let PageComponent: React.FC | null = null
 
 
 // 客户端路由处理组件
-const ClientRouter = () => {
-  const [loading, setLoading] = useState(true)
+const ClientRouter = ({ children }: { children: React.ReactNode }) => {
+  const [loading, setLoading] = useState(false)
 
   // 处理URL变化，加载对应的页面组件
   const loadPageComponent = async () => {
@@ -41,8 +38,6 @@ const ClientRouter = () => {
 
   // 初始化时加载组件
   useEffect(() => {
-    loadPageComponent()
-
     // 监听URL变化（前进/后退按钮）
     const handlePopState = () => {
       loadPageComponent()
@@ -52,11 +47,7 @@ const ClientRouter = () => {
     return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
-  if (loading) {
-    return <LoadingFallback />;
-  }
-
-  return <PageComponent />;
+  return PageComponent ? <PageComponent /> : children;
 }
 
 // 立即执行初始化
@@ -64,12 +55,16 @@ const currentUrl = window.location.pathname
 const { language } = parseUrlPath(currentUrl)
 
 initI18n(language).then(() => {
+  return getPageComponent(currentUrl)
+}).then((Component) => {
   hydrateRoot(
     document.getElementById('root')!,
     <StrictMode>
-      <Suspense fallback={<LoadingFallback />}>
-        <ClientRouter />
-      </Suspense>
+      {/* <Suspense fallback={<LoadingFallback />}> */}
+      <ClientRouter >
+        <Component />
+      </ClientRouter>
+      {/* </Suspense> */}
     </StrictMode>,
   )
 })
