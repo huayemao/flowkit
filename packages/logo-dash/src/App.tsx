@@ -16,7 +16,7 @@ function App() {
     <AppLayout>
       <div className="max-w-7xl self-stretch lg:min-w-[960px]  mx-auto w-full space-y-6">
         <LogoDash />
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-4">
           <a
             href="https://www.producthunt.com/products/logodash?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-logodash"
             target="_blank"
@@ -28,6 +28,9 @@ function App() {
               width={250}
               height={54}
             />
+          </a>
+          <a href="https://toolfame.com/item/logodash" target="_blank" rel="noopener noreferrer">
+            <img src="https://toolfame.com/badge-light.svg" alt="Featured on toolfame.com" style={{ width: 250, height: 54 }} />
           </a>
         </div>
 
