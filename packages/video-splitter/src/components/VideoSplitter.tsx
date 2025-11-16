@@ -11,10 +11,11 @@ import PreviewDialog from "./PreviewDialog";
 import {
   cn,
   isTauri,
-} from "node_modules/@flowkit/shared-ui/dist/src/lib/utils";
+} from "@flowkit/shared-ui";
 
 const VideoSplitter: React.FC = () => {
   const { t } = useTranslation();
+  console.log(isTauri);
 
   // 状态管理
   const [videoFile, setVideoFile] = useState<File | null>(null);

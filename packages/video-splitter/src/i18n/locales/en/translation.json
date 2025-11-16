@@ -91,16 +91,16 @@
     "splitResults": "Split Results",
     "preview": "Preview",
     "faq": {
-      "q1": "What is the video splitting feature?",
-      "a1": "Video Splitter is a professional video editing tool that supports precise time-based splitting of video files. You can easily split long videos into multiple short video segments to meet different usage scenarios.",
-      "q2": "What video formats and sizes are supported?",
-      "a2": "We support common video formats including MP4, AVI, MOV, MKV, etc., with recommended video file size not exceeding 500MB. Processing large files may take longer, please be patient.",
-      "q3": "How can I precisely set split time points?",
-      "a3": "You can drag the timeline to select split points, or directly input precise time (format: HH:MM:SS). The system supports adding multiple split points to complete multiple segment splitting at once.",
-      "q4": "Will the video quality be affected after splitting?",
-      "a4": "The splitting process uses lossless cutting technology that won't reduce the original video's image and sound quality. Split segments maintain the same encoding parameters as the original video to ensure optimal playback effect.",
+      "q1": "What is the Instant Split Video Cutter?",
+      "a1": "Instant Split Video Cutter is a video editing tool that supports time-based video file splitting. It allows you to easily split long videos into multiple short clips to meet the needs of different scenarios. It accurately solves pain points for various users: Short video creators can quickly split long materials according to platform duration requirements, getting rid of the trouble of time-consuming manual cropping with low precision; When processing event recording videos, it can easily split clips of different segments; For self-media practitioners distributing across multiple platforms, it can split the same material according to the duration requirements of each platform, avoiding the tedious process of repeated adjustments and exports.",
+      "q2": "When using Instant Split, are videos uploaded to a server?",
+      "a2": "Instant Split is a video splitting web application that runs purely in the browser without the need for installation. All processing is completed locally, and there is no need to upload videos to any server. This not only ensures the privacy and security of files but also avoids problems such as time-consuming uploads and network restrictions.",
+      "q3": "Can I split videos by the number of segments? What's the difference between Quick Split and Precision Split?",
+      "a3": "Instant Split supports splitting by Duration or by Number of Segments. The duration of clips from Quick Split may not be exactly equal to the input duration, while the duration of clips from Precision Split will be completely equal to the input duration.",
+      "q4": "Will the quality of split videos be affected?",
+      "a4": "The splitting process adopts lossless cutting technology, which will not reduce the image quality and sound quality of the original video. The split clips maintain the same encoding parameters as the original video to ensure the best playback effect.",
       "q5": "Is this tool free to use?",
-      "a5": "Yes, Video Splitter is completely free to use with no registration or login required. All processing is completed locally in your browser to protect your video privacy and security."
+      "a5": "Yes, the Instant Split Video Cutter is completely free to use, with no need for registration or login. All processing is completed locally in your browser to protect the privacy and security of your videos."
     }
   },
   "common": {
