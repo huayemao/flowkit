@@ -5,7 +5,7 @@
     "description": "Find the elevation of any location instantly with Altitude. Check your current position's altitude, compare elevations of major cities worldwide, and visualize altitude data with interactive charts. Perfect for travelers, hikers, researchers, and anyone interested in geographic elevation information.",
     "keywords": "Altitude finder, Elevation tool, City altitude comparison, Geographical elevation, Current location altitude, Elevation chart, Mountain height, Sea level elevation, Elevation data, World cities altitude",
     "author": "FlowKit Team",
-    "copyright": "© 2024 FlowKit",
+    "copyright": "© 2025 huayemao",
     "ogTitle": "Elevation Finder | realtime altitude query & City Comparison Tool",
     "ogDescription": "Find the elevation of any location instantly with Altitude. Check your current position's altitude, compare elevations of major cities worldwide, and visualize altitude data with interactive charts.",
     "twitterTitle": "Elevation Finder | realtime altitude query & City Comparison Tool",
@@ -106,7 +106,7 @@
       "queryFailed": "Failed to get elevation data. Please try again."
     },
     "footer": {
-      "copyright": "© 2024 FlowKit | Elevation Finder"
+      "copyright": "© 2025 huayemao | Elevation Finder"
     }
   },
   "common": {

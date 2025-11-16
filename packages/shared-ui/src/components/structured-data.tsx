@@ -30,15 +30,15 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
     },
     "author": {
       "@type": "Organization",
-      "name": "FlowKit",
+      "name": "Bobcat(huayemao)",
       "url": "https://utities.online"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "FlowKit",
+      "name": "utities.online",
       "url": "https://utities.online"
     },
-    "datePublished": "2024-01-01",
+    "datePublished": "2025-10-01",
     "dateModified": new Date().toISOString().split('T')[0],
     "inLanguage": "zh-CN",
     "isAccessibleForFree": true,
@@ -89,7 +89,7 @@ export const StructuredData: React.FC<StructuredDataProps> = ({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "FlowKit",
+    "name": "utities.online",
     "url": "https://utities.online",
     "logo": "https://utities.online/logo.png",
     "description": "提供强大的在线工具集合，提升工作效率",

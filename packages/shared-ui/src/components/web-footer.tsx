@@ -45,7 +45,7 @@ export const WebFooter: React.FC = () => {
   const socialLinks = [
     {
       name: "GitHub",
-      href: "https://github.com/flowkit",
+      href: "https://github.com/huayemao",
       icon: Github
     },
     {
