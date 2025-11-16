@@ -180,14 +180,6 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {/* 左侧：预览区域 */}
         <div className="flex flex-col items-center justify-center">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              {t('logoDash.title').split('-')[0].trim()}
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-md">
-              {t('logoDash.title').split('-').pop()?.trim()}
-            </p>
-          </div>
           <LogoPreview config={config} isGridVisible={isGridVisible} />
           <LogoActions
             config={config}

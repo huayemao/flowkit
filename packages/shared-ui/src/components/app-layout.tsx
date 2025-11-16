@@ -69,14 +69,19 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 
     return (
       <div className={`text-center mb-12 ${titleCentered ? "" : "text-left"}`}>
-        <h1 className={titleClassName}>{displayTitle}</h1>
-        {displaySubtitle && (
-          <p
-            className={`${subtitleClassName} ${titleCentered ? "mx-auto" : ""}`}
-          >
-            {displaySubtitle}
-          </p>
-        )}
+        <div className="flex items-center justify-center">
+          <div className="w-16 h-16 shadow-lg">
+            <img src="/favicon.png" className="rounded"></img>
+          </div>
+          <div className="ml-4">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+              {displayTitle}
+            </h1>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {displaySubtitle}
+            </p>
+          </div>
+        </div>
       </div>
     );
   };
