@@ -75,7 +75,7 @@ export const WebFooter: React.FC = () => {
 
   return (
     <footer className="bg-background/80 backdrop-blur-md border-t border-border/40">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
         {/* 额外的CTA区域 */}
         <div className="mt-8 text-center mb-6">
           <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg p-6 border border-indigo-200/60 dark:border-indigo-700/60">
@@ -98,7 +98,7 @@ export const WebFooter: React.FC = () => {
         </div>
 
         {/* 主要内容区域 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* 工具分类 */}
           {toolCategories.map((category, index) => (
             <div key={index} className="space-y-4">

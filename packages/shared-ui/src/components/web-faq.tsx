@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { Button } from './button';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from './collapsible';
 
 interface WebFAQProps {
   faqData: Array<{
@@ -12,17 +17,6 @@ interface WebFAQProps {
 
 export const WebFAQ: React.FC<WebFAQProps> = ({ faqData }) => {
   const { t } = useTranslation();
-  const [openItems, setOpenItems] = useState<Set<number>>(new Set());
-
-  const toggleItem = (index: number) => {
-    const newOpenItems = new Set(openItems);
-    if (newOpenItems.has(index)) {
-      newOpenItems.delete(index);
-    } else {
-      newOpenItems.add(index);
-    }
-    setOpenItems(newOpenItems);
-  };
 
   if (faqData.length === 0) {
     return null;
@@ -41,35 +35,27 @@ export const WebFAQ: React.FC<WebFAQProps> = ({ faqData }) => {
 
       <div className="space-y-4">
         {faqData.map((faq, index) => (
-          <div
-            key={index}
-            className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200/60 dark:border-gray-700/60 overflow-hidden transition-all duration-200 hover:shadow-lg"
-          >
-            <Button
-              variant="ghost"
-              className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50/50 dark:hover:bg-gray-700/50"
-              onClick={() => toggleItem(index)}
-            >
-              <span className="font-medium text-gray-900 dark:text-gray-100 pr-4">
-                {faq.question}
-              </span>
-              <div className="flex-shrink-0">
-                {openItems.has(index) ? (
-                  <ChevronUp className="h-5 w-5 text-gray-500" />
-                ) : (
-                  <ChevronDown className="h-5 w-5 text-gray-500" />
-                )}
-              </div>
-            </Button>
-            
-            {openItems.has(index) && (
-              <div className="px-6 pb-4">
+          <Collapsible key={index} className="group">
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200/60 dark:border-gray-700/60 overflow-hidden transition-all duration-200 hover:shadow-lg">
+              <CollapsibleTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50/50 dark:hover:bg-gray-700/50 h-auto"
+                >
+                  <span className="font-medium text-gray-900 dark:text-gray-100 pr-4 text-left">
+                    {faq.question}
+                  </span>
+                  <ChevronDown className="h-5 w-5 text-gray-500 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </Button>
+              </CollapsibleTrigger>
+              
+              <CollapsibleContent className="px-6 pb-4">
                 <div className="text-gray-600 dark:text-gray-400 leading-relaxed">
                   {faq.answer}
                 </div>
-              </div>
-            )}
-          </div>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
         ))}
       </div>
 
