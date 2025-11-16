@@ -54,16 +54,16 @@
     "currentlyShowing": "显示 {{start}} 至 {{end}}",
     "tryDifferentSearch": "尝试其他关键词搜索",
     "faq": {
-      "q1": "What is Logo Dash?",
-      "a1": "Logo Dash is a professional logo management and display tool that helps you organize and showcase your brand logos effectively.",
-      "q2": "How do I upload logos?",
-      "a2": "Simply drag and drop your logo files or click the upload button to select files from your device. Supported formats include PNG, JPG, SVG, and more.",
-      "q3": "Can I organize logos into categories?",
-      "a3": "Yes, Logo Dash allows you to create custom categories and tags to organize your logos efficiently.",
-      "q4": "Is my data secure?",
-      "a4": "All your logos are stored locally in your browser, ensuring complete privacy and security of your brand assets.",
-      "q5": "Can I export my logos?",
-      "a5": "Yes, you can export individual logos or entire collections in various formats for easy sharing and backup."
+      "q1": "LogoDash 是什么工具？主要用途是什么？",
+      "a1": "LogoDash 是一款专为独立开发者、创业者和内容创作者设计的极简Logo在线生成器。它的核心用途是帮助用户无需任何设计经验，也能在极短时间内快速生成美观、专业且适配明暗模式（如深色模式）的渐变风格Logo，旨在解决产品开发中‘因缺少合适Logo而延迟上线’的痛点，助力项目快速启动。",
+      "q2": "如何使用 LogoDash 创建 Logo？",
+      "a2": "LogoDash 提供两种简单创建方式：1) 手动创建：从图标库选择图标，调整线条粗细、边距比例，添加文字，自定义背景（渐变或纯色）；2) 随机生成：点击随机按钮，系统自动生成完整设计方案。两种方式都支持实时预览，无需设计经验即可快速制作专业 Logo。",
+      "q3": "LogoDash 支持导出哪些格式？",
+      "a3": "LogoDash 支持导出 SVG 和 PNG 两种格式。SVG 是矢量格式，可无限放大不失真，适合印刷和高质量显示场景；PNG 是位图格式，带有透明背景，适合网页和应用程序使用。",
+      "q4": "LogoDash 的图标源是什么？可以商用吗？",
+      "a4": "LogoDash 选择 Lucide 和 Font Awesome 作为图标源，无论是Lucide采用的ISC协议 ，还是Font Awesome采用的SIL OFL协议 ，都是允许免费商用的开源协议。您通过LogoDash生成的Logo用于个人或商业项目，均无版权风险。",
+      "q5": "LogoDash 生成的 Logo 如何适配暗黑模式？",
+      "a5": "这是 LogoDash 的一个核心设计考量。工具目前主打的渐变背景风格，通过精心调配的明亮色彩和对比度，确保生成的Logo不仅在明亮的背景下清晰醒目，在暗黑模式的任务栏、界面或网站上同样能保持出色的可见性和视觉质感，有效避免了纯深色图标在暗色背景下‘消失’的问题。"
     }
   },
   "common": {

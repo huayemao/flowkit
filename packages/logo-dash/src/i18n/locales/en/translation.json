@@ -54,16 +54,16 @@
     "currentlyShowing": "showing {{start}} to {{end}}",
     "tryDifferentSearch": "Try a different search term",
     "faq": {
-      "q1": "What is Logo Dash?",
-      "a1": "Logo Dash is a professional logo management and display tool that helps you organize and showcase your brand logos effectively.",
-      "q2": "How do I upload logos?",
-      "a2": "Simply drag and drop your logo files or click the upload button to select files from your device. Supported formats include PNG, JPG, SVG, and more.",
-      "q3": "Can I organize logos into categories?",
-      "a3": "Yes, Logo Dash allows you to create custom categories and tags to organize your logos efficiently.",
-      "q4": "Is my data secure?",
-      "a4": "All your logos are stored locally in your browser, ensuring complete privacy and security of your brand assets.",
-      "q5": "Can I export my logos?",
-      "a5": "Yes, you can export individual logos or entire collections in various formats for easy sharing and backup."
+      "q1": "What is LogoDash and what is its main purpose?",
+      "a1": "LogoDash is a minimalist online logo generator designed specifically for indie developers, entrepreneurs, and content creators. Its core purpose is to help users with no design experience quickly create sleek, professional gradient-style logos optimized for both light and dark modes in minutes. It solves the pain point of 'delayed project launches due to lack of a suitable logo' in product development, empowering users to kickstart their projects faster.",
+      "q2": "How do I create a logo with LogoDash?",
+      "a2": "LogoDash offers two simple ways to create a logo: 1) Manual Creation: Select icons from the library, adjust stroke weight and margin ratios, add text, and customize backgrounds (gradient or solid color); 2) Random Generation: Click the random button to let the system generate a complete design automatically. Both methods support real-time preview, allowing you to craft professional logos without any design expertise.",
+      "q3": "What file formats does LogoDash support for export?",
+      "a3": "LogoDash supports exporting in two formats: SVG and PNG. SVG is a vector format that scales infinitely without losing quality, making it ideal for printing and high-resolution display scenarios. PNG is a raster format with a transparent background, perfect for websites and applications.",
+      "q4": "Where does LogoDash source its icons, and are they commercially usable?",
+      "a4": "LogoDash sources its icons from Lucide and Font Awesome. Both Lucide (under the ISC license) and Font Awesome (under the SIL OFL license) use open-source licenses that permit free commercial use. There are no copyright risks when using logos generated with LogoDash for personal or commercial projects.",
+      "q5": "How do logos generated with LogoDash adapt to dark mode?",
+      "a5": "This is a core design consideration for LogoDash. The tool’s signature gradient background style uses carefully curated bright colors and contrast ratios, ensuring logos remain clear, eye-catching, and visually polished not only on light backgrounds but also on dark mode taskbars, interfaces, or websites. It effectively avoids the issue of solid dark icons 'disappearing' against dark backgrounds."
     }
   },
   "common": {
