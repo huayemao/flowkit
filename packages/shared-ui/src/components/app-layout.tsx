@@ -69,9 +69,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 
     return (
       <div className={`text-center mb-12 ${titleCentered ? "" : "text-left"}`}>
-        <div className="flex items-center justify-center">
-          <div className="w-16 h-16 shadow-lg">
-            <img src="/favicon.png" className="rounded"></img>
+        <div className="flex items-center justify-center max-w-full md:max-w-3xl mx-auto">
+          <div className="w-16 h-16  shadow-lg flex-shrink-0">
+            <img className="w-16 h-16 rounded" src="/favicon.png" onError={(e) => (e.target as HTMLImageElement).src = '/favicon.svg'} ></img>
           </div>
           <div className="ml-4">
             <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">

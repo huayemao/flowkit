@@ -44,7 +44,7 @@ const getSeoContent = async (url: string) => {
       title: seo.title,
       description: seo.description,
       keywords: seo.keywords,
-      author: seo.author || translations[SITE_ID]?.author || 'FlowKit Team',
+      author: seo.author || translations[SITE_ID]?.author || 'huayemao',
       copyright: seo.copyright || translations[SITE_ID]?.copyright,
       ogTitle: seo.ogTitle || seo.title,
       ogDescription: seo.ogDescription || seo.description,

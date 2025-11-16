@@ -7,7 +7,7 @@
     "enterParts": "Please enter number of parts",
     "description": "Split your videos into custom-length clips or divide them equally with ease. Simply drag and drop your video files for instant processing. If your video is too large or too long for easy sharing or transfer, use this free online tool to split it into smaller, manageable segments—all within your browser. No software installation or server uploads required; enjoy fast, local processing directly in your browser.",
     "keywords": "Video splitter, Split video by seconds, Equal video division, Online video processing, Video slicer, Fast video splitter, Video processing tool, Free video splitter, One-click video split, FFmpeg, Local processing, Productivity tool, PWA, Video clipper, Video trimmer, Browser-based video editor",
-    "author": "FlowKit Team",
+    "author": "huayemao",
     "copyright": "© 2025 huayemao",
     "ogTitle": "VideoSplitter - Fast Video Splitting Tool",
     "ogDescription": "Split your videos into clips of custom length quickly and easily. Supports drag and drop, multiple formats, and both fast and precise splitting modes.",
