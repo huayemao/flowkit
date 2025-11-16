@@ -4,15 +4,42 @@ import { ScrollArea } from "./scroll-area";
 import { LanguageSwitcher } from "./language-switcher";
 import { ThemeToggle } from "./theme-toggle";
 import { Analytics } from "@vercel/analytics/react";
+import { WebLayout } from "./web-layout";
 import { isTauri } from "../lib/utils";
 
 interface AppLayoutProps {
   children: ReactNode;
+  toolName?: string;
+  toolDescription?: string;
+  faqData?: Array<{
+    question: string;
+    answer: string;
+  }>;
 }
+
 /**
- * 应用布局组件 - 包含背景效果和顶部控制栏
+ * 应用布局组件 - 根据环境自动选择合适的布局
  */
-export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
+export const AppLayout: React.FC<AppLayoutProps> = ({ 
+  children, 
+  toolName,
+  toolDescription,
+  faqData
+}) => {
+  // 如果不是Tauri环境，使用WebLayout
+  if (!isTauri) {
+    return (
+      <WebLayout 
+        toolName={toolName}
+        toolDescription={toolDescription}
+        faqData={faqData}
+      >
+        {children}
+      </WebLayout>
+    );
+  }
+
+  // Tauri环境使用原有的布局
   return (
     <div className={`transition-all duration-300`}>
       {/* 磨砂光感渐变背景 */}

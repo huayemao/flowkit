@@ -48,5 +48,38 @@
     "moveRight": "Move right",
     "description": "Compare original and processed images with multiple view modes",
     "exitTip": "Press Escape to exit"
+  },
+  "webLayout": {
+    "home": "Home",
+    "moreTools": "More Tools",
+    "brandName": "utities.online"
+  },
+  "webFooter": {
+    "imageProcessing": "Image Processing",
+    "videoTools": "Video Tools",
+    "designTools": "Design Tools",
+    "geographicTools": "Geographic Tools",
+    "imageCompare": "Image Compare",
+    "autoTrimImage": "Auto Trim Image",
+    "immersiveImageView": "Immersive Image View",
+    "videoSplitter": "Video Splitter",
+    "logoMaker": "Logo Maker",
+    "altitudeQuery": "Altitude Query",
+    "aboutUs": "About Us",
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "contactUs": "Contact Us",
+    "copyright": "© {{year}} FlowKit",
+    "madeWithHeart": "Made with ❤️",
+    "providePowerfulTools": "Providing powerful, free, and easy-to-use online tools",
+    "discoverMoreTools": "Discover More Powerful Tools",
+    "exploreCompleteCollection": "Explore our complete tool collection, covering image processing, text editing, development tools and more, making your work more efficient",
+    "browseAllTools": "Browse All Tools"
+  },
+  "webFAQ": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "We've compiled some common questions from users to help you better use our tools",
+    "stillHaveQuestions": "Still have questions?",
+    "contactUs": "Contact Us"
   }
 }

@@ -49,5 +49,38 @@
     "moveRight": "向右移动",
     "description": "支持多种视图模式对比原始图片与处理后图片",
     "exitTip": "按Escape键退出"
+  },
+  "webLayout": {
+    "home": "首页",
+    "moreTools": "更多工具",
+    "brandName": "utities.online"
+  },
+  "webFooter": {
+    "imageProcessing": "图像处理",
+    "videoTools": "视频工具",
+    "designTools": "设计工具",
+    "geographicTools": "地理工具",
+    "imageCompare": "图片对比",
+    "autoTrimImage": "自动裁剪图片",
+    "immersiveImageView": "沉浸式图片浏览",
+    "videoSplitter": "视频分割器",
+    "logoMaker": "Logo制作",
+    "altitudeQuery": "海拔查询",
+    "aboutUs": "关于我们",
+    "termsOfUse": "使用条款",
+    "privacyPolicy": "隐私政策",
+    "contactUs": "联系我们",
+    "copyright": "© {{year}} FlowKit",
+    "madeWithHeart": "用心打造",
+    "providePowerfulTools": "提供强大、免费、易用的在线工具",
+    "discoverMoreTools": "发现更多强大工具",
+    "exploreCompleteCollection": "探索我们完整的工具集合，涵盖图像处理、文本编辑、开发工具等多个领域，让您的工作更高效",
+    "browseAllTools": "浏览所有工具"
+  },
+  "webFAQ": {
+    "title": "常见问题",
+    "subtitle": "我们整理了一些用户经常问的问题，希望能帮助您更好地使用我们的工具",
+    "stillHaveQuestions": "还有其他问题？",
+    "contactUs": "联系我们"
   }
 }

@@ -9,7 +9,11 @@ import {
 } from './dropdown-menu';
 import { supportedLanguages, languageDisplayNames, languageFlags } from '../i18n';
 
-export function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  showText?: boolean;
+}
+
+export function LanguageSwitcher({ showText = false }: LanguageSwitcherProps) {
   const { i18n, t } = useTranslation();
 
   const changeLanguage = (lng: string) => {
@@ -19,12 +23,18 @@ export function LanguageSwitcher() {
   };
 
   const currentLanguage = i18n.language;
+  const currentLanguageName = languageDisplayNames[currentLanguage as keyof typeof languageDisplayNames] || currentLanguage;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-8 w-8 p-0">
+        <Button variant="ghost" size={showText ? "default" : "icon"} className={`h-8 ${showText ? "px-3 gap-2" : "w-8 p-0"}`}>
           <Globe className="h-4 w-4" />
+          {showText && (
+            <span className="text-sm font-medium">
+              {currentLanguageName}
+            </span>
+          )}
           <span className="sr-only">{t('common.language')}</span>
         </Button>
       </DropdownMenuTrigger>
