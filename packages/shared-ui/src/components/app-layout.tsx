@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { WindowControls } from "./window-controls";
 import { ScrollArea } from "./scroll-area";
 import { LanguageSwitcher } from "./language-switcher";
@@ -15,25 +16,81 @@ interface AppLayoutProps {
     question: string;
     answer: string;
   }>;
+  // 新增的标题相关参数
+  title?: string;
+  subtitle?: string;
+  // SEO 相关参数
+  keywords?: string;
+  author?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  // 其他配置参数
+  showTitle?: boolean;
+  titleCentered?: boolean;
+  titleClassName?: string;
+  subtitleClassName?: string;
+  maxWidth?: string;
+  padding?: string;
 }
 
 /**
  * 应用布局组件 - 根据环境自动选择合适的布局
  */
-export const AppLayout: React.FC<AppLayoutProps> = ({ 
-  children, 
+export const AppLayout: React.FC<AppLayoutProps> = ({
+  children,
   toolName,
   toolDescription,
-  faqData
+  faqData,
+  title,
+  subtitle,
+  keywords,
+  author,
+  ogTitle,
+  ogDescription,
+  twitterTitle,
+  twitterDescription,
+  showTitle = false,
+  titleCentered = true,
+  titleClassName = "text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4",
+  subtitleClassName = "text-xl text-gray-600 dark:text-gray-400 max-w-3xl",
+  maxWidth = "max-w-7xl",
+  padding = "py-10 xs:pb-16",
 }) => {
+  const { t } = useTranslation();
+
+  // 处理标题和副标题的国际化
+  const displayTitle = title;
+  const displaySubtitle = subtitle;
+  // 渲染标题部分
+  const renderTitleSection = () => {
+    if (!showTitle || !displayTitle) return null;
+
+    return (
+      <div className={`text-center mb-12 ${titleCentered ? "" : "text-left"}`}>
+        <h1 className={titleClassName}>{displayTitle}</h1>
+        {displaySubtitle && (
+          <p
+            className={`${subtitleClassName} ${titleCentered ? "mx-auto" : ""}`}
+          >
+            {displaySubtitle}
+          </p>
+        )}
+      </div>
+    );
+  };
+
   // 如果不是Tauri环境，使用WebLayout
   if (!isTauri) {
     return (
-      <WebLayout 
+      <WebLayout
         toolName={toolName}
         toolDescription={toolDescription}
         faqData={faqData}
       >
+        {/* 在Web布局中也支持标题显示 */}
+        {renderTitleSection()}
         {children}
       </WebLayout>
     );
@@ -63,13 +120,23 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
       <div className="fixed inset-0 h-screen z-10 flex flex-col items-center justify-around ">
         {/* 只在非 Tauri 环境中渲染 Vercel Analytics */}
         {!isTauri && <Analytics />}
-        
+
         {/* 顶部栏 - 标题栏区域 */}
         <div className="h-12 w-full"></div>
 
         {/* 主内容区域 */}
         <ScrollArea className="w-full flex-1">
-          <div className="py-10 xs:pb-16">{children}</div>
+          <div className={`${padding}`}>
+            {/* 标题部分 */}
+            {renderTitleSection()}
+
+            {/* 子组件内容 */}
+            <div
+              className={`${maxWidth} self-stretch lg:min-w-[960px] mx-auto w-full`}
+            >
+              {children}
+            </div>
+          </div>
         </ScrollArea>
 
         {/* 顶部控制栏 */}
