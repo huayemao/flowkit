@@ -7,6 +7,29 @@ import ImageDiff from './components/ImageDiff';
 function App() {
   const { t } = useTranslation();
 
+  const faqData = [
+    {
+      question: t('imageDiff.faq.q1'),
+      answer: t('imageDiff.faq.a1')
+    },
+    {
+      question: t('imageDiff.faq.q2'),
+      answer: t('imageDiff.faq.a2')
+    },
+    {
+      question: t('imageDiff.faq.q3'),
+      answer: t('imageDiff.faq.a3')
+    },
+    {
+      question: t('imageDiff.faq.q4'),
+      answer: t('imageDiff.faq.a4')
+    },
+    {
+      question: t('imageDiff.faq.q5'),
+      answer: t('imageDiff.faq.a5')
+    }
+  ];
+
   return (
     <AppLayout
       toolName={t('imageDiff.title')}
@@ -20,6 +43,7 @@ function App() {
       twitterDescription={t('imageDiff.description')}
       showTitle={true}
       titleCentered={true}
+      faqData={faqData}
     >
       <ImageDiff />
     </AppLayout>

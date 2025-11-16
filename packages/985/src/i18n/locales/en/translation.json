@@ -76,5 +76,17 @@
     "processing": "Processing",
     "success": "Success",
     "error": "Error"
+  },
+  "faq": {
+    "q1": "What is the 985 University Elevation Query feature?",
+    "a1": "985 University Elevation Query is a specialized tool that provides elevation information for Chinese 985 universities, helping you understand the geographical location and altitude of each 985 university for school selection and travel reference.",
+    "q2": "Which universities are supported for query?",
+    "a2": "Supports elevation information queries for all 985 Project universities nationwide, including Tsinghua University, Peking University, Fudan University, Shanghai Jiao Tong University, and 39 other renowned universities with accurate and reliable data.",
+    "q3": "How can I quickly find the target university?",
+    "a3": "You can directly input the university name in the search box for searching, or browse the university list. The system supports fuzzy search - simply enter keywords to quickly locate the target university.",
+    "q4": "How accurate is the elevation data?",
+    "a4": "Our elevation data is based on authoritative geographic information databases and has been verified multiple times to ensure accuracy. Data is regularly updated to provide you with the latest and most accurate elevation information.",
+    "q5": "Is this tool free to use?",
+    "a5": "Yes, 985 University Elevation Query is completely free to use with no registration or login required. All queries are completed locally in your browser to protect your privacy and security, without recording any query information."
   }
 }

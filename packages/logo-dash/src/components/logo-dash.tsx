@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { useTranslation } from "../i18n";
-import { Card, CardContent, CardHeader, CardTitle, Toaster } from "@flowkit/shared-ui";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Toaster,
+} from "@flowkit/shared-ui";
 import * as LucideIcons from "lucide-react";
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import { iconCategories, validIcons } from "../constants";
 
 // 导入所有子组件
@@ -27,6 +33,7 @@ import {
   saveAsTemplate,
 } from "./logo-parts/logo-export-utils";
 import { generateRandomLogoConfig } from "./logo-parts/logo-generator-utils";
+import { cn, isTauri } from "@flowkit/shared-ui";
 
 export interface LogoMakerProps {
   className?: string;
@@ -80,7 +87,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
 
   // 处理图标选择
   const handleSelectIcon = (icon: string) => {
-    console.log('Selected icon:', icon);
+    console.log("Selected icon:", icon);
     setConfig((prev) => ({ ...prev, icon }));
   };
 
@@ -198,10 +205,10 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
         </div>
 
         {/* 右侧：设置区域 */}
-        <div className="space-y-6 lg:h-[80dvh]">
+        <div className={cn("space-y-6 ", { "lg:h-[80dvh]": isTauri })}>
           <Card>
             <CardHeader>
-              <CardTitle>{t('logoDash.icon')}</CardTitle>
+              <CardTitle>{t("logoDash.icon")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <IconSelector
@@ -231,7 +238,6 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
                 onTextColorChange={handleTextColorChange}
                 t={t}
               />
-
             </CardContent>
             {/* <SizeSettings
                   sizePreset={config.sizePreset}
@@ -248,9 +254,7 @@ export function LogoDash({ className, onLogoCreated }: LogoMakerProps) {
             customBackgroundColor={config.customBackgroundColor}
             onIsGradientChange={handleIsGradientChange}
             onGradientStyleChange={handleGradientStyleChange}
-            onCustomBackgroundColorChange={
-              handleCustomBackgroundColorChange
-            }
+            onCustomBackgroundColorChange={handleCustomBackgroundColorChange}
             t={t}
           />
         </div>

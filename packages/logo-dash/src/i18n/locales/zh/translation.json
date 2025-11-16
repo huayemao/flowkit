@@ -1,7 +1,7 @@
 {
   "logoDash": {
     "title": "极简Logo - 人人可用的免费Logo制作工具，精美Logo，一键搞定",
-    "description":"专为创业者、独立开发者及创意工作者打造的Logo制作利器工具！既可以从海量模板中自定义（图标、配色、文字、渐变等细节），也可以通过「随机生成」，刷出极简渐变风Logo。免下载、零设计经验，快速出独特标识，适配App、小程序、个人项目，助力创意提速！",
+    "description": "专为创业者、独立开发者及创意工作者打造的Logo制作利器工具！既可以从海量模板中自定义（图标、配色、文字、渐变等细节），也可以通过「随机生成」，刷出极简渐变风Logo。免下载、零设计经验，快速出独特标识，适配App、小程序、个人项目，助力创意提速！",
     "keywords": "Logo生成器,Logo制作,渐变Logo,极简Logo,标志制作,随机Logo生成,Logo工具,免费Logo设计,免费在线Logo制作工具,App Logo 制作,创业公司Logo,Logo灵感,品牌设计",
     "author": "huayemao",
     "copyright": "© 2025 huayemao",
@@ -9,7 +9,7 @@
     "ogDescription": "专为创业者、独立开发者及创意工作者打造的Logo制作利器工具！既可以从海量模板中自定义（图标、配色、文字、渐变等细节），也可以通过「随机生成」，刷出极简渐变风Logo。免下载、零设计经验，快速出独特标识，适配App、小程序、个人项目，助力创意提速！",
     "twitterTitle": "极简Logo - 人人可用的免费Logo制作工具，精美Logo，一键搞定",
     "twitterDescription": "专为创业者、独立开发者及创意工作者打造的Logo制作利器工具！既可以从海量模板中自定义（图标、配色、文字、渐变等细节），也可以通过「随机生成」，刷出极简渐变风Logo。免下载、零设计经验，快速出独特标识，适配App、小程序、个人项目，助力创意提速！",
-        "background": "背景",
+    "background": "背景",
     "icon": "图标",
     "text": "文字",
     "size": "尺寸",
@@ -52,7 +52,19 @@
     "nextPage": "下一页",
     "totalIconsFound": "共找到 {{count}} 个图标",
     "currentlyShowing": "显示 {{start}} 至 {{end}}",
-    "tryDifferentSearch": "尝试其他关键词搜索"
+    "tryDifferentSearch": "尝试其他关键词搜索",
+    "faq": {
+      "q1": "What is Logo Dash?",
+      "a1": "Logo Dash is a professional logo management and display tool that helps you organize and showcase your brand logos effectively.",
+      "q2": "How do I upload logos?",
+      "a2": "Simply drag and drop your logo files or click the upload button to select files from your device. Supported formats include PNG, JPG, SVG, and more.",
+      "q3": "Can I organize logos into categories?",
+      "a3": "Yes, Logo Dash allows you to create custom categories and tags to organize your logos efficiently.",
+      "q4": "Is my data secure?",
+      "a4": "All your logos are stored locally in your browser, ensuring complete privacy and security of your brand assets.",
+      "q5": "Can I export my logos?",
+      "a5": "Yes, you can export individual logos or entire collections in various formats for easy sharing and backup."
+    }
   },
   "common": {
     "processing": "处理中",

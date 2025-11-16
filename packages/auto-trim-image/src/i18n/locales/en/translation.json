@@ -26,7 +26,18 @@
     "openFolder": "Open Folder",
     "openFolderError": "Failed to open folder",
     "reDownload": "Re-download"
-
+  },
+  "faq": {
+    "q1": "What is the auto trim image feature?",
+    "a1": "The auto trim image feature intelligently identifies the main content area in images and automatically removes blank, transparent, or unwanted background areas from the edges, making images more compact and professional.",
+    "q2": "What image formats are supported?",
+    "a2": "We support common image formats including JPG, JPEG, PNG, WebP, BMP, and GIF. For best results, we recommend using PNG or JPG formats.",
+    "q3": "Are there any limitations for batch processing?",
+    "a3": "You can select multiple images for batch processing, and the system will automatically trim each image intelligently. Processing time depends on the number and size of images. We recommend processing no more than 20 images at once for optimal performance.",
+    "q4": "Will the image quality decrease after trimming?",
+    "a4": "No. Our tool only removes blank areas from the edges and does not compress or modify the core content of the image, so the image quality remains unchanged. The file size may decrease due to the removal of blank areas.",
+    "q5": "Is this tool free to use?",
+    "a5": "Yes, the auto trim image tool is completely free to use with no registration or login required. All processing is completed locally in your browser to protect your privacy and security."
   },
   "common": {
     "processing": "Processing"

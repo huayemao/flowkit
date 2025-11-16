@@ -13,7 +13,7 @@
     "ogDescription": "Split your videos into clips of custom length quickly and easily. Supports drag and drop, multiple formats, and both fast and precise splitting modes.",
     "twitterTitle": "VideoSplitter - Fast Video Splitting Tool",
     "twitterDescription": "Split your videos into clips of custom length quickly and easily. Supports drag and drop, multiple formats, and both fast and precise splitting modes.",
-        "uploadVideo": "Upload Video",
+    "uploadVideo": "Upload Video",
     "dragAndDrop": "Drag and drop your video file here",
     "or": "or",
     "selectFile": "Select File",
@@ -89,7 +89,19 @@
     "sampleVideoLoadFail": "Failed to load sample video",
     "testingVideoLinks": "Testing video links...",
     "splitResults": "Split Results",
-    "preview": "Preview"
+    "preview": "Preview",
+    "faq": {
+      "q1": "What is the video splitting feature?",
+      "a1": "Video Splitter is a professional video editing tool that supports precise time-based splitting of video files. You can easily split long videos into multiple short video segments to meet different usage scenarios.",
+      "q2": "What video formats and sizes are supported?",
+      "a2": "We support common video formats including MP4, AVI, MOV, MKV, etc., with recommended video file size not exceeding 500MB. Processing large files may take longer, please be patient.",
+      "q3": "How can I precisely set split time points?",
+      "a3": "You can drag the timeline to select split points, or directly input precise time (format: HH:MM:SS). The system supports adding multiple split points to complete multiple segment splitting at once.",
+      "q4": "Will the video quality be affected after splitting?",
+      "a4": "The splitting process uses lossless cutting technology that won't reduce the original video's image and sound quality. Split segments maintain the same encoding parameters as the original video to ensure optimal playback effect.",
+      "q5": "Is this tool free to use?",
+      "a5": "Yes, Video Splitter is completely free to use with no registration or login required. All processing is completed locally in your browser to protect your video privacy and security."
+    }
   },
   "common": {
     "processing": "Processing",

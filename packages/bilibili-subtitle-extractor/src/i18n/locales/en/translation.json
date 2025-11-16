@@ -1,0 +1,34 @@
+{
+  "bilibiliSubtitleExtractor": {
+    "title": "Bilibili Subtitle Extractor",
+    "description": "Quickly extract Bilibili video subtitles with multiple format export support",
+    "keywords": "Bilibili, subtitle extraction, video subtitles, subtitle download, online tool",
+    "author": "huayemao",
+    "copyright": "© 2025 huayemao",
+    "ogTitle": "Bilibili Subtitle Extractor - Quick Video Subtitle Extraction",
+    "ogDescription": "One-click extract Bilibili video subtitles, support SRT, VTT and other format exports, easy to use",
+    "twitterTitle": "Bilibili Subtitle Extractor - Quick Video Subtitle Extraction",
+    "twitterDescription": "One-click extract Bilibili video subtitles, support SRT, VTT and other format exports, easy to use",
+    "inputPlaceholder": "Please enter Bilibili video link",
+    "extractButton": "Extract Subtitles",
+    "extracting": "Extracting...",
+    "downloadButton": "Download Subtitles",
+    "copyButton": "Copy Subtitles",
+    "noSubtitle": "No subtitles found",
+    "error": "Extraction failed, please check if the link is correct",
+    "supportedFormats": "Supported formats: SRT, VTT, TXT",
+    "selectFormat": "Select export format"
+  },
+  "faq": {
+    "q1": "What is the Bilibili subtitle extraction feature?",
+    "a1": "Bilibili Subtitle Extractor is a professional video subtitle extraction tool that supports quickly extracting subtitle content from Bilibili video links and provides multiple format exports for easy saving and use of video subtitles.",
+    "q2": "What video links and subtitle formats are supported?",
+    "a2": "Supports all Bilibili video links, including regular videos, anime, courses, etc. Extracted subtitles support export to common formats like SRT, VTT, TXT, compatible with various video players and editing software.",
+    "q3": "How to correctly use the subtitle extraction feature?",
+    "a3": "Simply copy the Bilibili video link and paste it into the input box, then click the 'Extract Subtitles' button. The system will automatically parse the video and extract available subtitles. The whole process is simple and fast, no video download required.",
+    "q4": "How is the quality of extracted subtitles guaranteed?",
+    "a4": "We directly obtain subtitle data from Bilibili's official source, ensuring subtitle accuracy and completeness. Supports Chinese and English subtitles with precise timestamps and complete content, meeting learning and production needs.",
+    "q5": "Is this tool free to use?",
+    "a5": "Yes, Bilibili Subtitle Extractor is completely free to use with no registration or login required. All processing is completed locally in your browser to protect your privacy and security, without storing any video information."
+  }
+}

@@ -6,6 +6,29 @@ import UniversityMap from './components/UniversityMap/index';
 function App() {
   const { t } = useTranslation();
 
+  const faqData = [
+    {
+      question: t('university.faq.q1'),
+      answer: t('university.faq.a1')
+    },
+    {
+      question: t('university.faq.q2'),
+      answer: t('university.faq.a2')
+    },
+    {
+      question: t('university.faq.q3'),
+      answer: t('university.faq.a3')
+    },
+    {
+      question: t('university.faq.q4'),
+      answer: t('university.faq.a4')
+    },
+    {
+      question: t('university.faq.q5'),
+      answer: t('university.faq.a5')
+    }
+  ];
+
   return (
     <AppLayout
       toolName={t('university.title')}
@@ -19,6 +42,7 @@ function App() {
       twitterDescription={t('university.description')}
       showTitle={true}
       titleCentered={true}
+      faqData={faqData}
     >
       <UniversityMap />
     </AppLayout>

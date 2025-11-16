@@ -4,23 +4,48 @@ import {
   AppLayout,
 } from "@flowkit/shared-ui";
 import { BilibiliSubtitleExtractor } from './index';
+import { useTranslation } from './i18n';
 
 export default function App() {
   const { t } = useTranslation();
 
+  const faqData = [
+    {
+      question: t('bilibiliSubtitleExtractor.faq.q1'),
+      answer: t('bilibiliSubtitleExtractor.faq.a1')
+    },
+    {
+      question: t('bilibiliSubtitleExtractor.faq.q2'),
+      answer: t('bilibiliSubtitleExtractor.faq.a2')
+    },
+    {
+      question: t('bilibiliSubtitleExtractor.faq.q3'),
+      answer: t('bilibiliSubtitleExtractor.faq.a3')
+    },
+    {
+      question: t('bilibiliSubtitleExtractor.faq.q4'),
+      answer: t('bilibiliSubtitleExtractor.faq.a4')
+    },
+    {
+      question: t('bilibiliSubtitleExtractor.faq.q5'),
+      answer: t('bilibiliSubtitleExtractor.faq.a5')
+    }
+  ];
+
   return (
     <AppLayout
-      toolName="B站字幕提取器"
-      toolDescription="提取B站视频字幕，支持SRT和TXT格式下载，提供多种字幕语言选择"
-      title="B站字幕提取器"
-      subtitle="提取B站视频字幕，支持SRT和TXT格式下载，提供多种字幕语言选择"
-      keywords="B站,字幕提取,视频字幕,SRT,TXT,下载"
-      ogTitle="B站字幕提取器"
-      ogDescription="提取B站视频字幕，支持SRT和TXT格式下载，提供多种字幕语言选择"
-      twitterTitle="B站字幕提取器"
-      twitterDescription="提取B站视频字幕，支持SRT和TXT格式下载，提供多种字幕语言选择"
+      toolName={t('bilibiliSubtitleExtractor.title')}
+      toolDescription={t('bilibiliSubtitleExtractor.description')}
+      title={t('bilibiliSubtitleExtractor.title')}
+      subtitle={t('bilibiliSubtitleExtractor.description')}
+      keywords={t('bilibiliSubtitleExtractor.keywords')}
+      ogTitle={t('bilibiliSubtitleExtractor.ogTitle')}
+      ogDescription={t('bilibiliSubtitleExtractor.ogDescription')}
+      twitterTitle={t('bilibiliSubtitleExtractor.twitterTitle')}
+      twitterDescription={t('bilibiliSubtitleExtractor.twitterDescription')}
       showTitle={true}
       titleCentered={true}
+      faqData={faqData}
     >
       <BilibiliSubtitleExtractor />
     </AppLayout>

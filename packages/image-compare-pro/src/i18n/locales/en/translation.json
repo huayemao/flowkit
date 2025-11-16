@@ -21,5 +21,17 @@
     "uploadedFirstImage": "Uploaded Image 1",
     "stepTwo": "Step 2: Select Image 2",
     "supportedFormats": "Supports common image formats like JPG, PNG, WebP, file size not exceeding 20MB"
+  },
+  "faq": {
+    "q1": "What is the Image Compare Pro feature?",
+    "a1": "Image Compare Pro is a professional image difference comparison tool that supports side-by-side display, overlay comparison, and switch viewing modes to help you quickly discover subtle differences between two images.",
+    "q2": "What image formats and sizes are supported?",
+    "a2": "We support common image formats including JPG, PNG, WebP, etc., with single image file size not exceeding 20MB. We recommend using high-definition images for better comparison results.",
+    "q3": "How can I quickly start comparing two images?",
+    "a3": "You can select two images at once, and the system will automatically load and start comparing. You can also upload the first image first, then upload the second image. Drag-and-drop upload is supported for easy operation.",
+    "q4": "What are the differences between the three comparison modes?",
+    "a4": "Side-by-side mode displays two images left and right; overlay mode overlaps two images with adjustable transparency via slider; switch mode allows quick switching between two images, suitable for discovering dynamic differences.",
+    "q5": "Is this tool free to use?",
+    "a5": "Yes, Image Compare Pro is completely free to use with no registration or login required. All processing is completed locally in your browser to protect your image privacy and security."
   }
 }
