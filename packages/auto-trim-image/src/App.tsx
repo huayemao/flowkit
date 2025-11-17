@@ -45,7 +45,7 @@ function App() {
       titleCentered={true}
       faqData={faqData}
     >
-      <AutoTrimImage />
+      <AutoTrimImage className="min-h-[80dvh]"/>
     </AppLayout>
   );
 }

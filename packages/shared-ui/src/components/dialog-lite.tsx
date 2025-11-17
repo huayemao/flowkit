@@ -1,6 +1,6 @@
 import * as React from "react"
 import { X } from "lucide-react"
-import { cn } from "../lib/utils"
+import { cn, isTauri } from "../lib/utils"
 
 // 自定义对话框组件，不依赖 Radix UI，且点击外部不会关闭
 
@@ -14,6 +14,7 @@ type DialogLiteProps = {
 const DialogLite: React.FC<DialogLiteProps> = ({ open, onOpenChange, children }) => {
   // 当对话框打开时阻止背景滚动
   React.useEffect(() => {
+    if (!isTauri) return;
     if (open) {
       document.body.style.overflow = 'hidden';
     } else {

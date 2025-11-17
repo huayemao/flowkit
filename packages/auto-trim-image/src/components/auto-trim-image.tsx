@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Download, Image, FolderOpen, CheckCircle, ZoomInIcon } from "lucide-react";
 import { useTranslation } from "../i18n";
 import { autoTrimImage, getBorderColors } from "../utils/image-trim";
-import { Toaster, toast } from "@flowkit/shared-ui";
+import { Toaster, cn, toast } from "@flowkit/shared-ui";
 import { downloadDir } from "@tauri-apps/api/path";
 import { openPath } from "@tauri-apps/plugin-opener";
 
@@ -22,7 +22,7 @@ interface ProcessedImage {
   originalFile: File; // 存储原始文件
 }
 
-export function AutoTrimImage() {
+export function AutoTrimImage({ className }: { className?: string }) {
   const { t } = useTranslation();
   const [files, setFiles] = useState<File[]>([]);
   const [results, setResults] = useState<ProcessedImage[]>([]);
@@ -177,7 +177,7 @@ export function AutoTrimImage() {
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-center">
+    <div className={cn("relative w-full h-full flex flex-col justify-center", className)}>
       <Toaster />
       {/* 上传区域 */}
       <div className="h-4/5 w-4/5 flex flex-col max-w-4xl mx-auto">
