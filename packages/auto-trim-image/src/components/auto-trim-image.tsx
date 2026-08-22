@@ -46,9 +46,8 @@ export function AutoTrimImage({ className }: { className?: string }) {
         img.onload = res;
       });
 
-      // 自动识别边框主色
-      const borderColors = getBorderColors(img, 10, 3);
-      borderColors.push([0, 0, 0], [255, 255, 255]);
+      // 只识别最外层边框的单一主色，避免把内层其它颜色的边框也一并裁掉
+      const borderColors = getBorderColors(img, 10, 1);
 
       const blob = await autoTrimImage(img, borderColors);
       outs.push({
