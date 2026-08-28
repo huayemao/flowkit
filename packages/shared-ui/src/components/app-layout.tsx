@@ -1,3 +1,5 @@
+"use client";
+
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { WindowControls } from "./window-controls";
@@ -68,16 +70,16 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
     if (!showTitle || !displayTitle) return null;
 
     return (
-      <div className={`text-center mb-12 ${titleCentered ? "" : "text-left"}`}>
-        <div className="flex items-center justify-center max-w-sm md:max-lg lg:max-w-3xl mx-auto">
-          <div className="w-16 h-16  shadow-lg flex-shrink-0">
-            <img className="w-16 h-16 rounded" src="/favicon.svg" ></img>
+      <div className={`text-center mb-8 ${titleCentered ? "" : "text-left"}`}>
+        <div className="flex items-center justify-center max-w-3xl mx-auto">
+          <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-2xl flex-shrink-0">
+            ⚡
           </div>
-          <div className="ml-4">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+          <div className="ml-4 text-left">
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">
               {displayTitle}
             </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-muted-foreground mt-1">
               {displaySubtitle}
             </p>
           </div>

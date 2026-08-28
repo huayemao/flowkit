@@ -61,6 +61,16 @@
       "name": "转换图片链接",
       "description": "将图片链接转换为WordPress代理格式"
     },
+    "stackedit": {
+      "name": "StackEdit",
+      "description": "功能强大的 Markdown 在线编辑器",
+      "title": "StackEdit"
+    },
+    "baimiao": {
+      "name": "白喵 OCR",
+      "description": "高效精确的在线 OCR 文字识别工具",
+      "title": "白喵 OCR"
+    },
     "textRemoveNewlines": {
       "name": "文本去换行",
       "description": "删除文本中的所有换行符",

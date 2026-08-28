@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Minimize, Maximize, X, Minus } from "lucide-react";
 import { useTranslation } from "../i18n";

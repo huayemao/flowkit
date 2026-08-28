@@ -60,7 +60,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                           <NavigationMenuList>
                             <NavigationMenuItem>
                               <NavigationMenuTrigger className="h-7 px-2 py-1">
-                                {currentTool?.name || t("messages.selectATool")}
+                                {currentTool ? t(currentTool.name) : t("messages.selectATool")}
                               </NavigationMenuTrigger>
                               <NavigationMenuContent>
                                 <ul className="grid w-[200px] gap-1 p-2">
@@ -78,7 +78,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                                           setCurrentTool(tool);
                                         }}
                                       >
-                                        {tool.name}
+                                        {t(tool.name)}
                                       </NavigationMenuLink>
                                     </li>
                                   ))}
@@ -123,11 +123,10 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
             <ThemeToggle />
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <main className="relative h-[calc(100vh-6rem)]  flex flex-col overflow-hidden px-6">
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0 min-h-0 overflow-hidden">
+          <main className="relative flex-1 flex flex-col min-h-0 overflow-y-auto px-6 py-4">
             {children}
           </main>
-          <div className="bg-muted/50 min-h-[100dvh] flex-1 rounded-xl md:min-h-min" />
         </div>
       </SidebarInset>
     </SidebarProvider>

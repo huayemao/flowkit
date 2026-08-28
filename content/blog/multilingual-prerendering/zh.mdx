@@ -1,0 +1,254 @@
+export const metadata = {
+  title: '从零构建多语言预渲染：深入剖析 video-splitter 的架构设计',
+  description: "探索如何为现代 Web 应用实现多语言预渲染。本技术深入剖析 video-splitter 项目，揭示如何使用 React、i18next 和 Vite 在构建时为每种语言生成静态 HTML，从而改善 SEO、性能和全球可访问性。非常适合构建多语言工具的独立开发者。",
+  date: "2025-10-13",
+  readTime: 12,
+  tags: [
+    "multilingual prerendering", "SSR", "static site generation", "i18n",
+    "React 18", "i18next", "Vite", "Node.js", "ReactDOMServer",
+    "internationalization", "localization", "SEO optimization",
+    "performance optimization", "static HTML", "language detection",
+    "dynamic routing", "fallback mechanism", "translation management",
+    "indie developer", "web tools", "video-splitter", "utities.online",
+    "global reach", "static rendering", "build-time optimization",
+    "multilingual SEO", "hreflang", "language attributes",
+    "frontend architecture", "modern web development"
+  ],
+  coverImage: "http://huayemao.run/api/files/video-splitter-multilang.webp",
+};
+
+
+
+欢迎来到 **utities.online** 技术教程系列！今天，我们将剖析我们开源的 **video-splitter** 工具的**多语言预渲染**实现——这是一个基于浏览器的视频分割工具。本指南将带您了解实现全球用户无缝多语言支持的架构、工作流程和优化方案。
+
+---
+
+## **什么是多语言预渲染？**
+多语言预渲染是一种在**构建时为每种语言生成静态 HTML 文件**的技术，结合了**服务器端渲染 (SSR)** 和**静态站点生成 (SSG)** 的优点：
+- **增强用户体验**：用户即时看到完整渲染的内容，无需等待客户端 JavaScript。
+- **SEO 优化**：搜索引擎爬取完整内容，提高可发现性。
+- **降低服务器负载**：直接提供静态文件，最大限度减少运行时渲染开销。
+- **全球覆盖**：为不同语言和地区的用户提供定制内容。
+
+这种方法非常适合像 **video-splitter** 这样对性能要求高的多语言 Web 应用，其中速度和可访问性至关重要。
+
+---
+
+## **技术栈分解**
+
+| **技术**       | **用途**                     | **选择原因**                                                                 |
+|----------------------|---------------------------------|--------------------------------------------------------------------------------------|
+| **React 18**         | 前端 UI                     | 基于组件的架构，通过 `ReactDOMServer` 提供内置的 SSR 支持。       |
+| **i18next + react-i18next** | 国际化 (i18n) | 强大、灵活，支持命名空间和插值等高级功能。 |
+| **Vite**             | 构建工具                      | 极速构建和 HMR，支持原生 ESM。                                |
+| **Node.js**          | 运行时环境             | 为预渲染脚本和服务器端逻辑提供支持。                                   |
+| **ReactDOMServer**   | 服务器端渲染           | 官方 React SSR 解决方案，用于在服务器上生成 HTML。                      |
+
+---
+
+## **项目结构概述**
+**video-splitter** 项目采用模块化结构，以提高清晰度和可维护性：
+
+```
+├── src/
+│   ├── i18n/
+│   │   ├── index.ts           # i18n 配置和初始化
+│   │   └── locales/           # 翻译文件（例如 `en/`、`zh/`、`es/`）
+│   ├── entry-server.tsx       # 带有 `render` 函数的 SSR 入口点
+│   └── constants.ts           # 全局常量（例如 `DOMAIN_NAME`）
+├── prerender.js               # 用于生成静态 HTML 的预渲染脚本
+└── package.json               # 构建和预渲染脚本
+```
+
+关键设计原则：
+- **关注点分离**：i18n 逻辑隔离在 `/i18n` 中。
+- **可重用组件**：SSR 和客户端代码共享相同的 React 组件。
+
+---
+
+## **多语言预渲染工作流程**
+
+### **步骤 1：初始化预渲染脚本**
+`prerender.js` 脚本设置环境并准备为每种语言生成静态页面：
+
+```javascript
+import fs from 'node:fs';
+import path from 'node:path';
+import url from 'node:url';
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+const templateHtml = fs.readFileSync('./dist/static/index.html', 'utf-8');
+```
+
+### **步骤 2：动态检测支持的语言**
+脚本扫描 `locales/` 目录，而不是硬编码语言：
+
+```javascript
+const localesDir = path.resolve(__dirname, 'src/i18n/locales');
+const languages = fs.readdirSync(localesDir).filter(name =>
+  fs.statSync(path.join(localesDir, name)).isDirectory()
+);
+```
+
+### **步骤 3：生成特定语言的路由**
+路由是动态生成的：
+- **默认语言（英语）**：`/`
+- **其他语言**：`/{lang}/`（例如 `/zh/`、`/es/`）
+
+```javascript
+const routes = ['/'].concat(
+  languages.filter(lang => lang !== 'en').map(lang => `/${lang}`)
+);
+```
+
+### **步骤 4：服务器端渲染 (SSR)**
+`entry-server.tsx` 中的 `render` 函数处理每种语言的 SSR：
+
+```javascript
+export async function render(url: string, languages: string[]) {
+  const seoContent = await getSeoContent(url);
+  const i18nInstance = await initI18n(seoContent.language);
+  i18nInstance.changeLanguage(seoContent.language);
+
+  const html = renderToString(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
+  // 生成 hreflang 标签和其他 SEO 元数据...
+}
+```
+
+### **步骤 5：生成静态 HTML 文件**
+对于每个路由，脚本：
+1. 使用正确的语言渲染应用。
+2. 将 HTML 注入模板。
+3. 将文件保存到 `dist/static/{lang}/index.html`。
+
+```javascript
+for (const route of routes) {
+  const lang = route === '/' ? 'en' : route.split('/')[1];
+  const rendered = await render(route, languages);
+  const html = template
+    .replace(`<!--app-head-->`, rendered.head)
+    .replace(`<!--app-html-->`, rendered.html)
+    .replace(/<html([^>]*)>/, `<html$1 lang="${lang}">`);
+
+  fs.writeFileSync(`dist/static${route}/index.html`, html);
+}
+```
+
+---
+
+## **国际化 (i18n) 配置**
+`src/i18n/index.ts` 文件集中管理 i18n 逻辑：
+
+```javascript
+export const languages = [
+  'en', 'zh', 'es', 'fr', 'de', 'ja', 'ko', /* ... 共 28 种 */
+];
+
+export const initI18n = async (language?: string) => {
+  try {
+    const translations = await preloadCommonTranslations();
+    return await sharedInitI18n(translations, language);
+  } catch (error) {
+    return await sharedInitI18n({}); // 回退到空配置
+  }
+};
+```
+
+**主要功能：**
+- **动态导入**：按需加载翻译。
+- **优雅回退**：如果翻译缺失，默认使用英语。
+- **预加载**：通过预先加载翻译优化性能。
+
+---
+
+## **翻译文件结构**
+翻译组织在带有命名空间的**JSON 文件**中：
+
+```json
+{
+  "videoSplitter": {
+    "title": "VideoSplitter - 快速视频分割工具",
+    "uploadVideo": "上传视频",
+    "dragAndDrop": "将视频文件拖放到此处"
+  },
+  "common": {
+    "processing": "处理中",
+    "success": "成功",
+    "error": "错误"
+  }
+}
+```
+
+**优点：**
+- **模块化**：分离特定功能 (`videoSplitter`) 和共享 (`common`) 翻译。
+- **可扩展**：易于添加新语言或键。
+
+---
+
+## **构建和执行流程**
+`package.json` 脚本自动化流程：
+
+```json
+"scripts": {
+  "build": "vite build",
+  "build:server": "vite build --config vite.config.server.ts",
+  "generate": "pnpm run build && pnpm run build:server && node prerender"
+}
+```
+
+**步骤：**
+1. **客户端构建**：优化浏览器资源。
+2. **服务器构建**：生成 SSR 兼容代码。
+3. **预渲染**：执行 `prerender.js` 为所有语言生成静态 HTML。
+
+---
+
+## **关键技术亮点**
+
+1. **动态语言检测**
+   - 扫描 `locales/` 自动发现支持的语言。
+   - 添加新语言无需修改代码。
+
+2. **自动路由生成**
+   - 自动创建 `/{lang}/` 目录和 HTML 文件。
+
+3. **SEO 优化**
+   - 为搜索引擎设置 `lang` 属性和 `hreflang` 标签。
+   - 每种语言的自定义元数据。
+
+4. **强大的回退机制**
+   - 缺失的翻译默认使用英语，不会破坏 UI。
+
+5. **性能优化**
+   - **构建时渲染**：静态文件减少服务器负载。
+   - **Vite 缓存**：通过缓存依赖加速重建。
+   - **基础 URL 处理**：确保跨路由正确加载资源。
+
+```javascript
+// 设置全局 <base> 标签以解析资源路径
+const head = renderToString(<base href="/" />);
+```
+
+---
+
+## **性能考虑**
+- **构建时预渲染**：消除运行时 SSR 开销。
+- **高效资源加载**：Vite 的 ESM 构建最小化包大小。
+- **并行翻译加载**：减少初始化时间。
+
+---
+
+## **结论**
+**video-splitter** 项目展示了如何结合 **React SSR**、**i18next** 和 **Vite** 创建一个**可扩展的多语言静态站点**。这种方法平衡了性能、SEO 和可维护性——非常适合全球工具。
+
+**探索更多：**
+- 尝试 [video-splitter 工具](https://split-v.utities.online)。
+- 阅读我们的 [博客](https://www.utities.online/blog) 获取更深入的技术见解。
+
+---
+
+**向您提问：** 您是否正在项目中实现多语言支持？您遇到了哪些挑战，又是如何解决的？让我们一起讨论！

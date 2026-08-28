@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# 站点地图位置
+Sitemap: https://www.utities.online/sitemap.xml
+
+# 禁止搜索引擎索引的内容
+Disallow: /api/
+Disallow: /_next/
+Disallow: /public/
+Disallow: /node_modules/

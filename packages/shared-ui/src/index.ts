@@ -1,4 +1,7 @@
+"use client";
+
 import './index.css'
+
 
 
 
@@ -152,11 +155,12 @@ export * from './lib/utils'
 
 
 
+
 // 通知和工具
 export { toast } from 'sonner'
 
 // i18n 相关
-export { initI18n, changeLanguage, useTranslation } from './i18n'
+export { initI18n, changeLanguage, useTranslation, zhTranslations, enTranslations } from './i18n'
 export { LanguageSwitcher } from './components/language-switcher'
 
 // 工具函数

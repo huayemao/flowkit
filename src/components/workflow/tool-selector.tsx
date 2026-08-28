@@ -51,9 +51,9 @@ export function ToolSelector({
                   )}
                 >
                   <div className="space-y-1">
-                    <h4 className="text-sm font-medium">{tool.name}</h4>
+                    <h4 className="text-sm font-medium">{t(tool.name)}</h4>
                     <p className="text-sm text-muted-foreground">
-                      {tool.description}
+                      {t(tool.description)}
                     </p>
                   </div>
                   <Button

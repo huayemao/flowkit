@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import { initI18n } from './i18n';
 import { enTranslations, zhTranslations } from './i18n';
 // 导入 auto-trim-image 的翻译文件
-import autoTrimImageZhTranslations from '@flowkit/auto-trim-image/dist/i18n/locales/zh/translation.json';
-import autoTrimImageEnTranslations from '@flowkit/auto-trim-image/dist/i18n/locales/en/translation.json';
+import autoTrimImageZhTranslations from '../packages/auto-trim-image/src/i18n/locales/zh/translation.json';
+import autoTrimImageEnTranslations from '../packages/auto-trim-image/src/i18n/locales/en/translation.json';
 import App from "./App";
 import './index.css'
 

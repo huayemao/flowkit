@@ -1,0 +1,140 @@
+export const metadata = {
+  title: '提升用户体验：使用 React Hooks 为 Swiper Slider 实现自定义滚轮导航',
+  description: "学习如何在 React 中为 Swiper 滑块实现可重用、可维护的滚轮导航。本指南涵盖将滚轮事件逻辑提取到自定义 Hook 中，防止代码重复，并通过直观的滑块控制改善用户体验。非常适合 2025 年使用 Swiper.js 和 React Hooks 的开发者。",
+  date: "2025-10-28",
+  readTime: 8,
+  tags: [
+    "React Hooks", "Swiper.js", "Custom Hooks", "User Experience",
+    "Wheel Navigation", "Code Reusability", "Frontend Development",
+    "TypeScript", "Event Handling", "utities.online",
+    "Immersiview", "Technical Tutorial", "React Best Practices"
+  ],
+  coverImage: "/images/useSwiperWheelNavigation-code.webp"
+};
+
+
+# 使用自定义滚轮导航提升 Swiper 滑块的用户体验
+
+## 滚轮事件处理简介
+
+在现代 Web 应用中，直观的导航方式对用户体验有重大影响。虽然触摸手势主导移动界面，但鼠标滚轮交互仍然是桌面导航的基石。认识到这一点，我们着手为 [Immersiview](https://immersive.utities.online/) 项目创建无缝滚动体验，为 Swiper 滑块实现自定义滚轮事件处理。
+
+## 挑战：代码重复和维护
+
+我们的项目包含两个关键组件：ImageSlider 和 VideoSlider，均使用 Swiper 库构建。最初，每个组件都包含相同的滚轮事件处理逻辑：
+
+```typescript
+// ImageSlider.tsx 中的滚轮事件处理逻辑
+useEffect(() => {
+  const handleWheel = (e: WheelEvent) => {
+    e.preventDefault();
+    if (swiperInstance) {
+      if (e.deltaY > 0) {
+        swiperInstance.slideNext();
+      } else {
+        swiperInstance.slidePrev();
+      }
+    }
+  };
+  window.addEventListener("wheel", handleWheel, { passive: false });
+  return () => window.removeEventListener("wheel", handleWheel);
+}, [swiperInstance]);
+
+// VideoSlider.tsx 中也存在相同的逻辑
+```
+
+这种方法带来了几个问题：
+- **代码重复**：相同的逻辑在多个地方维护
+- **维护开销**：未来任何更改都需要在多个组件中更新
+- **不一致风险**：微小的修改可能会无意中导致行为差异
+
+## 实现可重用解决方案
+
+为解决这些挑战，我们将滚轮事件处理逻辑提取到自定义 React Hook 中。这种方法遵循 DRY（不要重复自己）原则，并促进组件间的代码重用。
+
+```typescript
+// hooks/useSwiperWheelNavigation.ts
+import { useEffect } from 'react';
+import type { Swiper as SwiperType } from 'swiper';
+
+/**
+ * 为 Swiper 实例启用滚轮导航的自定义 Hook
+ * @param swiperInstance 要附加滚轮导航的 Swiper 实例
+ */
+export const useSwiperWheelNavigation = (swiperInstance: SwiperType | null) => {
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      // 阻止默认浏览器滚动行为
+      e.preventDefault();
+
+      if (swiperInstance) {
+        // 根据滚轮方向导航到下一张或上一张幻灯片
+        if (e.deltaY > 0) {
+          swiperInstance.slideNext();
+        } else {
+          swiperInstance.slidePrev();
+        }
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [swiperInstance]);
+};
+```
+
+## 集成和好处
+
+有了这个 Hook，将滚轮导航集成到我们的滑块组件变得非常简单：
+
+```tsx
+// 在 ImageSlider.tsx 中
+import { useSwiperWheelNavigation } from "../../hooks/useSwiperWheelNavigation";
+
+// ...
+useSwiperWheelNavigation(swiperInstance);
+// ...
+
+// 同样在 VideoSlider.tsx 中
+import { useSwiperWheelNavigation } from "../../hooks/useSwiperWheelNavigation";
+
+// ...
+useSwiperWheelNavigation(swiperInstance);
+// ...
+```
+
+此实现提供了几个显著优势：
+
+1. **代码重用**：相同的导航逻辑可以轻松应用于任何基于 Swiper 的组件
+2. **提高可维护性**：对滚轮导航行为的更新只需在一个位置进行
+3. **一致的用户体验**：所有滑块以相同的直观方式响应滚轮事件
+4. **更干净的组件代码**：滑块组件专注于其核心功能而非事件处理逻辑
+
+## 技术实现细节
+
+### 阻止默认浏览器行为
+
+我们实现的一个关键方面是在滚轮事件处理程序中调用 `e.preventDefault()`。这可以防止浏览器将滚轮事件解释为页面滚动，确保所有滚轮交互都专用于滑块导航。
+
+### Passive 选项
+
+我们在添加事件监听器时显式设置 `{ passive: false }`。这是必要的，因为在现代浏览器中，滚轮事件通常默认是被动的（意味着它们的默认行为无法被阻止）。通过设置 `passive: false`，我们确保 `e.preventDefault()` 在不同浏览器中按预期工作。
+
+### 内存管理
+
+当组件卸载或 `swiperInstance` 更改时，Hook 会正确清理事件监听器。这可以防止内存泄漏，并确保在应用程序生命周期中保持最佳性能。
+
+## 应用的最佳实践
+
+此实现展示了几个重要的软件工程最佳实践：
+
+- **抽象**：复杂逻辑封装在可重用的 Hook 中
+- **关注点分离**：事件处理与组件渲染逻辑分离
+- **类型安全**：TypeScript 的使用确保整个实现的类型安全
+- **性能优化**：高效的事件处理和适当的清理防止性能问题
+
+## 结论
+
+通过将滚轮事件处理提取到自定义 React Hook 中，我们显著提高了代码库的可维护性，同时通过直观的导航控制增强了用户体验。这种方法展示了深思熟虑的架构决策如何同时解决技术挑战并提高产品质量。
+
+`useSwiperWheelNavigation` Hook 是 React 组合模型如何使开发者能够创建可重用、可维护代码而不牺牲功能或性能的完美示例。对于任何使用 Swiper 组件的项目，实现类似的导航模式可以为用户提供更自然、更吸引人的浏览体验。

@@ -1,3 +1,5 @@
+"use client";
+
 import { useTranslation } from 'react-i18next';
 import { Globe } from 'lucide-react';
 import { Button } from './button';

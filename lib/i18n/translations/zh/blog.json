@@ -1,0 +1,18 @@
+{
+  "title": "博客文章",
+  "subtitle": "探索我们的最新文章和教程",
+  "description": "获取最新的技术资讯、教程和实用指南，帮助您更好地使用我们的工具。",
+  "back_to_list": "返回文章列表",
+  "all": "全部",
+  "read_more": "阅读更多",
+  "min_read": "分钟阅读",
+  "no_posts": "暂无博客文章",
+  "no_posts_with_tag": "没有找到包含标签 '{{tag}}' 的文章",
+  "check_back_later": "请稍后再查看",
+  "post_not_found": "找不到该文章",
+  "error_fetching_post": "获取文章时出错",
+  "content_not_available": "内容暂时不可用",
+  "published_on": "发布于",
+  "show_more": "显示更多",
+  "show_less": "收起"
+}

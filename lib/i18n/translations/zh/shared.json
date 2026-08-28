@@ -1,0 +1,86 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "language": "语言",
+    "clear": "清空",
+    "preview": "预览",
+    "english": "English",
+    "chinese": "中文",
+    "files": "文件 "
+  },
+  "imageUploader": {
+    "selectImages": "选择图片，支持多选",
+    "dragDropSupport": "支持批量拖拽、粘贴",
+    "folderSupport": "和文件夹选择",
+    "dropHere": "拖拽图片到此处或点击上传",
+    "uploading": "上传中...",
+    "uploadSuccess": "上传成功",
+    "uploadFailed": "上传失败",
+    "tagDrop": "拖拽上传",
+    "tagPaste": "粘贴图片"
+  },
+  "validation": {
+    "fileTooLarge": "文件过大",
+    "invalidFormat": "文件格式不支持"
+  },
+  "windowControls": {
+    "minimize": "最小化",
+    "maximize": "最大化",
+    "restore": "还原",
+    "close": "关闭"
+  },
+  "imageDiff": {
+    "sideBySide": "并排显示",
+    "overlay": "叠加显示",
+    "switch": "切换显示",
+    "minimize": "最小化",
+    "maximize": "最大化",
+    "original": "原图",
+    "processed": "处理后",
+    "originalImage": "原始图片",
+    "processedImage": "处理后图片",
+    "verticalLayoutTip": "因屏幕宽度限制，已切换为垂直布局",
+    "moveLeft": "向左移动",
+    "moveRight": "向右移动",
+    "description": "支持多种视图模式对比原始图片与处理后图片",
+    "exitTip": "按Escape键退出"
+  },
+  "webLayout": {
+    "home": "首页",
+    "moreTools": "更多工具",
+    "brandName": "utities.online"
+  },
+  "webFooter": {
+    "imageProcessing": "图像处理",
+    "videoTools": "视频工具",
+    "designTools": "设计工具",
+    "geographicTools": "地理工具",
+    "imageCompare": "图片对比",
+    "autoTrimImage": "自动裁剪图片",
+    "immersiveImageView": "沉浸式图片浏览",
+    "videoSplitter": "视频分割器",
+    "logoMaker": "Logo制作",
+    "altitudeQuery": "海拔查询",
+    "aboutUs": "关于我们",
+    "termsOfUse": "使用条款",
+    "privacyPolicy": "隐私政策",
+    "contactUs": "联系我们",
+    "copyright": "© {{year}} utities.online",
+    "madeWithHeart": "用心打造",
+    "providePowerfulTools": "提供强大、免费、易用的在线工具",
+    "discoverMoreTools": "发现更多强大工具",
+    "exploreCompleteCollection": "探索我们完整的工具集合，涵盖图像处理、文本编辑、开发工具等多个领域，让您的工作更高效",
+    "browseAllTools": "浏览所有工具"
+  },
+  "webFAQ": {
+    "title": "常见问题",
+    "subtitle": "我们整理了一些用户经常问的问题，希望能帮助您更好地使用我们的工具",
+    "stillHaveQuestions": "还有其他问题？",
+    "contactUs": "联系我们"
+  }
+}

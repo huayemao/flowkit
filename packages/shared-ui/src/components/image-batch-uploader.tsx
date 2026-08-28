@@ -1,3 +1,5 @@
+"use client";
+
 import "../index.css";
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "../i18n";

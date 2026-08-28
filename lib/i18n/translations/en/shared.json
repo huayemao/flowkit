@@ -1,0 +1,85 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "language": "Language",
+    "clear": "Clear",
+    "preview": "Preview",
+    "english": "English",
+    "chinese": "中文",
+    "files": "files"
+  },
+  "imageUploader": {
+    "selectImages": "Select Images, Multiple Files Supported",
+    "dragDropSupport": "Supports batch drag & drop, paste",
+    "dropHere": "Drop image here or click to upload",
+    "uploading": "Uploading...",
+    "uploadSuccess": "Upload successful",
+    "uploadFailed": "Upload failed",
+    "tagDrop":"Drop supported",
+    "tagPaste":"paste supported"
+  },
+  "validation": {
+    "fileTooLarge": "File is too large",
+    "invalidFormat": "Invalid file format"
+  },
+  "windowControls": {
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "restore": "Restore",
+    "close": "Close"
+  },
+  "imageDiff": {
+    "sideBySide": "Side by Side",
+    "overlay": "Overlay",
+    "switch": "Switch",
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "original": "Original",
+    "processed": "Processed",
+    "originalImage": "Original Image",
+    "processedImage": "Processed Image",
+    "verticalLayoutTip": "Displayed vertically due to screen width",
+    "moveLeft": "Move left",
+    "moveRight": "Move right",
+    "description": "Compare original and processed images with multiple view modes",
+    "exitTip": "Press Escape to exit"
+  },
+  "webLayout": {
+    "home": "Home",
+    "moreTools": "More Tools",
+    "brandName": "utities.online"
+  },
+  "webFooter": {
+    "imageProcessing": "Image Processing",
+    "videoTools": "Video Tools",
+    "designTools": "Design Tools",
+    "geographicTools": "Geographic Tools",
+    "imageCompare": "Image Compare",
+    "autoTrimImage": "Auto Trim Image",
+    "immersiveImageView": "Immersive Image View",
+    "videoSplitter": "Video Splitter",
+    "logoMaker": "Logo Maker",
+    "altitudeQuery": "Altitude Query",
+    "aboutUs": "About Us",
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "contactUs": "Contact Us",
+    "copyright": "© {{year}} utities.online",
+    "madeWithHeart": "Made with ❤️",
+    "providePowerfulTools": "Providing powerful, free, and easy-to-use online tools",
+    "discoverMoreTools": "Discover More Powerful Tools",
+    "exploreCompleteCollection": "Explore our complete tool collection, covering image processing, text editing, development tools and more, making your work more efficient",
+    "browseAllTools": "Browse All Tools"
+  },
+  "webFAQ": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "We've compiled some common questions from users to help you better use our tools",
+    "stillHaveQuestions": "Still have questions?",
+    "contactUs": "Contact Us"
+  }
+}

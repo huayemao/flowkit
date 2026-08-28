@@ -129,10 +129,10 @@ export function WorkflowEditDialog({ workflowId, open, onOpenChange }: WorkflowE
                               </div>
                               <div>
                                 <h4 className="text-sm font-medium">
-                                  {tool.name}
+                                  {t(tool.name)}
                                 </h4>
                                 <p className="text-xs text-muted-foreground">
-                                  {tool.description}
+                                  {t(tool.description)}
                                 </p>
                               </div>
                             </div>

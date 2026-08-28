@@ -64,9 +64,7 @@ export const WebFAQ: React.FC<WebFAQProps> = ({ faqData }) => {
           {t('webFAQ.stillHaveQuestions')}
         </p>
         <a
-          href="https://www.utities.online/contact"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/about"
           className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors duration-200"
         >
           {t('webFAQ.contactUs')}

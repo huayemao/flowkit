@@ -1,0 +1,103 @@
+export const metadata = {
+  title: '如何在 Vercel 上仅构建 Monorepo 中受影响的项目',
+  description: "学习如何为多子域名项目优化 Vercel 上的 Monorepo 部署。本技术指南探讨了 utities.online 如何使用 Vercel 的智能部署跳过功能，仅重建更改的子项目，节省资源并加速部署。非常适合使用 pnpm workspaces、共享依赖和子域名架构的独立开发者管理大型代码库。",
+  date: "2025-10-13",
+  readTime: 8,
+  tags: [
+    "Monorepo", "Vercel", "pnpm workspaces", "deployment optimization",
+    "subdomain architecture", "build skipping", "resource efficiency",
+    "frontend deployment", "shared dependencies", "incremental builds",
+    "developer productivity", "web tools", "utities.online",
+    "scalable infrastructure", "build automation", "CI/CD",
+    "modern web development", "indie developer", "performance tuning",
+    "Vite", "Node.js", "static site generation", "SEO best practices",
+    "multi-project management", "codebase organization", "deployment strategies"
+  ],
+  coverImage: "http://huayemao.run/api/files/utities-online-monorepo-vercel.webp",
+};
+
+
+
+> Vercel 上的 Monorepo 部署优化：utities.online 案例研究
+
+## 挑战
+
+大型 Monorepo 项目——尤其是托管多个独立 Web 应用的项目——在 Vercel 上通常面临一个常见的部署低效问题：**即使对单个子项目进行微小更改，也会触发整个仓库的完整重建和重新部署**。这不仅浪费宝贵的构建资源，还会显著减慢部署时间，影响开发者的工作效率。
+
+## 案例研究：utities.online 项目结构
+
+### 目录布局
+
+`utities.online` 项目是一个典型的使用 **pnpm workspaces** 管理的 Monorepo，在 `utities.online` 域名生态系统下托管多个独立的 Web 应用：
+
+```
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+└── packages/
+    ├── altitude/          ← 海拔测量工具
+    ├── auto-trim-image/   ← 自动图像裁剪工具
+    ├── image-compare-pro/ ← 图像比较工具
+    ├── logo-dash/         ← Logo 生成工具
+    ├── shared-ui/         ← 共享 UI 组件库
+    └── video-splitter/    ← 视频分割工具
+```
+
+每个应用部署到唯一的子域名（例如 `altitude.utities.online`、`logo.utities.online`），而主网站位于 `www.utities.online`。
+
+### 共享 UI 依赖
+
+子项目通过 pnpm 的工作区协议引用共享 UI 库：
+
+```json
+// 子项目的 package.json 示例
+{
+  "dependencies": {
+    "shared-ui": "workspace:*"
+  }
+}
+```
+
+所有子项目使用类似的 `vercel.json` 配置：
+
+```json
+{
+  "buildCommand": "pnpm generate",
+  "outputDirectory": "dist/static",
+  "installCommand": "pnpm install",
+  "framework": "vite"
+}
+```
+
+## 解决方案：智能部署跳过
+
+Vercel 提供了一个强大的功能，可以**在未检测到相关更改时跳过构建**。对于像 `utities.online` 这样的多子域名项目，这是一个改变游戏规则的功能。
+
+### 如何启用
+
+1. **登录** Vercel 仪表板并导航到您的项目。
+2. 转到项目设置中的 **"Git"** 或 **"Deployments"** 选项卡。
+3. **启用**选项：*"当根目录或其依赖项没有更改时跳过部署"*。
+4. **保存**更改。
+
+此设置指示 Vercel 智能分析代码更改。如果只修改了一个子项目，则只有该子项目会被重建并重新部署到其对应的子域名。
+
+## 结果
+
+启用智能部署跳过后，`utities.online` 项目取得了显著改善：
+
+- **隔离更新**：对单个子项目的更改仅触发该子项目的重建。
+- **依赖感知构建**：共享 UI 库的更新仅触发依赖子项目的重建。
+- **资源效率**：构建资源得到优化使用，部署时间大幅缩短。
+- **更快迭代**：团队可以更快地部署 `utities.online` 更新，提高生产力。
+
+---
+
+### 为什么这很重要
+
+对于像 `utities.online` 这样的大型 Monorepo，这个简单的配置更改改变了部署工作流程。它确保每个子域名独立且高效地更新，充分利用 Vercel 的基础设施。
+
+**关键要点**：通过利用 Vercel 的内置智能功能，您可以优化 Monorepo 部署——节省时间、资源并减少开发者的挫败感。
+
+---
+*您是否遇到过类似的 Monorepo 部署挑战？您是如何解决的？*

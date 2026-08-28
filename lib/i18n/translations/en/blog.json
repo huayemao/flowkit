@@ -1,0 +1,18 @@
+{
+  "title": "Blog Posts",
+  "subtitle": "Explore our latest articles and tutorials",
+  "description": "Get the latest tech news, tutorials, and practical guides to help you make the most of our tools.",
+  "back_to_list": "Back to List",
+  "all": "All",
+  "read_more": "Read More",
+  "min_read": "min read",
+  "no_posts": "No blog posts available",
+  "no_posts_with_tag": "No posts found with tag '{{tag}}'",
+  "check_back_later": "Please check back later",
+  "post_not_found": "Post not found",
+  "error_fetching_post": "Error fetching post",
+  "content_not_available": "Content not available",
+  "published_on": "Published on",
+  "show_more": "Show more",
+  "show_less": "Show less"
+}

@@ -1,0 +1,103 @@
+export const metadata = {
+  title: 'How to Build Only Affected Projects in a Monorepo on Vercel',
+  description: "Learn how to streamline Monorepo deployments on Vercel for multi-subdomain projects. This technical guide explores how utities.online uses Vercel's smart deployment skipping to rebuild only changed subprojects, saving resources and accelerating deployments. Ideal for indie developers managing large codebases with pnpm workspaces, shared dependencies, and subdomain-based architectures.",
+  date: "2025-10-13",
+  readTime: 8,
+  tags: [
+    "Monorepo", "Vercel", "pnpm workspaces", "deployment optimization",
+    "subdomain architecture", "build skipping", "resource efficiency",
+    "frontend deployment", "shared dependencies", "incremental builds",
+    "developer productivity", "web tools", "utities.online",
+    "scalable infrastructure", "build automation", "CI/CD",
+    "modern web development", "indie developer", "performance tuning",
+    "Vite", "Node.js", "static site generation", "SEO best practices",
+    "multi-project management", "codebase organization", "deployment strategies"
+  ],
+  coverImage: "http://huayemao.run/api/files/utities-online-monorepo-vercel.webp",
+};
+
+
+
+> Optimizing Monorepo Deployments on Vercel: A Case Study of utities.online
+
+## The Challenge
+
+Large Monorepo projects—especially those hosting multiple independent web apps—often face a common deployment inefficiency on Vercel: **even minor changes to a single subproject trigger a full rebuild and redeployment of the entire repository**. This not only wastes valuable build resources but also significantly slows down deployment times, hampering developer productivity.
+
+## Case Study: utities.online Project Structure
+
+### Directory Layout
+
+The `utities.online` project is a typical Monorepo managed with **pnpm workspaces**, hosting several standalone web apps under the `utities.online` domain ecosystem:
+
+```
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+└── packages/
+    ├── altitude/          ← Altitude measurement tool
+    ├── auto-trim-image/   ← Automatic image cropping tool
+    ├── image-compare-pro/ ← Image comparison tool
+    ├── logo-dash/         ← Logo generation tool
+    ├── shared-ui/         ← Shared UI component library
+    └── video-splitter/    ← Video splitting tool
+```
+
+Each app is deployed to a unique subdomain (e.g., `altitude.utities.online`, `logo.utities.online`), while the main website lives at `www.utities.online`.
+
+### Shared UI Dependencies
+
+Subprojects reference the shared UI library via pnpm's workspace protocol:
+
+```json
+// Example package.json for a subproject
+{
+  "dependencies": {
+    "shared-ui": "workspace:*"
+  }
+}
+```
+
+All subprojects use a similar `vercel.json` configuration:
+
+```json
+{
+  "buildCommand": "pnpm generate",
+  "outputDirectory": "dist/static",
+  "installCommand": "pnpm install",
+  "framework": "vite"
+}
+```
+
+## The Solution: Smart Deployment Skipping
+
+Vercel offers a powerful feature to **skip builds when no relevant changes are detected**. For multi-subdomain projects like `utities.online`, this is a game-changer.
+
+### How to Enable
+
+1. **Log in** to the Vercel dashboard and navigate to your project.
+2. Go to the **"Git"** or **"Deployments"** tab in the project settings.
+3. **Enable** the option: *"Skip deployments when there are no changes to the root directory or its dependencies"*.
+4. **Save** the changes.
+
+This setting instructs Vercel to analyze code changes intelligently. If only one subproject is modified, only that subproject will be rebuilt and redeployed to its corresponding subdomain.
+
+## Results
+
+After enabling smart deployment skipping, the `utities.online` project sees dramatic improvements:
+
+- **Isolated Updates**: Changes to a single subproject trigger a rebuild *only* for that subproject.
+- **Dependency-Aware Builds**: Updates to the shared UI library trigger rebuilds *only* for dependent subprojects.
+- **Resource Efficiency**: Build resources are used optimally, and deployment times are slashed.
+- **Faster Iteration**: Teams can deploy updates to `utities.online` faster, boosting productivity.
+
+---
+
+### Why It Matters
+
+For large Monorepos like `utities.online`, this simple configuration change transforms the deployment workflow. It ensures that each subdomain updates independently and efficiently, making the most of Vercel's infrastructure.
+
+**Key Takeaway**: By leveraging Vercel's built-in intelligence, you can optimize Monorepo deployments—saving time, resources, and developer frustration.
+
+---
+*Have you faced similar Monorepo deployment challenges? How did you solve them?*

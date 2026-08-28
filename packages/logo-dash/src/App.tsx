@@ -1,3 +1,5 @@
+"use client";
+
 import "./index.css";
 import "@flowkit/shared-ui/dist/index.css";
 import { AppLayout, useTranslation } from "@flowkit/shared-ui";

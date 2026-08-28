@@ -1,9 +1,53 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+"use client";
 
-// 导入shared-ui自己的翻译文件
-import enTranslations from './locales/en/translation.json';
-import zhTranslations from './locales/zh/translation.json';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next/initReactI18next';
+
+// 导入shared-ui及各个子应用的默认翻译
+import enShared from './locales/en/translation.json';
+import zhShared from './locales/zh/translation.json';
+
+import enAutoTrim from '../../../auto-trim-image/src/i18n/locales/en/translation.json';
+import zhAutoTrim from '../../../auto-trim-image/src/i18n/locales/zh/translation.json';
+
+import enAltitude from '../../../altitude/src/i18n/locales/en/translation.json';
+import zhAltitude from '../../../altitude/src/i18n/locales/zh/translation.json';
+
+import enBilibili from '../../../bilibili-subtitle-extractor/src/i18n/locales/en/translation.json';
+import zhBilibili from '../../../bilibili-subtitle-extractor/src/i18n/locales/zh/translation.json';
+
+import enLogoDash from '../../../logo-dash/src/i18n/locales/en/translation.json';
+import zhLogoDash from '../../../logo-dash/src/i18n/locales/zh/translation.json';
+
+import enVideoSplitter from '../../../video-splitter/src/i18n/locales/en/translation.json';
+import zhVideoSplitter from '../../../video-splitter/src/i18n/locales/zh/translation.json';
+
+const unwrap = (mod: any) => (mod && mod.default ? mod.default : mod);
+
+function deepMerge(target: any, source: any) {
+  const output = { ...target };
+  const src = unwrap(source);
+  if (src && typeof src === 'object') {
+    Object.keys(src).forEach(key => {
+      if (src[key] && typeof src[key] === 'object' && !Array.isArray(src[key])) {
+        output[key] = deepMerge(target[key] || {}, src[key]);
+      } else {
+        output[key] = src[key];
+      }
+    });
+  }
+  return output;
+}
+
+export const enTranslations = [enShared, enAutoTrim, enAltitude, enBilibili, enLogoDash, enVideoSplitter].reduce(
+  (acc, curr) => deepMerge(acc, curr),
+  {}
+);
+
+export const zhTranslations = [zhShared, zhAutoTrim, zhAltitude, zhBilibili, zhLogoDash, zhVideoSplitter].reduce(
+  (acc, curr) => deepMerge(acc, curr),
+  {}
+);
 
 // 导出所有支持的语言列表
 export const supportedLanguages = [
@@ -78,104 +122,77 @@ export const languageFlags = {
 
 // 获取系统语言
 const getSystemLanguage = () => {
-  const language = navigator.language || 'en';
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return 'zh';
+  }
+  const language = navigator.language || 'zh';
   return language;
 };
 
 // 获取保存的语言或系统语言
 const getSavedLanguage = () => {
   if (typeof window === 'undefined') {
-    return getSystemLanguage();
+    return 'zh';
   }
   const savedLanguage = localStorage.getItem('flowkit-language');
   if (savedLanguage && supportedLanguages.includes(savedLanguage)) {
     return savedLanguage;
   }
   
-  // 首次运行或没有保存设置时，使用系统语言
-  return getSystemLanguage();
+  return 'zh';
 };
 
-// 合并翻译文件的工具函数
-const mergeTranslations = (defaultTrans: any, customTrans: any) => {
-  if (!customTrans) return defaultTrans;
-  
-  return {
-    ...defaultTrans,
-    ...customTrans,
-    // 深度合并嵌套对象
-    common: { ...defaultTrans.common, ...customTrans.common },
-    imageUploader: { ...defaultTrans.imageUploader, ...customTrans.imageUploader },
-    validation: { ...defaultTrans.validation, ...customTrans.validation },
-  };
-};
+// 初始化 i18n
+export const initI18n = (translations?: any, defaultLanguage?: string) => {
+  const lang = (typeof translations === 'string' ? translations : defaultLanguage) || getSavedLanguage() || 'zh';
+  const customZh = typeof translations === 'object' && translations ? (translations.zhTranslations || translations.zh) : undefined;
+  const customEn = typeof translations === 'object' && translations ? (translations.enTranslations || translations.en) : undefined;
 
-// 初始化 i18n - 使用单例模式，避免重复初始化
-export const initI18n = (translations?: {
-  enTranslations?: any;
-  zhTranslations?: any;
-  [key: string]: any;
-}, defaultLanguage?: string) => {
-  // 如果已经初始化，直接返回
-  if (i18n.isInitialized) {
-    return i18n;
+  const mergedZh = customZh ? { ...zhTranslations, ...customZh } : zhTranslations;
+  const mergedEn = customEn ? { ...enTranslations, ...customEn } : enTranslations;
+
+  if (!i18n.isInitialized) {
+    i18n
+      .use(initReactI18next)
+      .init({
+        resources: {
+          zh: { translation: mergedZh },
+          en: { translation: mergedEn },
+        },
+        lng: lang,
+        fallbackLng: 'zh',
+        debug: false,
+        interpolation: {
+          escapeValue: false,
+        },
+        react: {
+          useSuspense: false,
+        },
+      });
   }
 
-  // 合并翻译文件：shared-ui的默认翻译 + 外部提供的翻译
-  const resources: Record<string, any> = {};
+  i18n.addResourceBundle('zh', 'translation', mergedZh, true, true);
+  i18n.addResourceBundle('en', 'translation', mergedEn, true, true);
   
-  // 遍历所有支持的语言
-  supportedLanguages.forEach(language => {
-    try {
-      // 检查是否有对应的默认翻译文件
-      if (language === 'en' && enTranslations) {
-        resources[language] = {
-          translation: mergeTranslations(enTranslations, translations?.enTranslations),
-        };
-      } else if (language === 'zh' && zhTranslations) {
-        resources[language] = {
-          translation: mergeTranslations(zhTranslations, translations?.zhTranslations),
-        };
-      } else {
-        // 对于没有默认翻译的语言，检查外部是否提供了翻译
-        const externalTranslationKey = `${language}Translations`;
-        if (translations && translations[externalTranslationKey]) {
-          resources[language] = {
-            translation: translations[externalTranslationKey],
-          };
-        }
-      }
-    } catch (error) {
-      console.warn(`Failed to load translations for language: ${language}`, error);
-    }
-  });
-
-  // 设置i18n配置，使用简单资源对象和动态加载机制
-  i18n
-    .use(initReactI18next)
-    .init({
-      resources,
-      // 优先使用传入的默认语言参数，如果没有则使用保存的语言
-      lng: defaultLanguage && supportedLanguages.includes(defaultLanguage) ? defaultLanguage : getSavedLanguage(),
-      fallbackLng: 'en',
-      debug: true,
-      interpolation: {
-        escapeValue: false,
-      },
-      react: {
-        useSuspense: false,
-      },
-      // partialBundledLanguages: true,
-    });
+  if (lang && i18n.language !== lang) {
+    i18n.changeLanguage(lang);
+  }
 
   return i18n;
 };
+
+// 自动初始化，保证在 SSR/CSR 环境下始终准备就绪
+if (!i18n.isInitialized) {
+  initI18n();
+}
 
 // 动态切换语言的函数
 export const changeLanguage = (lng: string) => {
   if (supportedLanguages.includes(lng)) {
     i18n.changeLanguage(lng);
-    localStorage.setItem('flowkit-language', lng);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('flowkit-language', lng);
+    }
   }
 };
 

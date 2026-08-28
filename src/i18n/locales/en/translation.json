@@ -61,6 +61,16 @@
       "name": "Convert Image Links",
       "description": "Convert image links to WordPress proxy format"
     },
+    "stackedit": {
+      "name": "StackEdit",
+      "description": "Full-featured Markdown online editor",
+      "title": "StackEdit"
+    },
+    "baimiao": {
+      "name": "Baimiao OCR",
+      "description": "Efficient and accurate online OCR text recognition tool",
+      "title": "Baimiao OCR"
+    },
     "textRemoveNewlines": {
       "name": "Text Remove Newlines",
       "description": "Remove all newline characters from text",

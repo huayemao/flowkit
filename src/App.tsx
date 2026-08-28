@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useParams, Outlet, useNavigate } from 'react-router-dom'
 import { MainLayout } from './components/layout/main-layout'
-import { SettingsPage } from './pages/settings'
+import { SettingsPage } from './desktop-pages/settings'
 import { useAppStore } from './store/app-store'
 import { ToolContent } from './components/tool-content'
 import { useEffect } from 'react'
 import { WorkflowEditDialog } from './components/workflow/workflow-edit-dialog'
-import WorkflowsPage from "@/pages/workflows"
-import ToolsPage from "@/pages/tools"
-import ToolPage from "@/pages/tool"
+import WorkflowsPage from "@/desktop-pages/workflows"
+import ToolsPage from "@/desktop-pages/tools"
+import ToolPage from "@/desktop-pages/tool"
 
 function WorkflowLayout() {
   const { workflowId } = useParams()

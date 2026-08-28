@@ -10,6 +10,14 @@ export default defineConfig(async () => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@flowkit/shared-ui/dist/index.css": path.resolve(__dirname, "./packages/shared-ui/src/index.css"),
+      "@flowkit/shared-ui": path.resolve(__dirname, "./packages/shared-ui/src/index.ts"),
+      "@flowkit/auto-trim-image": path.resolve(__dirname, "./packages/auto-trim-image/src/index.ts"),
+      "@flowkit/altitude": path.resolve(__dirname, "./packages/altitude/src/index.ts"),
+      "@flowkit/bilibili-subtitle-extractor": path.resolve(__dirname, "./packages/bilibili-subtitle-extractor/src/index.ts"),
+      "@flowkit/image-compare-pro": path.resolve(__dirname, "./packages/image-compare-pro/src/index.ts"),
+      "@flowkit/logo-dash": path.resolve(__dirname, "./packages/logo-dash/src/index.ts"),
+      "@flowkit/video-splitter": path.resolve(__dirname, "./packages/video-splitter/src/index.ts"),
     },
   },
 

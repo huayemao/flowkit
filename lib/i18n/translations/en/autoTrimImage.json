@@ -1,0 +1,46 @@
+{
+  "autoTrimImage": {
+    "title": "iTrim - Auto Trim Image Tool",
+    "description": "Automatically identify image edges and crop excess blank areas",
+    "batchUpload": "Batch Upload Images",
+    "processResult": "Process Result",
+    "imagesSelected": "{{count}} images selected",
+    "imagesProcessed": "{{count}} images processed",
+    "clear": "Clear",
+    "startProcessing": "Start Processing",
+    "processing": "Processing",
+    "processingImages": "Processing Images",
+    "complete": "Processing Complete",
+    "processedCount": "{{count}} images processed",
+    "downloadAll": "Download All",
+    "download": "Download",
+    "close": "Close",
+    "selectSaveDirectory": "Select Save Directory",
+    "downloadCancelled": "Download cancelled",
+    "downloading": "Downloading...",
+    "downloadFailed": "Download failed, please try again",
+    "singleFileSaved": "File {{filename}} has been saved",
+    "multipleFilesSaved": "{{count}} files have been saved",
+    "fileSaved": "File {{filename}} has been saved",
+    "open": "Open",
+    "openFolder": "Open Folder",
+    "openFolderError": "Failed to open folder",
+    "reDownload": "Re-download",
+    "faq": {
+    "q1": "What is iTrim? What are iTrim’s core functions?",
+    "a1": "iTrim is a tool specializing in image border processing. Its core function is to automatically detect and batch remove white borders, black borders, or other decorative edges from images. It supports efficient processing of both single and multiple images, with all operations performed locally on your device for maximum speed.",
+    "q2": "What types of borders can iTrim remove? Are there any requirements for image size or border dimensions?",
+    "a2": "iTrim supports the removal of white borders, black borders, and various other decorative edges. There are no restrictions on image size or border dimensions—it can accurately detect and process images of all sizes.",
+    "q3": "How do I use iTrim to batch remove borders from images?",
+    "a3": "You can drag and drop multiple images into the tool at once, or click the input box and hold the Shift key to select multiple images. The tool will automatically process them in batch. Once processing is complete, click the 'Download All' button to export all processed images at once.",
+    "q4": "Will the quality of the cropped images be reduced?",
+    "a4": "No. iTrim only removes the empty border areas and does not compress or alter the core content of your images, so the quality remains unchanged. The file size may decrease due to the removal of blank areas.",
+    "q5": "Is this tool free to use?",
+    "a5": "Yes, the automatic image cropping tool is completely free to use, with no registration or login required. All processing is done locally in your browser, ensuring fast speeds even for batch processing, while effectively protecting your privacy and security."
+  }
+  },
+
+  "common": {
+    "processing": "Processing"
+  }
+}

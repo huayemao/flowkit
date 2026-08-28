@@ -1,0 +1,254 @@
+export const metadata = {
+  title: 'Building Multilingual Prerendering from Scratch: A Deep Dive into video-splitter\'s Architecture',
+  description: "Discover how to implement multilingual prerendering for modern web apps. This technical deep dive into the video-splitter project reveals how to use React, i18next, and Vite to generate static HTML for each language at build time, improving SEO, performance, and global accessibility. Perfect for indie developers building multilingual tools.",
+  date: "2025-10-13",
+  readTime: 12,
+  tags: [
+    "multilingual prerendering", "SSR", "static site generation", "i18n",
+    "React 18", "i18next", "Vite", "Node.js", "ReactDOMServer",
+    "internationalization", "localization", "SEO optimization",
+    "performance optimization", "static HTML", "language detection",
+    "dynamic routing", "fallback mechanism", "translation management",
+    "indie developer", "web tools", "video-splitter", "utities.online",
+    "global reach", "static rendering", "build-time optimization",
+    "multilingual SEO", "hreflang", "language attributes",
+    "frontend architecture", "modern web development"
+  ],
+  coverImage: "http://huayemao.run/api/files/video-splitter-multilang.webp",
+};
+
+
+
+Welcome to the **utities.online** technical tutorial series! Today, we'll dissect the **multilingual prerendering** implementation of our open-source **video-splitter** tool—a browser-based utility for splitting videos into custom segments. This guide will walk you through the architecture, workflow, and optimizations that enable seamless multilingual support for global users.
+
+---
+
+## **What Is Multilingual Prerendering?**
+Multilingual prerendering is a technique that generates **static HTML files for each language at build time**, combining the benefits of **Server-Side Rendering (SSR)** and **Static Site Generation (SSG)**:
+- **Enhanced User Experience**: Users see fully rendered content instantly, without waiting for client-side JavaScript.
+- **SEO Optimization**: Search engines crawl complete content, improving discoverability.
+- **Reduced Server Load**: Static files are served directly, minimizing runtime rendering overhead.
+- **Global Reach**: Tailored content for users in different languages and regions.
+
+This approach is ideal for performance-critical, multilingual web apps like **video-splitter**, where speed and accessibility matter.
+
+---
+
+## **Tech Stack Breakdown**
+
+| **Technology**       | **Purpose**                     | **Why It Was Chosen**                                                                 |
+|----------------------|---------------------------------|--------------------------------------------------------------------------------------|
+| **React 18**         | Frontend UI                     | Component-based architecture with built-in SSR support via `ReactDOMServer`.       |
+| **i18next + react-i18next** | Internationalization (i18n) | Robust, flexible, and supports advanced features like namespaces and interpolation. |
+| **Vite**             | Build Tool                      | Blazing-fast builds and HMR, with native ESM support.                                |
+| **Node.js**          | Runtime Environment             | Powers prerendering scripts and server-side logic.                                   |
+| **ReactDOMServer**   | Server-Side Rendering           | Official React SSR solution for generating HTML on the server.                      |
+
+---
+
+## **Project Structure Overview**
+The **video-splitter** project follows a modular structure for clarity and maintainability:
+
+```
+├── src/
+│   ├── i18n/
+│   │   ├── index.ts           # i18n configuration and initialization
+│   │   └── locales/           # Translation files (e.g., `en/`, `zh/`, `es/`)
+│   ├── entry-server.tsx       # SSR entry point with the `render` function
+│   └── constants.ts           # Global constants (e.g., `DOMAIN_NAME`)
+├── prerender.js               # Prerendering script for static HTML generation
+└── package.json               # Build and prerendering scripts
+```
+
+Key design principles:
+- **Separation of concerns**: i18n logic is isolated in `/i18n`.
+- **Reusable components**: SSR and client-side code share the same React components.
+
+---
+
+## **Multilingual Prerendering Workflow**
+
+### **Step 1: Initialize the Prerendering Script**
+The `prerender.js` script sets up the environment and prepares to generate static pages for each language:
+
+```javascript
+import fs from 'node:fs';
+import path from 'node:path';
+import url from 'node:url';
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+const templateHtml = fs.readFileSync('./dist/static/index.html', 'utf-8');
+```
+
+### **Step 2: Dynamically Detect Supported Languages**
+Instead of hardcoding languages, the script scans the `locales/` directory:
+
+```javascript
+const localesDir = path.resolve(__dirname, 'src/i18n/locales');
+const languages = fs.readdirSync(localesDir).filter(name =>
+  fs.statSync(path.join(localesDir, name)).isDirectory()
+);
+```
+
+### **Step 3: Generate Language-Specific Routes**
+Routes are generated dynamically:
+- **Default language (English)**: `/`
+- **Other languages**: `/{lang}/` (e.g., `/zh/`, `/es/`)
+
+```javascript
+const routes = ['/'].concat(
+  languages.filter(lang => lang !== 'en').map(lang => `/${lang}`)
+);
+```
+
+### **Step 4: Server-Side Rendering (SSR)**
+The `render` function in `entry-server.tsx` handles SSR for each language:
+
+```javascript
+export async function render(url: string, languages: string[]) {
+  const seoContent = await getSeoContent(url);
+  const i18nInstance = await initI18n(seoContent.language);
+  i18nInstance.changeLanguage(seoContent.language);
+
+  const html = renderToString(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
+  // Generate hreflang tags and other SEO metadata...
+}
+```
+
+### **Step 5: Generate Static HTML Files**
+For each route, the script:
+1. Renders the app with the correct language.
+2. Injects the HTML into a template.
+3. Saves the file to `dist/static/{lang}/index.html`.
+
+```javascript
+for (const route of routes) {
+  const lang = route === '/' ? 'en' : route.split('/')[1];
+  const rendered = await render(route, languages);
+  const html = template
+    .replace(`<!--app-head-->`, rendered.head)
+    .replace(`<!--app-html-->`, rendered.html)
+    .replace(/<html([^>]*)>/, `<html$1 lang="${lang}">`);
+
+  fs.writeFileSync(`dist/static${route}/index.html`, html);
+}
+```
+
+---
+
+## **Internationalization (i18n) Configuration**
+The `src/i18n/index.ts` file centralizes i18n logic:
+
+```javascript
+export const languages = [
+  'en', 'zh', 'es', 'fr', 'de', 'ja', 'ko', /* ... 28 total */
+];
+
+export const initI18n = async (language?: string) => {
+  try {
+    const translations = await preloadCommonTranslations();
+    return await sharedInitI18n(translations, language);
+  } catch (error) {
+    return await sharedInitI18n({}); // Fallback to empty config
+  }
+};
+```
+
+**Key Features:**
+- **Dynamic imports**: Loads translations on demand.
+- **Graceful fallback**: Defaults to English if a translation is missing.
+- **Preloading**: Optimizes performance by loading translations upfront.
+
+---
+
+## **Translation File Structure**
+Translations are organized in **JSON files** with namespaces:
+
+```json
+{
+  "videoSplitter": {
+    "title": "VideoSplitter - Fast Video Splitting Tool",
+    "uploadVideo": "Upload Video",
+    "dragAndDrop": "Drag and drop your video file here"
+  },
+  "common": {
+    "processing": "Processing",
+    "success": "Success",
+    "error": "Error"
+  }
+}
+```
+
+**Advantages:**
+- **Modular**: Separates feature-specific (`videoSplitter`) and shared (`common`) translations.
+- **Scalable**: Easy to add new languages or keys.
+
+---
+
+## **Build and Execution Flow**
+The `package.json` scripts automate the process:
+
+```json
+"scripts": {
+  "build": "vite build",
+  "build:server": "vite build --config vite.config.server.ts",
+  "generate": "pnpm run build && pnpm run build:server && node prerender"
+}
+```
+
+**Steps:**
+1. **Client build**: Optimizes assets for the browser.
+2. **Server build**: Generates SSR-compatible code.
+3. **Prerendering**: Executes `prerender.js` to generate static HTML for all languages.
+
+---
+
+## **Key Technical Highlights**
+
+1. **Dynamic Language Detection**
+   - Scans `locales/` to auto-discover supported languages.
+   - No code changes needed to add a new language.
+
+2. **Automated Route Generation**
+   - Creates `/{lang}/` directories and HTML files automatically.
+
+3. **SEO Optimization**
+   - Sets `lang` attributes and `hreflang` tags for search engines.
+   - Custom metadata per language.
+
+4. **Robust Fallback Mechanism**
+   - Missing translations default to English without breaking the UI.
+
+5. **Performance Optimizations**
+   - **Build-time rendering**: Static files reduce server load.
+   - **Vite caching**: Speeds up rebuilds by caching dependencies.
+   - **Base URL handling**: Ensures assets load correctly across routes.
+
+```javascript
+// Set a global <base> tag to resolve asset paths
+const head = renderToString(<base href="/" />);
+```
+
+---
+
+## **Performance Considerations**
+- **Prerendering at build time**: Eliminates runtime SSR overhead.
+- **Efficient asset loading**: Vite's ESM-based builds minimize bundle size.
+- **Parallel translation loading**: Reduces initialization time.
+
+---
+
+## **Conclusion**
+The **video-splitter** project demonstrates how to combine **React SSR**, **i18next**, and **Vite** to create a **scalable, multilingual static site**. This approach balances performance, SEO, and maintainability—ideal for global tools.
+
+**Explore more:**
+- Try the [video-splitter tool](https://split-v.utities.online).
+- Read our [blog](https://www.utities.online/blog) for deeper technical insights.
+
+---
+
+**Question for you:** Are you implementing multilingual support in your projects? What challenges have you faced, and how did you solve them? Let's discuss!

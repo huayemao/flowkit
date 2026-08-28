@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useRef } from 'react';
 import { ThemeToggle, LanguageSwitcher, ImageDiffViewer, ImageBatchUploader, Input, AppLayout } from '@flowkit/shared-ui';
 import { useTranslation } from './i18n';

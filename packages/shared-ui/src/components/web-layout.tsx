@@ -27,10 +27,8 @@ export const WebLayout: React.FC<WebLayoutProps> = ({
   toolDescription = "powerful online tools to use",
   faqData = []
 }) => {
-  const { t } = useTranslation();
   return (
-    <div className={`transition-all duration-300 min-h-screen`}>
-      {/* 结构化数据 */}
+    <div className="w-full min-h-screen relative">
       <StructuredData 
         toolName={toolName}
         toolDescription={toolDescription}
@@ -38,7 +36,7 @@ export const WebLayout: React.FC<WebLayoutProps> = ({
       />
 
       {/* 磨砂光感渐变背景 */}
-      <div className="fixed inset-0 overflow-hidden">
+      <div className="fixed inset-0 overflow-hidden -z-10 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-50/95 via-white/95 to-slate-100/95 dark:from-gray-900/95 dark:via-gray-800/95 dark:to-gray-900/95 backdrop-blur-xl" />
 
         {/* 动态光效 */}
@@ -54,82 +52,16 @@ export const WebLayout: React.FC<WebLayoutProps> = ({
         <div className="absolute inset-0 backdrop-blur-3xl" />
       </div>
 
-      {/* 内容层 */}
-      <div className="relative z-10 flex flex-col min-h-screen">
-        {/* Analytics */}
-        <Analytics />
-        
-        {/* 顶部导航栏 */}
-        <header className="w-full border-b border-border/40 bg-background/80 backdrop-blur-md sticky top-0 z-50">
-          <div className="mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              {/* 左侧区域 */}
-              <div className="flex items-center gap-6">
-                {/* Logo和主页链接 */}
-                <a
-                  href="https://www.utities.online"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200"
-                >
-                  <span className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center">
-                    <span className="text-sm text-indigo-600 dark:text-indigo-400 font-bold">
-                      U
-                    </span>
-                  </span>
-                  <span className="hidden sm:inline">{t('webLayout.brandName')}</span>
-                </a>
-                
-                {/* 导航链接 */}
-                <nav className="hidden md:flex items-center gap-6">
-                  <a
-                    href="https://www.utities.online"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                  >
-                    {t('webLayout.home')}
-                  </a>
-                  <a
-                    href="https://www.utities.online/tools"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                  >
-                    {t('webLayout.moreTools')}
-                  </a>
-                </nav>
-              </div>
-
-              {/* 右侧控制区域 */}
-              <div className="flex items-center gap-2">
-                <LanguageSwitcher showText={true} />
-                <ThemeToggle />
-              </div>
-            </div>
-          </div>
-        </header>
-
-        {/* 主内容区域 */}
-        <main className="flex-1">
-          <ScrollArea className="w-full h-full">
-            <div className="py-8 xs:pb-16">
-              {children}
-            </div>
-          </ScrollArea>
+      <div className="w-full py-6 px-4 md:px-8 max-w-7xl mx-auto">
+        <main className="w-full flex-1">
+          {children}
         </main>
 
-        {/* FAQ部分 */}
         {faqData.length > 0 && (
-          <section className="border-t border-border/40 bg-background/60 backdrop-blur-sm">
-            <div className="mx-auto px-4 sm:px-6 lg:px-8 py-16">
-              <WebFAQ faqData={faqData} />
-            </div>
+          <section className="mt-16 pt-12 border-t border-border/40">
+            <WebFAQ faqData={faqData} />
           </section>
         )}
-
-        {/* Footer */}
-        <WebFooter />
       </div>
     </div>
   );

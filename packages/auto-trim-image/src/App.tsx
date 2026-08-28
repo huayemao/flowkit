@@ -1,3 +1,5 @@
+"use client";
+
 import { AppLayout } from "@flowkit/shared-ui";
 import { AutoTrimImage } from "./components/auto-trim-image";
 import {  useTranslation } from "./i18n";

@@ -12,15 +12,15 @@ export const WebFooter: React.FC = () => {
       tools: [
         {
           name: t("webFooter.imageCompare"),
-          href: "https://idiff.utities.online",
+          href: "/apps/idiff",
         },
         {
           name: t("webFooter.autoTrimImage"),
-          href: "https://itrim.utities.online",
+          href: "/apps/itrim",
         },
         {
           name: t("webFooter.immersiveImageView"),
-          href: "https://immersiview.utities.online",
+          href: "/projects/immersiview",
         },
       ],
     },
@@ -29,14 +29,14 @@ export const WebFooter: React.FC = () => {
       tools: [
         {
           name: t("webFooter.videoSplitter"),
-          href: "https://split-v.utities.online",
+          href: "/apps/video-splitter",
         },
       ],
     },
     {
       title: t("webFooter.designTools"),
       tools: [
-        { name: t("webFooter.logoMaker"), href: "https://logo.utities.online" },
+        { name: t("webFooter.logoMaker"), href: "/apps/logo-dash" },
       ],
     },
     {
@@ -44,20 +44,20 @@ export const WebFooter: React.FC = () => {
       tools: [
         {
           name: t("webFooter.altitudeQuery"),
-          href: "https://altitude.utities.online",
+          href: "/apps/altitude",
         },
       ],
     },
   ];
 
   const companyLinks = [
-    { name: t("webFooter.aboutUs"), href: "https://utities.online/about" },
-    { name: t("webFooter.termsOfUse"), href: "https://utities.online/terms" },
+    { name: t("webFooter.aboutUs"), href: "/about" },
+    { name: t("webFooter.termsOfUse"), href: "/terms" },
     {
       name: t("webFooter.privacyPolicy"),
-      href: "https://utities.online/privacy",
+      href: "/privacy",
     },
-    { name: t("webFooter.contactUs"), href: "https://utities.online/contact" },
+    { name: t("webFooter.contactUs"), href: "/about" },
   ];
 
   const socialLinks = [
@@ -86,9 +86,7 @@ export const WebFooter: React.FC = () => {
               {t("webFooter.exploreCompleteCollection")}
             </p>
             <a
-              href="https://www.utities.online/tools"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/projects"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors duration-200"
             >
               {t("webFooter.browseAllTools")}

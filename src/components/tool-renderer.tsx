@@ -1,4 +1,5 @@
 import { Tool } from "@/store/app-store";
+import { useTranslation } from "@/i18n";
 import { TextRemoveNewlines } from '../features/text-remove-newlines'
 import { TextOcr } from '../features/text-ocr'
 import { WebAppEmbed } from './web-app-embed'
@@ -22,12 +23,13 @@ const componentMap: Record<string, React.ComponentType<any>> = {
 };
 
 export function ToolRenderer({ tool }: ToolRendererProps) {
+  const { t } = useTranslation();
   if (tool.type === 'component') {
     const Comp = componentMap[tool.component!];
     return Comp ? <Comp /> : <div>未知的组件类型: {tool.component}</div>;
   }
   if (tool.type === 'web-app' && tool.url) {
-    return <WebAppEmbed title={tool.description} url={tool.url} />;
+    return <WebAppEmbed title={t(tool.description)} url={tool.url} />;
   }
   return <div>未知的工具类型: {tool.type}</div>;
 } 
